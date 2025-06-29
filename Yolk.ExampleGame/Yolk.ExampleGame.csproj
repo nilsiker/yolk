@@ -1,0 +1,71 @@
+<Project Sdk="Godot.NET.Sdk/4.4.1">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Yolk.ExampleGame</RootNamespace>
+    <!-- Catch compiler-mismatch issues with the Introspection generator as early as possible -->
+    <WarningsAsErrors>CS9057</WarningsAsErrors>
+    <!-- Required for some nuget packages to work -->
+    <!-- godotengine/godot/issues/42271#issuecomment-751423827 -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <!-- To show generated files -->
+    <!-- <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles> -->
+    <!--
+      <CompilerGeneratedFilesOutputPath>.generated</CompilerGeneratedFilesOutputPath>
+    -->
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Title>Yolk</Title>
+    <Version>1.0.0</Version>
+    <Description>Slit</Description>
+    <Copyright>© 2025 Andreas Nilsson</Copyright>
+    <Authors>Andreas Nilsson</Authors>
+    <Company>Andreas Nilsson</Company>
+    <!-- Don't include unit tests in release builds. -->
+    <DefaultItemExcludes Condition="'$(Configuration)' == 'ExportRelease'">
+      $(DefaultItemExcludes);test/**/*
+    </DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' or '$(Configuration)' == 'ExportDebug' ">
+    <!-- Test dependencies go here! -->
+    <!-- Dependencies added here will not be included in release builds. -->
+    <PackageReference Include="Chickensoft.GoDotTest" Version="1.6.1" />
+    <!-- Used to drive test scenes when testing visual code -->
+    <PackageReference Include="Chickensoft.GodotTestDriver" Version="3.0.2" />
+    <!-- Bring your own assertion library for tests! -->
+    <!-- We're using Shouldly for this example, but you can use anything. -->
+    <PackageReference Include="Shouldly" Version="4.3.0" />
+    <!-- LightMock is a mocking library that works without reflection. -->
+    <PackageReference Include="LightMock.Generator" Version="1.2.2" />
+    <!-- LightMoq is a Chickensoft package which makes it more like Moq. -->
+    <PackageReference Include="LightMoq" Version="0.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Production dependencies go here! -->
+    <PackageReference Include="System.IO.Abstractions" Version="22.0.10" />
+    <PackageReference Include="EnvironmentAbstractions" Version="5.0.0" />
+    <!-- For whatever reason, I cannot use private assets here while Chickensoft GameDemo can -->
+    <PackageReference Include="GodotSharp.SourceGenerators" Version="2.5.0" />
+    <PackageReference Include="Chickensoft.AutoInject" Version="2.5.0" PrivateAssets="all" />
+    <PackageReference Include="Chickensoft.Collections" Version="1.13.0" />
+    <PackageReference Include="Chickensoft.GodotNodeInterfaces" Version="2.4.0" />
+    <PackageReference Include="Chickensoft.Introspection" Version="2.2.0" />
+    <PackageReference Include="Chickensoft.Introspection.Generator" Version="2.2.0" PrivateAssets="all" OutputItemType="analyzer" />
+    <PackageReference Include="Chickensoft.Serialization" Version="2.2.0" />
+    <PackageReference Include="Chickensoft.Serialization.Godot" Version="0.7.5" />
+    <PackageReference Include="Chickensoft.SaveFileBuilder" Version="1.2.0" />
+    <PackageReference Include="Chickensoft.LogicBlocks" Version="5.16.0" />
+    <PackageReference Include="Chickensoft.LogicBlocks.DiagramGenerator" Version="5.16.0" PrivateAssets="all" OutputItemType="analyzer" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\options\state\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Yolk.Data\Yolk.Data.csproj" />
+    <ProjectReference Include="..\Yolk.Logic\Yolk.Logic.csproj" />
+  </ItemGroup>
+</Project>

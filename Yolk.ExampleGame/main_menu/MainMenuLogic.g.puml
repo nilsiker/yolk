@@ -1,0 +1,18 @@
+@startuml MainMenuLogic
+state "MainMenuLogic State" as Yolk_MainMenuLogic_State {
+  state "Visible" as Yolk_MainMenuLogic_State_Visible
+  state "Hidden" as Yolk_MainMenuLogic_State_Hidden
+}
+
+Yolk_MainMenuLogic_State --> Yolk_MainMenuLogic_State : OnGameEnteredMainMenu
+Yolk_MainMenuLogic_State --> Yolk_MainMenuLogic_State : OnGameLeftMainMenu
+Yolk_MainMenuLogic_State --> Yolk_MainMenuLogic_State : OnQuitButtonPressed
+Yolk_MainMenuLogic_State --> Yolk_MainMenuLogic_State : OnStartGamePressed
+
+Yolk_MainMenuLogic_State : OnOnGameEnteredMainMenu → UpdateVisibility
+Yolk_MainMenuLogic_State : OnOnGameLeftMainMenu → UpdateVisibility
+Yolk_MainMenuLogic_State : OnOnQuitButtonPressed → UpdateVisibility
+Yolk_MainMenuLogic_State : OnOnStartGamePressed → UpdateVisibility
+
+[*] --> Yolk_MainMenuLogic_State
+@enduml

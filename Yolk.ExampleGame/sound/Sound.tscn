@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddhqqc3jfb0df"]
+
+[ext_resource type="Script" uid="uid://cqm4rxmberxfi" path="res://sound/Sound.cs" id="1_7w756"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_b33wo"]
+
+[node name="Sound" type="AudioStreamPlayer3D"]
+script = ExtResource("1_7w756")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_b33wo")

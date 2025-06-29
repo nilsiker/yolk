@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ch84hntra3ghi"]
+
+[ext_resource type="Shader" uid="uid://cf4yqaklqjhxv" path="res://shaders/dithering/main.gdshader" id="1_ol1is"]
+[ext_resource type="Script" uid="uid://bck075onw83hx" path="res://screen_effects/ScreenEffects.cs" id="2_1khpq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3lvgx"]
+shader = ExtResource("1_ol1is")
+shader_parameter/quantize_size = 4.0
+shader_parameter/handle_scale = false
+shader_parameter/dither_enabled = true
+shader_parameter/bayer_pattern = 2.0
+shader_parameter/divisions = 16.0
+shader_parameter/contrast = 1.0
+shader_parameter/shift = 0.0
+shader_parameter/grayscale = false
+shader_parameter/use_palette = false
+
+[node name="ScreenEffects" type="ColorRect"]
+material = SubResource("ShaderMaterial_3lvgx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_1khpq")

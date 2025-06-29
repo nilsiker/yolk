@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://3jhsp73yitne"]
+
+[ext_resource type="AudioStream" uid="uid://bptgkj0hgnwwv" path="res://sound/sound_debug.ogg" id="1_4f2bq"]
+[ext_resource type="Script" uid="uid://csmmx2p8dbfy2" path="res://sound/SoundResource.cs" id="1_f2on3"]
+
+[resource]
+script = ExtResource("1_f2on3")
+Stream = ExtResource("1_4f2bq")
+Distance = 50.0
+metadata/_custom_type_script = "uid://csmmx2p8dbfy2"

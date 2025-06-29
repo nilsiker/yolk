@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://dmbkddu7qr6uv"]
+
+[ext_resource type="Script" uid="uid://cm5pm2wrcv8xa" path="res://app/App.cs" id="1_3st5l"]
+[ext_resource type="PackedScene" uid="uid://cywpu6lxdjhuu" path="res://game/Game.tscn" id="2_v0mgf"]
+[ext_resource type="PackedScene" uid="uid://ch84hntra3ghi" path="res://screen_effects/ScreenEffects.tscn" id="3_iuu71"]
+[ext_resource type="Script" uid="uid://dt4hepqn6oqyj" path="res://options/Options.cs" id="3_ub2di"]
+[ext_resource type="PackedScene" uid="uid://gxsvb52nm7s8" path="res://debug_panel/DebugPanel.tscn" id="5_l0x3n"]
+
+[sub_resource type="Animation" id="Animation_2d5qb"]
+resource_name = "fade_from_black"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8i5je"]
+resource_name = "fade_to_black"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k6vbj"]
+_data = {
+&"fade_from_black": SubResource("Animation_2d5qb"),
+&"fade_to_black": SubResource("Animation_8i5je")
+}
+
+[node name="App" type="CanvasLayer"]
+script = ExtResource("1_3st5l")
+
+[node name="Options" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_ub2di")
+
+[node name="ScreenEffects" parent="Options" instance=ExtResource("3_iuu71")]
+unique_name_in_owner = true
+
+[node name="Game" parent="." instance=ExtResource("2_v0mgf")]
+
+[node name="Blackout" type="ColorRect" parent="."]
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Blackout" type="AnimationPlayer" parent="Blackout"]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_k6vbj")
+}
+
+[node name="DebugPanel" parent="." instance=ExtResource("5_l0x3n")]
+top_level = true
+offset_right = 70.0
+offset_bottom = 78.0

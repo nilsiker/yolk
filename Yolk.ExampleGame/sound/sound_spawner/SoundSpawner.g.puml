@@ -1,0 +1,4 @@
+@startuml SoundSpawnerLogic
+state "SoundSpawnerLogic State" as Yolk_SoundSpawnerLogic_State
+[*] --> Yolk_SoundSpawnerLogic_State
+@enduml

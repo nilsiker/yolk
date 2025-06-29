@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dcgqd4r7xk7k2"]
+
+[ext_resource type="Shader" uid="uid://cf4yqaklqjhxv" path="res://src/shaders/dithering/main.gdshader" id="1_kc5du"]
+
+[sub_resource type="Gradient" id="Gradient_kc5du"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.0728477, 0.145695, 0.231788, 0.304636, 0.417219)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0.220779, 0, 1, 0, 0.386843, 0, 1, 0, 0.550351, 0, 1, 0, 0.783502, 0, 1, 0, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_k7b6a"]
+gradient = SubResource("Gradient_kc5du")
+
+[resource]
+shader = ExtResource("1_kc5du")
+shader_parameter/quantize_size = 4.0
+shader_parameter/handle_scale = false
+shader_parameter/dither_enabled = true
+shader_parameter/bayer_pattern = 3.0
+shader_parameter/divisions = 16.0
+shader_parameter/contrast = 1.0
+shader_parameter/shift = 0.0
+shader_parameter/grayscale = true
+shader_parameter/use_palette = true
+shader_parameter/palette = SubResource("GradientTexture1D_k7b6a")

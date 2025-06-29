@@ -1,0 +1,44 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://dx8a0hc3h3m6w"]
+
+[ext_resource type="FontFile" uid="uid://c4rqt8pyo8ms8" path="res://fonts/VCR_OSD_MONO_1.001.ttf" id="1_v4ne4"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_v4ne4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78vta"]
+bg_color = Color(0.270222, 0.270222, 0.270222, 1)
+border_width_top = 7
+border_width_bottom = 7
+border_color = Color(0.190762, 0.190762, 0.190762, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ww0g3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4ne4"]
+bg_color = Color(0, 0, 0, 0.745098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qd87"]
+bg_color = Color(0, 0, 0, 0.611765)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wcyv"]
+bg_color = Color(1, 1, 1, 1)
+
+[resource]
+default_font = ExtResource("1_v4ne4")
+default_font_size = 20
+HSlider/icons/grabber = SubResource("ImageTexture_v4ne4")
+HSlider/icons/grabber_highlight = SubResource("ImageTexture_v4ne4")
+HSlider/styles/slider = SubResource("StyleBoxFlat_78vta")
+ItemList/colors/guide_color = Color(0, 0, 0, 0)
+ItemList/constants/h_separation = 0
+ItemList/constants/v_separation = 12
+ItemList/styles/panel = SubResource("StyleBoxFlat_ww0g3")
+Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+MarginContainer/constants/margin_bottom = 20
+MarginContainer/constants/margin_left = 20
+MarginContainer/constants/margin_right = 20
+MarginContainer/constants/margin_top = 20
+Panel/styles/panel = SubResource("StyleBoxFlat_v4ne4")
+ProgressBar/font_sizes/font_size = 32
+ProgressBar/fonts/font = ExtResource("1_v4ne4")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_1qd87")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_4wcyv")

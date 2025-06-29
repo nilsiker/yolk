@@ -1,0 +1,18 @@
+@startuml PauseMenuLogic
+state "PauseMenuLogic State" as Yolk_PauseMenuLogic_State {
+  state "Hidden" as Yolk_PauseMenuLogic_State_Hidden
+  state "Visible" as Yolk_PauseMenuLogic_State_Visible
+}
+
+Yolk_PauseMenuLogic_State --> Yolk_PauseMenuLogic_State : OnOptionsPressed
+Yolk_PauseMenuLogic_State --> Yolk_PauseMenuLogic_State : OnQuitPressed
+Yolk_PauseMenuLogic_State --> Yolk_PauseMenuLogic_State : OnResumePressed
+Yolk_PauseMenuLogic_State_Hidden --> Yolk_PauseMenuLogic_State_Visible : Show
+Yolk_PauseMenuLogic_State_Visible --> Yolk_PauseMenuLogic_State_Hidden : Hide
+
+Yolk_PauseMenuLogic_State : OnGameQuitRequested() → UpdateVisibility
+Yolk_PauseMenuLogic_State_Hidden : OnEnter → UpdateVisibility
+Yolk_PauseMenuLogic_State_Visible : OnEnter → UpdateVisibility
+
+[*] --> Yolk_PauseMenuLogic_State_Hidden
+@enduml

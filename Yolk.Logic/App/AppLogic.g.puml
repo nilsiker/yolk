@@ -1,0 +1,15 @@
+@startuml AppLogic
+state "AppLogic State" as Yolk_AppLogic_State {
+  state "BlackingOut" as Yolk_AppLogic_State_BlackingOut
+}
+
+Yolk_AppLogic_State --> Yolk_AppLogic_State_BlackingOut : BlackoutRequested
+Yolk_AppLogic_State_BlackingOut --> Yolk_AppLogic_State : BlackoutFinished
+
+Yolk_AppLogic_State : OnAppMouseReleasesSync() → SetMouseCaptured
+Yolk_AppLogic_State : OnAppQuitRequested() → QuitApp
+Yolk_AppLogic_State_BlackingOut : OnEnter → SetBlackout
+Yolk_AppLogic_State_BlackingOut : OnExit → SetBlackout
+
+[*] --> Yolk_AppLogic_State
+@enduml

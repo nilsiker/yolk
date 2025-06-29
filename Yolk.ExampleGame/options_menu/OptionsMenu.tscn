@@ -1,0 +1,152 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6s5ahp5if2vn"]
+
+[ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_d78cj"]
+[ext_resource type="Script" uid="uid://ovytfoh3xfgw" path="res://options_menu/OptionsMenu.cs" id="2_bbeos"]
+
+[node name="OptionsUI" type="Control"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_d78cj")
+script = ExtResource("2_bbeos")
+
+[node name="OptionsPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.486275)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+text = "Options"
+
+[node name="HSeparator" type="HSeparator" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="GraphicsContainer" type="MarginContainer" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer/VBoxContainer"]
+layout_mode = 2
+text = "Graphics"
+
+[node name="HSeparator" type="HSeparator" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PixelationOption" type="HBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PixelationLabel" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer/VBoxContainer/PixelationOption"]
+layout_mode = 2
+text = "Pixelation "
+
+[node name="PixelationCheckButton" type="CheckButton" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer/VBoxContainer/PixelationOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+button_pressed = true
+
+[node name="DitheringOption" type="HBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DitheringLabel" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer/VBoxContainer/DitheringOption"]
+layout_mode = 2
+text = "Dithering  "
+
+[node name="DitheringCheckButton" type="CheckButton" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer/VBoxContainer/DitheringOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+button_pressed = true
+
+[node name="AudioContainer" type="MarginContainer" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+text = "Audio"
+
+[node name="HSeparator" type="HSeparator" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterVolumeOption" type="HBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterVolumeLabel" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer/MasterVolumeOption"]
+layout_mode = 2
+text = "Master     "
+
+[node name="MasterVolumeSlider" type="HSlider" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer/MasterVolumeOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_d78cj")
+min_value = -80.0
+max_value = 0.0
+step = 10.0
+
+[node name="MusicVolumeOption" type="HBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicVolumeLabel" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer/MusicVolumeOption"]
+layout_mode = 2
+text = "Music      "
+
+[node name="MusicVolumeSlider" type="HSlider" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer/MusicVolumeOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_d78cj")
+min_value = -80.0
+max_value = 0.0
+step = 10.0
+
+[node name="SFXVolumeOption" type="HBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SFXVolumeLabel" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer/SFXVolumeOption"]
+layout_mode = 2
+text = "SFX        "
+
+[node name="SFXVolumeSlider" type="HSlider" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer/SFXVolumeOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_d78cj")
+min_value = -80.0
+max_value = 0.0
+step = 10.0
+
+[node name="CloseButton" type="Button" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close"
