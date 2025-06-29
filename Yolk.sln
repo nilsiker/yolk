@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk.Logic", "Yolk.Logic\Yo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk.Data", "Yolk.Data\Yolk.Data.csproj", "{180E9AF3-3396-4F54-A4AE-CE7548B2A3DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk.Generator", "Yolk.Generator\Yolk.Generator.csproj", "{4196A1F3-5EC1-4D90-820D-938CB34FD690}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,12 @@ Global
 		{180E9AF3-3396-4F54-A4AE-CE7548B2A3DB}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
 		{180E9AF3-3396-4F54-A4AE-CE7548B2A3DB}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
 		{180E9AF3-3396-4F54-A4AE-CE7548B2A3DB}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{4196A1F3-5EC1-4D90-820D-938CB34FD690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4196A1F3-5EC1-4D90-820D-938CB34FD690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4196A1F3-5EC1-4D90-820D-938CB34FD690}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4196A1F3-5EC1-4D90-820D-938CB34FD690}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{4196A1F3-5EC1-4D90-820D-938CB34FD690}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{4196A1F3-5EC1-4D90-820D-938CB34FD690}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

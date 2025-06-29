@@ -8,17 +8,17 @@ using Chickensoft.SaveFileBuilder;
 using Chickensoft.Serialization.Godot;
 using Godot;
 using Yolk.Data;
+using Yolk.Generator;
 
-
-public interface IGame : IControl, IStateInfo,
+public interface IGame : IControl,
   IProvide<IGameRepo>,
   IProvide<ISaveChunk<GameData>>;
 
 [InputMap]
 [Meta(typeof(IAutoNode))]
+[StateInfo]
 public partial class Game : Control, IGame {
   public override void _Notification(int what) => this.Notify(what);
-
   [Dependency] private IAppRepo AppRepo => this.DependOn<IAppRepo>();
 
   private IGameRepo GameRepo { get; set; } = default!;
@@ -26,8 +26,6 @@ public partial class Game : Control, IGame {
   private GameLogic Logic { get; set; } = default!;
   private GameLogic.IBinding Binding { get; set; } = default!;
   private int Slot { get; set; } = -1;
-  string IStateInfo.Name => Name;
-  public string State => Logic.Value.ToString();
   public SaveFile<GameData> SaveFile { get; set; } = default!;
 
   IGameRepo IProvide<IGameRepo>.Value() => GameRepo;
