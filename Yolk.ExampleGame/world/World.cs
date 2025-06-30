@@ -7,12 +7,14 @@ using Chickensoft.SaveFileBuilder;
 using Godot;
 using Yolk.Data;
 using Yolk.Game;
+using Yolk.Generator;
 using Yolk.Level;
 using Yolk.World;
 
 
-public interface IWorld : INode, IProvide<IWorldRepo>, IStateInfo;
+public interface IWorld : INode, IProvide<IWorldRepo>;
 
+[StateInfo]
 [Meta(typeof(IAutoNode))]
 public partial class World : Node, IWorld {
   public override void _Notification(int what) => this.Notify(what);
@@ -29,8 +31,6 @@ public partial class World : Node, IWorld {
   private WorldLogic Logic { get; set; } = new WorldLogic();
   private WorldLogic.IBinding Binding { get; set; } = default!;
   private ISaveChunk<WorldData> LevelSaveChunk { get; set; } = default!;
-  string IStateInfo.Name => Name;
-  public string State => Logic.Value.ToString();
 
   public void OnResolved() {
     LevelSaveChunk = new SaveChunk<WorldData>(
@@ -40,7 +40,6 @@ public partial class World : Node, IWorld {
       onLoad: (chunk, data) => Logic.Input(new WorldLogic.Input.RequestLevelTransition("", data.CurrentLevelName, true)));
 
     GameSaveChunk.AddChunk(LevelSaveChunk);
-
     Binding = Logic.Bind();
 
     Binding

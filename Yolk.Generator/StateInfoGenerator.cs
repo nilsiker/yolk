@@ -40,7 +40,7 @@
         foreach (var attribute in attributeList.Attributes) {
           var symbol = context.SemanticModel.GetSymbolInfo(attribute).Symbol;
           if (symbol is IMethodSymbol methodSymbol &&
-              methodSymbol.ContainingType.ToDisplayString() == "StateInfoAttribute") {
+              methodSymbol.ContainingType.Name == "StateInfoAttribute") {
             return classSyntax;
           }
         }
@@ -49,17 +49,31 @@
     }
 
     private static void Execute(Compilation compilation, ImmutableArray<ClassDeclarationSyntax> classes, SourceProductionContext context) {
+      var interfaceSource = $@"
+namespace Yolk {{
+  public interface IStateInfo {{
+    string Name {{  get; }}
+    string State {{ get; }}
+  }}
+}}";
+
+      context.AddSource($"StateInfo.g.cs", SourceText.From(interfaceSource, Encoding.UTF8));
+
       foreach (var classDecl in classes) {
         var className = classDecl.Identifier.Text;
-        var ns = classDecl.FirstAncestorOrSelf<NamespaceDeclarationSyntax>()?.Name.ToString() ?? "Generated";
+        var ns = classDecl.FirstAncestorOrSelf<NamespaceDeclarationSyntax>()?.Name.ToString()
+          ?? classDecl.FirstAncestorOrSelf<FileScopedNamespaceDeclarationSyntax>()?.Name.ToString()
+          ?? "Generated";
 
         var source = $@"
 namespace {ns}
 {{
+    using Yolk;
+
     public partial class {className} : IStateInfo
     {{
-        public string Name => nameof({className});
-        public string State => Logic.Value.ToString();
+        string IStateInfo.Name => Name;
+        string IStateInfo.State => Logic.Value.ToString();
     }}
 }}";
         context.AddSource($"{className}_StateInfo.g.cs", SourceText.From(source, Encoding.UTF8));

@@ -1,8 +1,8 @@
 @startuml WorldLogic
 state "WorldLogic State" as Yolk_Level_WorldLogic_State {
+  state "InLevel" as Yolk_Level_WorldLogic_State_InLevel
   state "LoadingLevel" as Yolk_Level_WorldLogic_State_LoadingLevel
   state "OutOfLevel" as Yolk_Level_WorldLogic_State_OutOfLevel
-  state "InLevel" as Yolk_Level_WorldLogic_State_InLevel
 }
 
 Yolk_Level_WorldLogic_State_InLevel --> Yolk_Level_WorldLogic_State_LoadingLevel : RequestLevelTransition

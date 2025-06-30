@@ -5,9 +5,12 @@ using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
 using Godot;
 using Yolk.Game;
-public interface IMainMenu : IControl, IStateInfo {
+using Yolk.Generator;
+
+public interface IMainMenu : IControl {
 }
 
+[StateInfo]
 [Meta(typeof(IAutoNode))]
 public partial class MainMenu : Control, IMainMenu {
   public override void _Notification(int what) => this.Notify(what);
@@ -23,12 +26,9 @@ public partial class MainMenu : Control, IMainMenu {
 
   private MainMenuLogic Logic { get; set; } = new();
   private MainMenuLogic.IBinding Binding { get; set; } = default!;
-  string IStateInfo.Name => Name;
-  public string State => Logic.Value.ToString();
 
   public void OnResolved() {
     Binding = Logic.Bind();
-
     Binding.Handle((in MainMenuLogic.Output.UpdateVisibility output) => Visible = output.Visible);
 
     // Bind functions to state outputs here
@@ -65,6 +65,8 @@ public partial class MainMenu : Control, IMainMenu {
   private void OnQuitButtonFocused() => QuitButton.Text = "> Quit";
   private void OnQuitButtonUnfocused() => QuitButton.Text = "Quit";
   private void OnQuitButtonPressed() => Logic.Input(new MainMenuLogic.Input.OnQuitButtonPressed());
+
+  public override void _Ready() => AddToGroup("state");
 
   public void OnExitTree() {
     Logic.Stop();

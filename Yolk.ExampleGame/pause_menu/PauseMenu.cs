@@ -5,9 +5,11 @@ using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
 using Godot;
 using Yolk.Game;
+using Yolk.Generator;
 
-public interface IPauseMenu : IControl, IStateInfo { }
+public interface IPauseMenu : IControl { }
 
+[StateInfo]
 [Meta(typeof(IAutoNode))]
 public partial class PauseMenu : Control, IPauseMenu {
   public override void _Notification(int what) => this.Notify(what);
@@ -18,13 +20,11 @@ public partial class PauseMenu : Control, IPauseMenu {
 
   [Node] private Button ResumeButton { get; set; } = default!;
   [Node] private Button OptionsButton { get; set; } = default!;
+
   [Node] private Button QuitMainMenuButton { get; set; } = default!;
   [Node] private Button QuitDesktopButton { get; set; } = default!;
   private PauseMenuLogic Logic { get; set; } = new();
   private PauseMenuLogic.IBinding Binding { get; set; } = default!;
-
-  string IStateInfo.Name => Name;
-  public string State => Logic.Value.ToString();
 
 
   public void OnResolved() {
@@ -50,8 +50,6 @@ public partial class PauseMenu : Control, IPauseMenu {
   private void OnOptionsButtonPressed() => Logic.Input(new PauseMenuLogic.Input.OnOptionsPressed());
   private void OnQuitMainMenuButtonPressed() => Logic.Input(new PauseMenuLogic.Input.OnQuitPressed(false));
   private void OnQuitDesktopButtonPressed() => Logic.Input(new PauseMenuLogic.Input.OnQuitPressed(true));
-
-  public void _Ready() => AddToGroup("state");
 
   private void OnOutputUpdateVisibility(bool visible) {
     Visible = visible;

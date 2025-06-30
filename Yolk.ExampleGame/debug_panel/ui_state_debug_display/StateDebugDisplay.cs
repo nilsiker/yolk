@@ -4,12 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-
-public interface IStateInfo {
-  public string Name { get; }
-  public string State { get; }
-}
-
 [SceneTree]
 public partial class StateDebugDisplay : HBoxContainer {
   private IEnumerable<IStateInfo> NodesInStateGroup => GetTree().GetNodesInGroup("state").OfType<IStateInfo>();

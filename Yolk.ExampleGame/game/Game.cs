@@ -90,7 +90,6 @@ public partial class Game : Control, IGame {
   private void OnOutputSaveGame(int slot) => SaveFile.Save();
   private void OnOutputLoadGame(int slot) => SaveFile.Load();
 
-
   public override void _Ready() => AddToGroup("state");
 
   public override void _UnhandledInput(InputEvent @event) {

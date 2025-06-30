@@ -7,7 +7,7 @@ using Yolk.Game;
 
 
 [Meta(typeof(IAutoNode))]
-public partial class OptionsMenu : Control, IStateInfo {
+public partial class OptionsMenu : Control {
   public override void _Notification(int what) => this.Notify(what);
 
   [Dependency] private IOptionsRepo OptionsRepo => this.DependOn<IOptionsRepo>();
@@ -22,8 +22,6 @@ public partial class OptionsMenu : Control, IStateInfo {
   [Node] private Button CloseButton { get; set; } = default!;
   private OptionsMenuLogic Logic { get; set; } = new();
   private OptionsMenuLogic.IBinding Binding { get; set; } = default!;
-  string IStateInfo.Name => Name;
-  public string State => Logic.Value.ToString();
 
   public void OnResolved() {
     Binding = Logic.Bind();
@@ -48,10 +46,9 @@ public partial class OptionsMenu : Control, IStateInfo {
     OptionsRepo.MusicVolume.Sync += OnOptionsMusicVolumeSync;
     OptionsRepo.SFXVolume.Sync += OnOptionsSFXVolumeSync;
 
+
     GameRepo.Quitted += () => OptionsRepo.SetUIVisible(false);
     GameRepo.Started += () => OptionsRepo.SetUIVisible(false);
-
-    AddToGroup("state");
   }
 
   private void OnPixelationCheckButtonToggled(bool on) => OptionsRepo.SetPixelation(on);

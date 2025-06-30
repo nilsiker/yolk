@@ -4,11 +4,13 @@ using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
 using Godot;
+using Yolk.Generator;
 
-public interface IApp : ICanvasLayer, IProvide<IAppRepo>, IProvide<IOptionsRepo>, IStateInfo {
+public interface IApp : ICanvasLayer, IProvide<IAppRepo>, IProvide<IOptionsRepo> {
   public void OnOutputQuitApp();
 }
 
+[StateInfo]
 [Meta(typeof(IAutoNode))]
 public partial class App : CanvasLayer, IApp {
   public override void _Notification(int what) => this.Notify(what);
@@ -18,8 +20,6 @@ public partial class App : CanvasLayer, IApp {
   private IAppRepo AppRepo { get; set; } = new AppRepo();
   private AppLogic Logic { get; set; } = new();
   private AppLogic.IBinding Binding { get; set; } = default!;
-  string IStateInfo.Name => Name;
-  public string State => Logic.Value.ToString();
 
   IAppRepo IProvide<IAppRepo>.Value() => AppRepo;
   IOptionsRepo IProvide<IOptionsRepo>.Value() => Options.OptionsRepo;

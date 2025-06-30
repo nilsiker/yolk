@@ -10,7 +10,7 @@ public partial class GameLogic {
         OnDetach(() => Get<IGameRepo>().StartRequested -= OnGameStartRequested);
 
         this.OnEnter(() => {
-          Output(new Output.UpdateVisibility(false));
+          Output(new Output.UpdateVisibility(true));
           Get<IGameRepo>().Pause();
         });
       }

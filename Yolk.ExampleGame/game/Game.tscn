@@ -24,8 +24,15 @@ script = ExtResource("3_ejjr5")
 script = ExtResource("2_51532")
 _soundScene = ExtResource("3_85edk")
 
-[node name="UI" type="Control" parent="YolkRepoProvider"]
-layout_mode = 3
+[node name="World" type="Node2D" parent="YolkRepoProvider"]
+process_mode = 1
+script = ExtResource("6_dh30g")
+
+[node name="Player" parent="YolkRepoProvider/World" instance=ExtResource("11_5a4rm")]
+unique_name_in_owner = true
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -34,25 +41,15 @@ grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("9_ss4mk")
 
-[node name="MainMenu" parent="YolkRepoProvider/UI" instance=ExtResource("3_3d0qh")]
+[node name="MainMenu" parent="UI" instance=ExtResource("3_3d0qh")]
 unique_name_in_owner = true
+layout_mode = 1
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("5_yw8km")]
 visible = false
 layout_mode = 1
 
-[node name="PauseMenu" parent="YolkRepoProvider/UI" instance=ExtResource("5_yw8km")]
-visible = false
-layout_mode = 1
-
-[node name="OptionsMenu" parent="YolkRepoProvider/UI" instance=ExtResource("4_enhjj")]
+[node name="OptionsMenu" parent="UI" instance=ExtResource("4_enhjj")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
-
-[node name="World" type="Node2D" parent="YolkRepoProvider"]
-process_mode = 1
-script = ExtResource("6_dh30g")
-
-[node name="Player" parent="YolkRepoProvider/World" instance=ExtResource("11_5a4rm")]
-unique_name_in_owner = true
-
-[node name="Camera2D" type="Camera2D" parent="YolkRepoProvider/World"]
