@@ -59,12 +59,6 @@ public class GameRepo : IGameRepo, IDisposable {
   public void SetSlot(int slot) => _slot.OnNext(slot);
 
   public void Dispose() {
-    QuitRequested = null;
-    Quitted = null;
-    GameOverRequested = null;
-    SaveRequested = null;
-    LoadRequested = null;
-
     _pauseMode.OnCompleted();
     _pauseMode.Dispose();
     _slot.OnCompleted();

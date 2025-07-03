@@ -5,8 +5,8 @@ state "MainMenuLogic State" as Yolk_MainMenuLogic_State {
 }
 
 Yolk_MainMenuLogic_State --> Yolk_MainMenuLogic_State : OnQuitButtonPressed
-Yolk_MainMenuLogic_State --> Yolk_MainMenuLogic_State_Hidden : Hide
-Yolk_MainMenuLogic_State --> Yolk_MainMenuLogic_State_Visible : Show
+Yolk_MainMenuLogic_State_Hidden --> Yolk_MainMenuLogic_State_Visible : Show
+Yolk_MainMenuLogic_State_Visible --> Yolk_MainMenuLogic_State_Hidden : Hide
 
 Yolk_MainMenuLogic_State_Hidden : OnEnter → UpdateVisibility
 Yolk_MainMenuLogic_State_Visible : OnEnter → UpdateVisibility

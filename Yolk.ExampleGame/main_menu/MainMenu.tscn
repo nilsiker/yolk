@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3yir6wkmklbj"]
+[gd_scene load_steps=7 format=3 uid="uid://b3yir6wkmklbj"]
 
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_4ia3c"]
 [ext_resource type="Script" uid="uid://yofr8m5jd46t" path="res://main_menu/MainMenu.cs" id="2_0rgyt"]
-[ext_resource type="PackedScene" uid="uid://cfytm7qeslqrq" path="res://game_slots_panel/GameSlotsPanel.tscn" id="3_0rgyt"]
+[ext_resource type="PackedScene" uid="uid://cfytm7qeslqrq" path="res://load_game_panel/LoadGamePanel.tscn" id="3_0rgyt"]
+[ext_resource type="PackedScene" uid="uid://c6s5ahp5if2vn" path="res://options_menu/OptionsMenu.tscn" id="4_yt4ty"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4ia3c"]
 
@@ -20,15 +21,17 @@ script = ExtResource("2_0rgyt")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 131.0
+grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+size_flags_horizontal = 0
 alignment = 1
 
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
@@ -49,7 +52,17 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_styles/focus = SubResource("StyleBoxEmpty_4ia3c")
-text = "Play"
+text = "New Game"
+flat = true
+alignment = 0
+
+[node name="LoadButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4ia3c")
+text = "Load Game"
 flat = true
 alignment = 0
 
@@ -73,9 +86,15 @@ text = "Quit"
 flat = true
 alignment = 0
 
-[node name="GameSlotsPanel" parent="." instance=ExtResource("3_0rgyt")]
+[node name="LoadGamePanel" parent="MarginContainer" instance=ExtResource("3_0rgyt")]
 unique_name_in_owner = true
 visible = false
-layout_mode = 1
-offset_top = -131.0
-offset_bottom = 131.0
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="OptionsMenu" parent="MarginContainer" instance=ExtResource("4_yt4ty")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

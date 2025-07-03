@@ -40,6 +40,8 @@ public partial class OptionsMenu : Control {
     SFXVolumeSlider.ValueChanged += OnSFXVolumeSliderValueChanged;
     CloseButton.Pressed += OnCloseButtonPressed;
 
+    OptionsRepo.UIVisible.Sync += OnOutputUpdateVisibility;
+
     OptionsRepo.Pixelation.Sync += OnOptionsPixelationSync;
     OptionsRepo.Dithering.Sync += OnOptionsDitheringSync;
     OptionsRepo.MasterVolume.Sync += OnOptionsMasterVolumeSync;

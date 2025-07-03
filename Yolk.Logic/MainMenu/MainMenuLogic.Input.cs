@@ -6,5 +6,6 @@ public partial class MainMenuLogic {
     public record struct OnQuitButtonPressed;
     public record struct Hide;
     public record struct Show;
+    public record struct BlackoutFinished;
   }
 }

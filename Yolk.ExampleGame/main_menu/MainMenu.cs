@@ -1,5 +1,6 @@
 namespace Yolk;
 
+using System;
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
@@ -20,9 +21,10 @@ public partial class MainMenu : Control, IMainMenu {
   [Dependency] private IOptionsRepo Options => this.DependOn<IOptionsRepo>();
 
   [Node] private Button PlayButton { get; set; } = default!;
+  [Node] private Button LoadButton { get; set; } = default!;
   [Node] private Button OptionsButton { get; set; } = default!;
   [Node] private Button QuitButton { get; set; } = default!;
-  [Node] private Control GameSlotsPanel { get; set; } = default!;
+  [Node] private Control LoadGamePanel { get; set; } = default!;
 
   private MainMenuLogic Logic { get; set; } = new();
   private MainMenuLogic.IBinding Binding { get; set; } = default!;
@@ -33,14 +35,17 @@ public partial class MainMenu : Control, IMainMenu {
 
     // Bind functions to state outputs here
     PlayButton.Pressed += OnPlayButtonPressed;
+    LoadButton.Pressed += OnLoadButtonPressed;
     OptionsButton.Pressed += OnOptionsButtonPressed;
     QuitButton.Pressed += OnQuitButtonPressed;
 
     PlayButton.FocusEntered += OnPlayButtonFocused;
+    LoadButton.FocusEntered += OnLoadButtonFocused;
     OptionsButton.FocusEntered += OnOptionsButtonFocused;
     QuitButton.FocusEntered += OnQuitButtonFocused;
 
     PlayButton.FocusExited += OnPlayButtonUnfocused;
+    LoadButton.FocusExited += OnLoadButtonUnfocused;
     OptionsButton.FocusExited += OnOptionsButtonUnfocused;
     QuitButton.FocusExited += OnQuitButtonUnfocused;
 
@@ -50,14 +55,17 @@ public partial class MainMenu : Control, IMainMenu {
     Logic.Start();
 
     PlayButton.GrabFocus();
-
-    AddToGroup("state");
   }
 
   private void OnAppSetMainMenuVisibility(bool visible) => Visible = visible;
   private void OnPlayButtonFocused() => PlayButton.Text = "> Play";
   private void OnPlayButtonUnfocused() => PlayButton.Text = "Play";
-  private void OnPlayButtonPressed() => GameSlotsPanel.Visible = true;
+  private void OnPlayButtonPressed() => GameRepo.RequestStart(0);
+
+  private void OnLoadButtonUnfocused() => LoadButton.Text = "Load Game";
+  private void OnLoadButtonFocused() => LoadButton.Text = "> Load Game";
+  private void OnLoadButtonPressed() => LoadGamePanel.Visible = true;
+
   private void OnOptionsButtonFocused() => OptionsButton.Text = "> Options";
   private void OnOptionsButtonUnfocused() => OptionsButton.Text = "Options";
   private void OnOptionsButtonPressed() => Options.SetUIVisible(true);
@@ -66,7 +74,6 @@ public partial class MainMenu : Control, IMainMenu {
   private void OnQuitButtonUnfocused() => QuitButton.Text = "Quit";
   private void OnQuitButtonPressed() => Logic.Input(new MainMenuLogic.Input.OnQuitButtonPressed());
 
-  public override void _Ready() => AddToGroup("state");
 
   public void OnExitTree() {
     Logic.Stop();

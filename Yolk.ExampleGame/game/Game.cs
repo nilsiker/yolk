@@ -41,12 +41,9 @@ public partial class Game : Control, IGame {
     SaveFile = new SaveFile<GameData>(
       root: new SaveChunk<GameData>(
         onSave: (chunk) => new() {
-
           WorldData = chunk.GetChunkSaveData<WorldData>()
         },
-        onLoad: (chunk, data) => {
-          chunk.LoadChunkSaveData(data.WorldData);
-        }),
+        onLoad: (chunk, data) => chunk.LoadChunkSaveData(data.WorldData)),
       onSave: async data => {
         GetViewport().SetCanvasCullMaskBit(2, false);
         await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
@@ -89,8 +86,6 @@ public partial class Game : Control, IGame {
   private void OnOutputUpdateVisibility(bool visible) => Visible = visible;
   private void OnOutputSaveGame(int slot) => SaveFile.Save();
   private void OnOutputLoadGame(int slot) => SaveFile.Load();
-
-  public override void _Ready() => AddToGroup("state");
 
   public override void _UnhandledInput(InputEvent @event) {
     if (@event.IsActionPressed(Pause)) {

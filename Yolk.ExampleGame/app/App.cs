@@ -1,5 +1,6 @@
 namespace Yolk.App;
 
+using System;
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
@@ -40,19 +41,25 @@ public partial class App : CanvasLayer, IApp {
 
     Logic.Start();
 
-    Blackout.AnimationFinished += (anim) => Logic.Input(new AppLogic.Input.BlackoutFinished());
+    Blackout.AnimationFinished += OnBlackoutAnimationFinished;
 
     this.Provide();
   }
 
-  private void OnOutputSetBlackout(bool on) => Blackout.Play(on ? "fade_to_black" : "fade_from_black");
+  private void OnBlackoutAnimationFinished(StringName animName) => Logic.Input(new AppLogic.Input.BlackoutFinished());
+
+
+  private void OnOutputSetBlackout(bool on) {
+    Visible = true;
+    Blackout.Play(on ? "fade_to_black" : "fade_from_black");
+  }
+
+
   private static void OnOutputSetMouseCaptured(bool captured)
     => Input.MouseMode = captured
       ? Input.MouseModeEnum.Captured
       : Input.MouseModeEnum.Visible;
   public void OnOutputQuitApp() => GetTree().Quit();
-
-  public override void _Ready() => AddToGroup("state");
 
   public override void _Input(InputEvent @event) {
     if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Visible) {

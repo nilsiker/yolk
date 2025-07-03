@@ -74,6 +74,8 @@ namespace {ns}
     {{
         string IStateInfo.Name => Name;
         string IStateInfo.State => Logic.Value.ToString();
+
+        public override void _Ready() => AddToGroup(""state"");
     }}
 }}";
         context.AddSource($"{className}_StateInfo.g.cs", SourceText.From(source, Encoding.UTF8));

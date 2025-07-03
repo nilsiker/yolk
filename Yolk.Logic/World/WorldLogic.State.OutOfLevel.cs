@@ -1,7 +1,6 @@
 namespace Yolk.Level;
 
 using Yolk.Game;
-using Yolk.World;
 
 public partial class WorldLogic {
   public abstract partial record State {
@@ -20,9 +19,7 @@ public partial class WorldLogic {
       }
 
       private void OnGameStarted()
-        => Input(new Input.RequestLevelTransition("0_DebugBox1", "0_DebugBox1"));
+        => Input(new Input.RequestLevelTransition("0_DebugBox1", "0_DebugBox1", true));
     }
   }
 }
-
-

@@ -25,8 +25,11 @@ public partial class World : Node, IWorld {
 
   IWorldRepo IProvide<IWorldRepo>.Value() => WorldRepo;
 
+  [Export] private PackedScene _startScene = default!;
   [Export] private Level _level = default!; // TODO don't export this, handle programmatically?
+
   [Node] private Player Player { get; set; } = default!;
+
   private IWorldRepo WorldRepo { get; set; } = new WorldRepo();
   private WorldLogic Logic { get; set; } = new WorldLogic();
   private WorldLogic.IBinding Binding { get; set; } = default!;
@@ -57,8 +60,9 @@ public partial class World : Node, IWorld {
     Logic.Start();
     this.Provide();
   }
+
   private void OnOutputLoadLevel(string levelName) {
-    var loadingFromLevel = _level?.Name ?? Level.DEBUG_LEVEL;
+    var loadingFromLevel = _level?.Name ?? _startScene.ResourceName;
     var scene = GD.Load<PackedScene>(Level.GetLevelPath(levelName));
 
     if (_level is not null) {
@@ -77,8 +81,6 @@ public partial class World : Node, IWorld {
 
     Logic.Input(new WorldLogic.Input.OnLevelLoaded(landing?.GlobalTransform));
   }
-
-  public override void _Ready() => AddToGroup("state");
 
   public override void _ExitTree() => Binding.Dispose();
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://3mwky8ciwtjk"]
+[gd_scene load_steps=4 format=3 uid="uid://3mwky8ciwtjk"]
 
 [ext_resource type="Script" uid="uid://rqm8nt4pb2qs" path="res://pause_menu/PauseMenu.cs" id="1_fhjix"]
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_xhb88"]
+[ext_resource type="PackedScene" uid="uid://c6s5ahp5if2vn" path="res://options_menu/OptionsMenu.tscn" id="3_s3m1y"]
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -61,3 +62,8 @@ text = "Quit To Main Menu"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit To Desktop"
+
+[node name="OptionsMenu" parent="." instance=ExtResource("3_s3m1y")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
