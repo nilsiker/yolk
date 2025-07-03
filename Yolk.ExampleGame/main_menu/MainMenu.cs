@@ -1,6 +1,5 @@
 namespace Yolk;
 
-using System;
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
@@ -60,7 +59,7 @@ public partial class MainMenu : Control, IMainMenu {
   private void OnAppSetMainMenuVisibility(bool visible) => Visible = visible;
   private void OnPlayButtonFocused() => PlayButton.Text = "> Play";
   private void OnPlayButtonUnfocused() => PlayButton.Text = "Play";
-  private void OnPlayButtonPressed() => GameRepo.RequestStart(0);
+  private void OnPlayButtonPressed() => GameRepo.RequestStart();
 
   private void OnLoadButtonUnfocused() => LoadButton.Text = "Load Game";
   private void OnLoadButtonFocused() => LoadButton.Text = "> Load Game";

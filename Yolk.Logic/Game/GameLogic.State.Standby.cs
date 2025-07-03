@@ -15,12 +15,9 @@ public partial class GameLogic {
         });
       }
 
-      private void OnGameStartRequested(int slot) => Input(new Input.OnStartRequested(slot));
+      private void OnGameStartRequested() => Get<IAppRepo>().RequestBlackout(() => Input(new Input.OnStartRequested()));
 
-      public Transition On(in Input.OnStartRequested input) {
-        Get<Data>().Slot = input.Slot;
-        return input.Slot < 0 ? To<InGame.Playing>() : To<Loading>();
-      }
+      public Transition On(in Input.OnStartRequested input) => To<InGame.Playing>();
     }
   }
 }

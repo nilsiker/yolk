@@ -21,7 +21,6 @@ Yolk_Game_GameLogic_State_InGame_Paused_Quitting --> Yolk_Game_GameLogic_State_S
 Yolk_Game_GameLogic_State_InGame_Playing --> Yolk_Game_GameLogic_State_InGame_Paused : OnPauseUserInput
 Yolk_Game_GameLogic_State_Loading --> Yolk_Game_GameLogic_State_InGame_Playing : OnLoaded
 Yolk_Game_GameLogic_State_Standby --> Yolk_Game_GameLogic_State_InGame_Playing : OnStartRequested
-Yolk_Game_GameLogic_State_Standby --> Yolk_Game_GameLogic_State_Loading : OnStartRequested
 
 Yolk_Game_GameLogic_State : OnGamePausedSync() → SetPauseMode
 Yolk_Game_GameLogic_State : OnGameSlotSync() → SetSlot
