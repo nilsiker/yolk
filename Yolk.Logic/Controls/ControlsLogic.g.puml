@@ -6,12 +6,12 @@ state "ControlsLogic State" as Yolk_Logic_Controls_ControlsLogic_State {
   }
 }
 
-Yolk_Logic_Controls_ControlsLogic_State_Idle --> Yolk_Logic_Controls_ControlsLogic_State_Listening : Listen
+Yolk_Logic_Controls_ControlsLogic_State_Idle --> Yolk_Logic_Controls_ControlsLogic_State_Idle : Listen
+Yolk_Logic_Controls_ControlsLogic_State_Idle --> Yolk_Logic_Controls_ControlsLogic_State_Listening_Key : Listen
 Yolk_Logic_Controls_ControlsLogic_State_Listening --> Yolk_Logic_Controls_ControlsLogic_State_Idle : Cancel
-Yolk_Logic_Controls_ControlsLogic_State_Listening_Key --> Yolk_Logic_Controls_ControlsLogic_State_Idle : Press
+Yolk_Logic_Controls_ControlsLogic_State_Listening_Key --> Yolk_Logic_Controls_ControlsLogic_State_Idle : PressKey
 
-Yolk_Logic_Controls_ControlsLogic_State_Listening : On() → ActionMapped
-Yolk_Logic_Controls_ControlsLogic_State_Listening_Key : OnPress → ActionMapped
+Yolk_Logic_Controls_ControlsLogic_State_Listening_Key : OnPressKey → ActionMapped
 
 [*] --> Yolk_Logic_Controls_ControlsLogic_State_Idle
 @enduml

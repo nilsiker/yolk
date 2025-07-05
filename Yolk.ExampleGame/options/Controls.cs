@@ -1,6 +1,5 @@
 namespace Yolk.Controls;
 
-using System;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
@@ -9,7 +8,7 @@ using Yolk.Logic.Controls;
 
 [StateInfo]
 [Meta(typeof(IAutoNode))]
-public partial class InputController : Node {
+public partial class Controls : Node {
   public override void _Notification(int what) => this.Notify(what);
 
   private ControlsLogic Logic { get; set; } = new();
@@ -36,11 +35,8 @@ public partial class InputController : Node {
       return;
     }
 
-
-
-
     if (@event.IsActionPressed(Inputs.Rebind)) {
-      Logic.Input(new ControlsLogic.Input.Listen(Inputs.Rebind));
+      Logic.Input(new ControlsLogic.Input.Listen(Inputs.Rebind, EActionType.Key));
     }
     else if (@event.IsPressed() && !@event.IsEcho() && @event is InputEventKey key) {
       Logic.Input(new ControlsLogic.Input.PressKey(key));
