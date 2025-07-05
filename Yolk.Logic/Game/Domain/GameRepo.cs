@@ -4,8 +4,9 @@ using System;
 using Chickensoft.Collections;
 
 public interface IGameRepo {
-  public event Action? StartRequested;
-  public event Action? Started;
+  public event Action? Start;
+  public event Action? Starting;
+  public event Action? Ready;
   public event Action? QuitRequested;
   public event Action? GameOverRequested;
   public event Action? GameOver;
@@ -17,7 +18,8 @@ public interface IGameRepo {
   public IAutoProp<EPauseMode> PauseMode { get; }
 
   public void RequestStart();
-  public void BroadcastStarted();
+  public void BroadcastStarting();
+  public void BroadcastReady();
   public void RequestQuit();
   public void BroadcastQuitted();
   public void RequestGameOver();
@@ -30,8 +32,9 @@ public interface IGameRepo {
 }
 
 public class GameRepo : IGameRepo, IDisposable {
-  public event Action? StartRequested;
-  public event Action? Started;
+  public event Action? Start;
+  public event Action? Starting;
+  public event Action? Ready;
 
   public event Action? QuitRequested;
   public event Action? Quitted;
@@ -40,13 +43,15 @@ public class GameRepo : IGameRepo, IDisposable {
   public event Action<int>? LoadRequested;
   public event Action? GameOver;
 
+
   private readonly AutoProp<EPauseMode> _pauseMode = new(EPauseMode.NotPaused);
   private readonly AutoProp<int> _slot = new(0);
   public IAutoProp<EPauseMode> PauseMode => _pauseMode;
   public IAutoProp<int> Slot => _slot;
 
-  public void RequestStart() => StartRequested?.Invoke();
-  public void BroadcastStarted() => Started?.Invoke();
+  public void RequestStart() => Start?.Invoke();
+  public void BroadcastStarting() => Starting?.Invoke();
+  public void BroadcastReady() => Ready?.Invoke();
   public void RequestQuit() => QuitRequested?.Invoke();
   public void BroadcastQuitted() => Quitted?.Invoke();
   public void RequestGameOver() => GameOverRequested?.Invoke();

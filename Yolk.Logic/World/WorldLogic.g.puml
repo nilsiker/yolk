@@ -1,15 +1,15 @@
 @startuml WorldLogic
 state "WorldLogic State" as Yolk_Level_WorldLogic_State {
-  state "InLevel" as Yolk_Level_WorldLogic_State_InLevel
-  state "LoadingLevel" as Yolk_Level_WorldLogic_State_LoadingLevel
-  state "OutOfLevel" as Yolk_Level_WorldLogic_State_OutOfLevel
+  state "InWorld" as Yolk_Level_WorldLogic_State_InWorld
+  state "OutOfWorld" as Yolk_Level_WorldLogic_State_OutOfWorld
+  state "Transitioning" as Yolk_Level_WorldLogic_State_Transitioning
 }
 
-Yolk_Level_WorldLogic_State_InLevel --> Yolk_Level_WorldLogic_State_LoadingLevel : RequestLevelTransition
-Yolk_Level_WorldLogic_State_LoadingLevel --> Yolk_Level_WorldLogic_State_InLevel : OnLevelLoaded
-Yolk_Level_WorldLogic_State_OutOfLevel --> Yolk_Level_WorldLogic_State_LoadingLevel : RequestLevelTransition
+Yolk_Level_WorldLogic_State_InWorld --> Yolk_Level_WorldLogic_State_Transitioning : Transition
+Yolk_Level_WorldLogic_State_OutOfWorld --> Yolk_Level_WorldLogic_State_Transitioning : Transition
+Yolk_Level_WorldLogic_State_Transitioning --> Yolk_Level_WorldLogic_State_InWorld : OnTransitioned
 
-Yolk_Level_WorldLogic_State_LoadingLevel : LoadAndEnterLevel() → LoadLevel
+Yolk_Level_WorldLogic_State_Transitioning : LoadAndEnterLevel() → TransitionLevel
 
-[*] --> Yolk_Level_WorldLogic_State_OutOfLevel
+[*] --> Yolk_Level_WorldLogic_State_OutOfWorld
 @enduml

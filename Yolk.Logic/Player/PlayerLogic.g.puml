@@ -1,0 +1,8 @@
+@startuml PlayerLogic
+state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
+  state "Disabled" as Yolk_Logic_Player_PlayerLogic_State_Disabled
+}
+Yolk_Logic_Player_PlayerLogic_State : OnWorldLevelLoaded() → Teleport
+
+[*] --> Yolk_Logic_Player_PlayerLogic_State_Disabled
+@enduml

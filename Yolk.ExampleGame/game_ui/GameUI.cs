@@ -2,7 +2,7 @@ namespace Yolk.UI;
 
 using Godot;
 
-public partial class GameUI : Control {
+public partial class GameUI : CanvasLayer {
   // Called when the node enters the scene tree for the first time.
   public override void _Ready() {
   }

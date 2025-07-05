@@ -1,15 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://cywpu6lxdjhuu"]
+[gd_scene load_steps=11 format=3 uid="uid://cywpu6lxdjhuu"]
 
 [ext_resource type="Script" uid="uid://bjbrxyy5n8jhp" path="res://game/Game.cs" id="1_17mmo"]
 [ext_resource type="Script" uid="uid://buoim3o7kayu0" path="res://sound/sound_spawner/SoundSpawner.cs" id="2_51532"]
+[ext_resource type="PackedScene" uid="uid://ch84hntra3ghi" path="res://screen_effects/ScreenEffects.tscn" id="2_qv7dg"]
 [ext_resource type="PackedScene" uid="uid://b3yir6wkmklbj" path="res://main_menu/MainMenu.tscn" id="3_3d0qh"]
 [ext_resource type="PackedScene" uid="uid://ddhqqc3jfb0df" path="res://sound/Sound.tscn" id="3_85edk"]
 [ext_resource type="Script" uid="uid://17kismd3rhvu" path="res://yolk_repo_provider/YolkRepoProvider.cs" id="3_ejjr5"]
+[ext_resource type="Script" uid="uid://d245yqet0ckd0" path="res://world/World2D.cs" id="5_qv7dg"]
 [ext_resource type="PackedScene" uid="uid://3mwky8ciwtjk" path="res://pause_menu/PauseMenu.tscn" id="5_yw8km"]
-[ext_resource type="PackedScene" uid="uid://cjm6d8ntikt0l" path="res://level/scenes/Level_0.tscn" id="6_5a4rm"]
-[ext_resource type="Script" uid="uid://5416hnsiqdrx" path="res://world/World.cs" id="6_dh30g"]
 [ext_resource type="Script" uid="uid://dawsapso2t66k" path="res://game_ui/GameUI.cs" id="8_5a4rm"]
-[ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="9_ss4mk"]
 [ext_resource type="PackedScene" uid="uid://djk0n5kradfsr" path="res://player/Player.tscn" id="11_5a4rm"]
 
 [node name="Game" type="Control"]
@@ -27,27 +26,25 @@ _soundScene = ExtResource("3_85edk")
 
 [node name="World" type="Node2D" parent="YolkRepoProvider"]
 process_mode = 1
-script = ExtResource("6_dh30g")
-_startScene = ExtResource("6_5a4rm")
+script = ExtResource("5_qv7dg")
 
 [node name="Player" parent="YolkRepoProvider/World" instance=ExtResource("11_5a4rm")]
 unique_name_in_owner = true
+position = Vector2(456, 325)
 
-[node name="GameUI" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme = ExtResource("9_ss4mk")
+[node name="Levels" type="Node2D" parent="YolkRepoProvider/World"]
+unique_name_in_owner = true
+
+[node name="GameUI" type="CanvasLayer" parent="."]
 script = ExtResource("8_5a4rm")
+
+[node name="ScreenEffects" parent="GameUI" instance=ExtResource("2_qv7dg")]
+unique_name_in_owner = true
+size_flags_horizontal = 2
+size_flags_vertical = 3
 
 [node name="MainMenu" parent="GameUI" instance=ExtResource("3_3d0qh")]
 unique_name_in_owner = true
-layout_mode = 1
 
 [node name="PauseMenu" parent="GameUI" instance=ExtResource("5_yw8km")]
 visible = false
-layout_mode = 1

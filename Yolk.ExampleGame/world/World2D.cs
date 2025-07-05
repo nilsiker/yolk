@@ -9,14 +9,15 @@ using Yolk.Data;
 using Yolk.Game;
 using Yolk.Generator;
 using Yolk.Level;
+using Yolk.Logic.World;
 using Yolk.World;
 
 
-public interface IWorld : INode, IProvide<IWorldRepo>;
+public interface IWorld2D : INode, IProvide<IWorldRepo>;
 
 [StateInfo]
 [Meta(typeof(IAutoNode))]
-public partial class World : Node, IWorld {
+public partial class World2D : Node, IWorld2D {
   public override void _Notification(int what) => this.Notify(what);
 
   [Dependency] private ISaveChunk<GameData> GameSaveChunk => this.DependOn<ISaveChunk<GameData>>();
@@ -26,9 +27,9 @@ public partial class World : Node, IWorld {
   IWorldRepo IProvide<IWorldRepo>.Value() => WorldRepo;
 
   [Export] private PackedScene _startScene = default!;
-  [Export] private Level _level = default!; // TODO don't export this, handle programmatically?
 
   [Node] private Player Player { get; set; } = default!;
+  [Node] private Node2D Levels { get; set; } = default!;
 
   private IWorldRepo WorldRepo { get; set; } = new WorldRepo();
   private WorldLogic Logic { get; set; } = new WorldLogic();
@@ -38,48 +39,50 @@ public partial class World : Node, IWorld {
   public void OnResolved() {
     LevelSaveChunk = new SaveChunk<WorldData>(
       onSave: chunk => new WorldData {
-        CurrentLevelName = _level.Name
+        CurrentLevelName = "Level_0" // TODO sort this out!
       },
-      onLoad: (chunk, data) => Logic.Input(new WorldLogic.Input.RequestLevelTransition("", data.CurrentLevelName, true)));
+      onLoad: (chunk, data) => Logic.Input(new WorldLogic.Input.Transition(data.CurrentLevelName)));
 
     GameSaveChunk.AddChunk(LevelSaveChunk);
     Binding = Logic.Bind();
 
     Binding
-      .Handle((in WorldLogic.Output.LoadLevel output) => OnOutputLoadLevel(output.LevelName));
+      .Handle((in WorldLogic.Output.TransitionLevel output) => OnOutputTransitionLevel(output.LevelName, output.FromLevelName));
 
     Logic.Set(AppRepo);
     Logic.Set(GameRepo);
     Logic.Set(WorldRepo);
     Logic.Set(new WorldLogic.Data {
-      LevelToLoad = Level.DEBUG_LEVEL,
-      PreviousLevelName = Level.DEBUG_LEVEL,
-      SkipBlackout = false
+      LevelToLoad = Level2D.DEBUG_LEVEL,
+      PreviousLevelName = Level2D.DEBUG_LEVEL,
     });
 
     Logic.Start();
     this.Provide();
   }
 
-  private void OnOutputLoadLevel(string levelName) {
-    var loadingFromLevel = _level?.Name ?? _startScene.ResourceName;
-    var scene = GD.Load<PackedScene>(Level.GetLevelPath(levelName));
+  private void OnOutputTransitionLevel(string levelName, string? fromLevelName) {
+    var pathLevelTo = Level2D.GetLevelPath(levelName);
+    var scene = GD.Load<PackedScene>(pathLevelTo);
 
-    if (_level is not null) {
-      _level.Name += "_Removing";
-      _level.QueueFree();
+    foreach (var levelChild in Levels.GetChildren()) {
+      levelChild.Name += "_Removing";
+      levelChild.QueueFree();
     }
 
-    _level = scene.Instantiate<Level>();
+    var level = scene.Instantiate<Level2D>();
 
-    AddChild(_level, true);
+    Levels.AddChild(level, true);
 
-    var landing = _level.GetLanding(loadingFromLevel);
-    if (landing is null) {
-      GD.PushWarning("Landing was null for ", loadingFromLevel);
+    var entrypointTransform = level.GetEntrypointTransform(fromLevelName ?? "Default");
+
+    if (entrypointTransform is not null) {
+      var entrypoint = new Entrypoint(entrypointTransform.Position, entrypointTransform.RotationDegrees);
+      Logic.Input(new WorldLogic.Input.OnTransitioned(entrypoint));
     }
-
-    Logic.Input(new WorldLogic.Input.OnLevelLoaded(landing?.GlobalTransform));
+    else {
+      GD.PushError("TRANSITION FAILED: entrypoint not found for ", fromLevelName ?? "Default");
+    }
   }
 
   public override void _ExitTree() => Binding.Dispose();

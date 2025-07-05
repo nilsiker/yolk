@@ -1,19 +1,21 @@
 namespace Yolk.World;
 
-using Godot;
+using Yolk.Logic.World;
+
 
 public interface IWorldRepo {
-  public event Action<string>? LevelLoadRequested;
-  public event Action<Transform3D?>? LevelLoaded;
+  public event Action<string>? Transitioning;
+  public event Action<Entrypoint?>? Transitioned;
 
-  public void RequestLevelLoad(string toLevelName);
-  public void BroadcastLevelLoaded(Transform3D? landingTransform);
+  public void Transition(string toLevelName);
+  public void BroadcastTransitioned(Entrypoint? entrypoint);
 }
 
 public class WorldRepo : IWorldRepo {
-  public event Action<string>? LevelLoadRequested;
-  public event Action<Transform3D?>? LevelLoaded;
+  public event Action<string>? Transitioning;
+  public event Action<Entrypoint?>? Transitioned;
 
-  public void BroadcastLevelLoaded(Transform3D? landingTransform) => LevelLoaded?.Invoke(landingTransform);
-  public void RequestLevelLoad(string toLevelName) => LevelLoadRequested?.Invoke(toLevelName);
+  public void Transition(string toLevelName) => Transitioning?.Invoke(toLevelName);
+  public void BroadcastTransitioned(Entrypoint? entrypoint) => Transitioned?.Invoke(entrypoint);
+
 }

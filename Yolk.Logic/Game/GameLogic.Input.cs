@@ -2,9 +2,10 @@ namespace Yolk.Game;
 
 public partial class GameLogic {
   public static class Input {
+    public record struct Ready;
     public record struct OnPauseUserInput;
     public record struct OnQuitRequested;
-    public record struct OnStartRequested();
+    public record struct Start();
     public record struct OnGameOverTriggered;
     public record struct Save(int Slot);
     public record struct Load(int Slot);

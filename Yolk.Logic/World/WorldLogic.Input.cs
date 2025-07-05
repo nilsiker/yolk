@@ -1,12 +1,12 @@
 namespace Yolk.Level;
 
-using Godot;
+using Yolk.Logic.World;
 
 public partial class WorldLogic {
   public static class Input {
-    public record struct RequestLevelTransition(string FromLevelName, string ToLevelName, bool SkipTransition = false);
-    public record struct OnLevelLoaded(Transform3D? LandingTransform = null);
+    public record struct Transition(string ToLevelName, string? FromLevelName = null);
+    public record struct LoadLevel(string LevelName);
+    public record struct UnloadLevel(string LevelName);
+    public record struct OnTransitioned(Entrypoint? Entrypoint = null);
   }
 }
-
-

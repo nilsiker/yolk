@@ -7,13 +7,13 @@ using Chickensoft.Introspection;
 using Godot;
 using Yolk.Generator;
 
-public interface IApp : ICanvasLayer, IProvide<IAppRepo>, IProvide<IOptionsRepo> {
+public interface IApp : INode, IProvide<IAppRepo>, IProvide<IOptionsRepo> {
   public void OnOutputQuitApp();
 }
 
 [StateInfo]
 [Meta(typeof(IAutoNode))]
-public partial class App : CanvasLayer, IApp {
+public partial class App : Node, IApp {
   public override void _Notification(int what) => this.Notify(what);
 
   [Node] private IOptions Options { get; set; } = default!;
@@ -49,10 +49,7 @@ public partial class App : CanvasLayer, IApp {
   private void OnBlackoutAnimationFinished(StringName animName) => Logic.Input(new AppLogic.Input.BlackoutFinished());
 
 
-  private void OnOutputSetBlackout(bool on) {
-    Visible = true;
-    Blackout.Play(on ? "fade_to_black" : "fade_from_black");
-  }
+  private void OnOutputSetBlackout(bool on) => Blackout.Play(on ? "fade_to_black" : "fade_from_black");
 
 
   private static void OnOutputSetMouseCaptured(bool captured)

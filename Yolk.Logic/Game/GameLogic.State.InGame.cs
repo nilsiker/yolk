@@ -18,7 +18,7 @@ public partial class GameLogic {
           game.GameOverRequested -= OnGameOverRequested;
         });
 
-        this.OnEnter(() => Get<IGameRepo>().BroadcastStarted());
+        this.OnEnter(() => Get<IGameRepo>().BroadcastStarting());
       }
 
       private void OnGameOverRequested() => Input(new Input.OnGameOverTriggered());

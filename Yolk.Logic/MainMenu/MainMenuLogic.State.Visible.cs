@@ -7,8 +7,8 @@ public partial class MainMenuLogic {
   public partial record State {
     public partial record Visible : State, IGet<Input.Hide> {
       public Visible() {
-        OnAttach(() => Get<IGameRepo>().Started += OnGameStarted);
-        OnDetach(() => Get<IGameRepo>().Started -= OnGameStarted);
+        OnAttach(() => Get<IGameRepo>().Starting += OnGameStarting);
+        OnDetach(() => Get<IGameRepo>().Starting -= OnGameStarting);
 
         this.OnEnter(() => {
           Output(new Output.UpdateVisibility(true));
@@ -18,7 +18,7 @@ public partial class MainMenuLogic {
         this.OnExit(() => Get<IAppRepo>().CaptureMouse());
       }
 
-      private void OnGameStarted() => Input(new Input.Hide());
+      private void OnGameStarting() => Input(new Input.Hide());
 
       public Transition On(in Input.Hide input) => To<Hidden>();
     }

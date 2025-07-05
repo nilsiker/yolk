@@ -50,7 +50,7 @@ public partial class OptionsMenu : Control {
 
 
     GameRepo.Quitted += () => OptionsRepo.SetUIVisible(false);
-    GameRepo.Started += () => OptionsRepo.SetUIVisible(false);
+    GameRepo.Starting += () => OptionsRepo.SetUIVisible(false);
   }
 
   private void OnPixelationCheckButtonToggled(bool on) => OptionsRepo.SetPixelation(on);
