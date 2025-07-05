@@ -26,6 +26,7 @@ DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 [dialogue_manager]
 
 runtime/balloon_path="uid://c7cvcvteb72gn"
+runtime/advanced/uses_dotnet=true
 
 [display]
 
@@ -34,7 +35,7 @@ window/vsync/vsync_mode=0
 
 [dotnet]
 
-project/assembly_name="Yolk.ExampleGame"
+project/assembly_name="Yolk"
 project/solution_directory=".."
 
 [editor_plugins]

@@ -1,4 +1,4 @@
-namespace Yolk;
+namespace Yolk.Options;
 
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
@@ -23,6 +23,8 @@ public partial class Options : Node, IOptions {
 
     return error == Error.Ok
       ? new(
+        config.GetValue("display", "fullscreen").AsBool(),
+        config.GetValue("display", "vsync").AsBool(),
         config.GetValue("graphics", "pixelation").AsBool(),
         config.GetValue("graphics", "dithering").AsBool(),
         config.GetValue("audio", "master_volume").AsInt16(),
@@ -35,6 +37,8 @@ public partial class Options : Node, IOptions {
   private void SaveOptionsConfigFile() {
     var config = new ConfigFile();
 
+    config.SetValue("display", "fullscreen", OptionsRepo.Fullscreen.Value);
+    config.SetValue("display", "vsync", OptionsRepo.Vsync.Value);
     config.SetValue("graphics", "pixelation", OptionsRepo.Pixelation.Value);
     config.SetValue("graphics", "dithering", OptionsRepo.Dithering.Value);
     config.SetValue("audio", "master_volume", OptionsRepo.MasterVolume.Value);

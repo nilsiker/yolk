@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk.ExampleGame", "Yolk.ExampleGame\Yolk.ExampleGame.csproj", "{6DB508E4-3E80-4AF4-BB03-674F0590ED2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk", "Yolk.ExampleGame\Yolk.csproj", "{6DB508E4-3E80-4AF4-BB03-674F0590ED2D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk.Logic", "Yolk.Logic\Yolk.Logic.csproj", "{E2D1D7A5-5195-4A17-889A-1B2385E0CB69}"
 EndProject

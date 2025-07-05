@@ -5,6 +5,8 @@ using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
 using Godot;
 using Yolk.Generator;
+using Yolk.Options;
+
 
 public interface IApp : INode, IProvide<IAppRepo>, IProvide<IOptionsRepo> {
   public void OnOutputQuitApp();

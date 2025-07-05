@@ -21,6 +21,7 @@ The template provides a set of modules that can help accelerate your next game p
 ### 💻 App
 
 The `App` module provides an easy interface to:
+
 - **Shut down the app**
 - **Obscure and revealing the application screen**
   - Optionally executing an arbitrary callback function mid-transition
@@ -35,7 +36,15 @@ The `Game` module provides an easy interface to:
 - Delete a saved game
 - Quit a game
 
-### 🎧 Options
+### 🎧 Audio Options
+
+
+
+### 📺 Display Options
+
+### ⌨️ Input Options
+
+
 
 
 ## Built with

@@ -1,12 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://4l4vo36cuol5"]
+[gd_scene load_steps=4 format=3 uid="uid://4l4vo36cuol5"]
 
 [ext_resource type="Script" uid="uid://dt4hepqn6oqyj" path="res://options/Options.cs" id="1_qqqsy"]
+[ext_resource type="Script" uid="uid://bc77pffitsqim" path="res://options/display/DisplayOptions.cs" id="2_ueft8"]
+[ext_resource type="Script" uid="uid://csso6yx2mpxco" path="res://options/audio/AudioOptions.cs" id="3_gvwrl"]
 
 [node name="Options" type="Node"]
 script = ExtResource("1_qqqsy")
 
 [node name="DisplayOptions" type="Node" parent="."]
+script = ExtResource("2_ueft8")
 
 [node name="AudioOptions" type="Node" parent="."]
+script = ExtResource("3_gvwrl")
 
 [node name="InputOptions" type="Node" parent="."]

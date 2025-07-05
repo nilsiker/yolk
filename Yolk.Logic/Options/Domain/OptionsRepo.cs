@@ -6,6 +6,8 @@ using Chickensoft.Collections;
 public interface IOptionsRepo : IDisposable {
   public event Action? OptionChanged;
   public IAutoProp<bool> UIVisible { get; }
+  public IAutoProp<bool> Fullscreen { get; }
+  public IAutoProp<bool> Vsync { get; }
   public IAutoProp<bool> Pixelation { get; }
   public IAutoProp<bool> Dithering { get; }
   public IAutoProp<float> MasterVolume { get; }
@@ -13,14 +15,21 @@ public interface IOptionsRepo : IDisposable {
   public IAutoProp<float> SFXVolume { get; }
 
   public void SetUIVisible(bool visible);
+  // Display
+  public void SetFullscreen(bool fullscreen);
+  public void SetVSync(bool vsync);
+  // Graphics
   public void SetPixelation(bool enabled);
   public void SetDithering(bool enabled);
+  // Audio
   public void SetMasterVolume(float volumeDb);
   public void SetMusicVolume(float volumeDb);
   public void SetSFXVolume(float volumeDb);
 }
 
 public class OptionsRepo(
+  bool fullscreen = true,
+  bool vsync = false,
   bool pixelation = true,
   bool dithering = true,
   float masterVolume = 0,
@@ -28,6 +37,8 @@ public class OptionsRepo(
   float sfxVolume = 0
 ) : IOptionsRepo {
   private readonly AutoProp<bool> _uiVisible = new(false);
+  private readonly AutoProp<bool> _fullscreen = new(fullscreen);
+  private readonly AutoProp<bool> _vsync = new(vsync);
   private readonly AutoProp<bool> _dithering = new(dithering);
   private readonly AutoProp<bool> _pixelation = new(pixelation);
   private readonly AutoProp<float> _masterVolume = new(masterVolume);
@@ -35,6 +46,8 @@ public class OptionsRepo(
   private readonly AutoProp<float> _sfxVolume = new(sfxVolume);
 
   public event Action? OptionChanged;
+  public IAutoProp<bool> Fullscreen => _fullscreen;
+  public IAutoProp<bool> Vsync => _vsync;
   public IAutoProp<bool> UIVisible => _uiVisible;
   public IAutoProp<bool> Pixelation => _pixelation;
   public IAutoProp<bool> Dithering => _dithering;
@@ -43,6 +56,16 @@ public class OptionsRepo(
   public IAutoProp<float> SFXVolume => _sfxVolume;
 
   public void SetUIVisible(bool visible) => _uiVisible.OnNext(visible);
+
+  public void SetFullscreen(bool fullscreen) {
+    _fullscreen.OnNext(fullscreen);
+    OptionChanged?.Invoke();
+  }
+
+  public void SetVSync(bool vsync) {
+    _vsync.OnNext(vsync);
+    OptionChanged?.Invoke();
+  }
 
   public void SetPixelation(bool enabled) {
     _pixelation.OnNext(enabled);
@@ -87,8 +110,6 @@ public class OptionsRepo(
 
     _sfxVolume.OnCompleted();
     _sfxVolume.Dispose();
-
-    OptionChanged = null;
 
     GC.SuppressFinalize(this);
   }
