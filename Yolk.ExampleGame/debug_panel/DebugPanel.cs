@@ -3,6 +3,8 @@ namespace Yolk;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
+using Yolk.Controls;
+
 
 [Meta(typeof(IAutoNode))]
 public partial class DebugPanel : PanelContainer {

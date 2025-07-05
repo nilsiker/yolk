@@ -1,4 +1,4 @@
-namespace Yolk;
+namespace Yolk.Controls;
 
 using Godot;
 

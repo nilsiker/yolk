@@ -5,6 +5,7 @@ using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
 using Chickensoft.SaveFileBuilder;
 using Godot;
+using Yolk.Controls;
 using Yolk.Data;
 using Yolk.Generator;
 using Yolk.Logic.Player;
