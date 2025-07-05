@@ -35,9 +35,9 @@ public class OptionsRepo(
   bool vsync = false,
   bool pixelation = true,
   bool dithering = true,
-  float masterVolume = 0,
-  float musicVolume = 0,
-  float sfxVolume = 0
+  float masterVolume = 1,
+  float musicVolume = 1,
+  float sfxVolume = 1
 ) : IOptionsRepo {
   private readonly AutoProp<bool> _uiVisible = new(false);
   private readonly AutoProp<(int, int)> _resolution = new(resolution);
