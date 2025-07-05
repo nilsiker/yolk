@@ -2,7 +2,6 @@ namespace Yolk;
 
 using System;
 using Chickensoft.Collections;
-using Godot;
 
 public interface IOptionsRepo : IDisposable {
   public event Action? OptionChanged;
