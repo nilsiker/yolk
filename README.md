@@ -36,22 +36,24 @@ The `Game` module provides an easy interface to:
 - Delete a saved game
 - Quit a game
 
-### 🎧 Audio Options
+### TODO add remaining modules
 
-
-
-### 📺 Display Options
-
-### ⌨️ Input Options
-
-
-
+...
 
 ## Built with
 
 This game is built using the Godot engine, utilizing free assets and some custom made.
 
 - Godot 4.4
+
+## Attributions
+
+To showcase the template, I'm using assets by the amazing [Kenney](https://kenney.nl). specifically:
+
+- [1-Bit Platformer Pack](https://kenney.nl/assets/1-bit-platformer-pack)
+- [1-Bit Input Prompts Pixel 16×](https://kenney.nl/assets/1-bit-input-prompts-pixel-16)
+
+Give his website a look, his assets are great! **And free - consider donating!**
 
 ## License
 
