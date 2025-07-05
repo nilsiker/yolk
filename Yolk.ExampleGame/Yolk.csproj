@@ -66,6 +66,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../Yolk.FileSystem.Godot/Yolk.FS.csproj" />
     <ProjectReference Include="../Yolk.Generator/Yolk.Generator.csproj" OutputItemType="analyzer" />
     <ProjectReference Include="..\Yolk.Data\Yolk.Data.csproj" />
     <ProjectReference Include="..\Yolk.Logic\Yolk.Logic.csproj" />

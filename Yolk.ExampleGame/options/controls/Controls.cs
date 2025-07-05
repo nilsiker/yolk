@@ -3,6 +3,8 @@ namespace Yolk.Controls;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
+using Godot.Collections;
+using Yolk.FS;
 using Yolk.Generator;
 using Yolk.Logic.Controls;
 
@@ -13,23 +15,23 @@ public partial class Controls : Node {
 
   private ControlsLogic Logic { get; set; } = new();
   private ControlsLogic.IBinding Binding { get; set; } = default!;
-  public ControlsRepo ControlsRepo = OS.
-
+  public ControlsRepo ControlsRepo = new();
   public void OnResolved() {
     Binding = Logic.Bind();
 
+    Binding.Handle((in ControlsLogic.Output.ActionMapped output) => OnOutputActionMapped(output.Action, output.Key));
+
     Logic.Set(new ControlsLogic.Data());
 
-    Binding.Handle((in ControlsLogic.Output.ActionMapped output) => OnOutputActionMapped(output.Action, output.Key));
+    GodotConfig.ImportInputMap();
   }
 
-  private static void OnOutputActionMapped(string action, InputEventKey key) {
-    var actions = InputMap.GetActions();
-    GD.Print("all actions: ", actions);
+  private static void OnOutputActionMapped(string action, InputEventKey @event) {
+    InputMap.ActionEraseEvents(action);
+    InputMap.ActionAddEvent(action, @event);
 
-    GD.Print($"wants to map {key.AsText()} to {action}");
+    GodotConfig.WriteMappedAction(action);
   }
-
 
   public override void _Input(InputEvent @event) {
     if (@event.IsPressed() && @event.IsEcho()) {

@@ -5,9 +5,9 @@ using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
 using Chickensoft.SaveFileBuilder;
-using Chickensoft.Serialization.Godot;
 using Godot;
 using Yolk.Data;
+using Yolk.FS;
 using Yolk.Generator;
 
 public interface IGame : IControl,
@@ -37,7 +37,8 @@ public partial class Game : Control, IGame {
   }
 
   public void OnResolved() {
-    GodotSerialization.Setup();
+    GodotSave.Setup();
+
     SaveFile = new SaveFile<GameData>(
       root: new SaveChunk<GameData>(
         onSave: (chunk) => new() {
@@ -55,10 +56,10 @@ public partial class Game : Control, IGame {
         var error = image.SavePng($"{OS.GetUserDataDir()}/slot{Slot}.png");
         GetViewport().SetCanvasCullMaskBit(2, true);
 
-        await Save.SaveGame(data, Slot);
+        await GodotSave.Save(data, Slot);
       },
       onLoad: async () => {
-        var data = await Save.LoadGame(Slot);
+        var data = await GodotSave.Load<GameData>(Slot);
         Logic.Input(new GameLogic.Input.OnLoaded()); // TODO this does not get called if load fails. Needs more robust load logic...
         return data;
       });

@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://dmbkddu7qr6uv"]
 
 [ext_resource type="Script" uid="uid://cm5pm2wrcv8xa" path="res://app/App.cs" id="1_3st5l"]
-[ext_resource type="Script" uid="uid://cm7a564ifpkqo" path="res://options/Controls.cs" id="2_kv4k2"]
+[ext_resource type="Script" uid="uid://cm7a564ifpkqo" path="res://options/controls/Controls.cs" id="2_kv4k2"]
 [ext_resource type="PackedScene" uid="uid://4l4vo36cuol5" path="res://options/Options.tscn" id="2_l0x3n"]
 [ext_resource type="PackedScene" uid="uid://cywpu6lxdjhuu" path="res://game/Game.tscn" id="2_v0mgf"]
 [ext_resource type="PackedScene" uid="uid://gxsvb52nm7s8" path="res://debug_panel/DebugPanel.tscn" id="5_l0x3n"]
@@ -89,6 +89,7 @@ _data = {
 script = ExtResource("1_3st5l")
 
 [node name="Controls" type="Node" parent="."]
+unique_name_in_owner = true
 process_mode = 3
 script = ExtResource("2_kv4k2")
 

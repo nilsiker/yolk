@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdvpp54grfmaq"]
+
+[ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_kpofq"]
+[ext_resource type="Script" uid="uid://bjkhq8mnf1drk" path="res://options_menu/ActionContainer.cs" id="1_yqs1y"]
+[ext_resource type="Texture2D" uid="uid://d3ogymew0buwf" path="res://options_menu/kenney_1bit_input/Tilemap/tilemap_white_packed.png" id="2_43p8w"]
+
+[node name="ActionContainer" type="HBoxContainer"]
+size_flags_horizontal = 3
+theme = ExtResource("1_kpofq")
+script = ExtResource("1_yqs1y")
+
+[node name="BindButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Test Action     "
+alignment = 0
+expand_icon = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+position = Vector2(-24, 20)
+scale = Vector2(2, 2)
+texture = ExtResource("2_43p8w")
+hframes = 34
+vframes = 24
+frame = 33

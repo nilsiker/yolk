@@ -11,4 +11,10 @@ public static class NodeExtensions {
 
     tween = node.CreateTween();
   }
+
+  public static void ClearChildren(this Node node) {
+    foreach (var child in node.GetChildren()) {
+      child.QueueFree();
+    }
+  }
 }

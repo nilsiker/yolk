@@ -60,7 +60,11 @@ public partial class OptionsMenu : Control {
 
   private void OnFullscreenCheckButtonToggled(bool enabled) => OptionsRepo.SetFullscreen(enabled);
   private void OnVsyncCheckButtonToggled(bool enabled) => OptionsRepo.SetVSync(enabled);
-  private void OnPixelationCheckButtonToggled(bool on) => OptionsRepo.SetPixelation(on);
+  private void OnPixelationCheckButtonToggled(bool on) {
+    OptionsRepo.SetPixelation(on);
+    DitheringCheckButton.Disabled = !on;
+  }
+
   private void OnDitheringCheckButtonToggled(bool on) => OptionsRepo.SetDithering(on);
   private void OnSFXVolumeSliderValueChanged(double value) => OptionsRepo.SetSFXVolume((float)value);
   private void OnMusicVolumeSliderValueChanged(double value) => OptionsRepo.SetMusicVolume((float)value);
