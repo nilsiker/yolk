@@ -3,14 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://dlv7c086j0ewr" path="res://debug_panel/ui_state_debug_display/StateDebugDisplay.tscn" id="1_amyq3"]
 [ext_resource type="Script" uid="uid://bexespvweylf" path="res://debug_panel/DebugPanel.cs" id="1_x875p"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ggoj4"]
-bg_color = Color(0, 0, 0, 0.258824)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tfmje"]
 
 [node name="DebugPanel" type="PanelContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ggoj4")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tfmje")
 script = ExtResource("1_x875p")
 
 [node name="Margins" type="MarginContainer" parent="."]
@@ -25,9 +24,20 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Title" type="Label" parent="Margins/Contents"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Margins/Contents"]
 layout_mode = 2
-text = "Debug"
+
+[node name="FPS" type="HBoxContainer" parent="Margins/Contents/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Margins/Contents/HBoxContainer/FPS"]
+layout_mode = 2
+text = "FPS: "
+
+[node name="FPSValue" type="Label" parent="Margins/Contents/HBoxContainer/FPS"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
 
 [node name="TitleSeparator" type="HSeparator" parent="Margins/Contents"]
 layout_mode = 2
