@@ -30,11 +30,9 @@ public partial class Player : CharacterBody2D, IPlayer {
       onSave: chunk => new PlayerData {
         Px = GlobalPosition.X,
         Py = GlobalPosition.Y,
-        Rz = GlobalRotation
       },
       onLoad: (chunk, data) => {
         GlobalPosition = new(data.Px, data.Py);
-        GlobalRotation = data.Rz;
       });
     GameChunk.AddChunk(PlayerChunk);
 

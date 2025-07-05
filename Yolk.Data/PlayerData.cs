@@ -12,10 +12,4 @@ public partial record PlayerData {
   public float Py { get; init; }
   [Save("pz")]
   public float Pz { get; init; }
-  [Save("rx")]
-  public float Rx { get; init; }
-  [Save("ry")]
-  public float Ry { get; init; }
-  [Save("rz")]
-  public float Rz { get; init; }
 }
