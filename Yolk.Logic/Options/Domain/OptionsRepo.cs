@@ -2,10 +2,12 @@ namespace Yolk;
 
 using System;
 using Chickensoft.Collections;
+using Godot;
 
 public interface IOptionsRepo : IDisposable {
   public event Action? OptionChanged;
   public IAutoProp<bool> UIVisible { get; }
+  public IAutoProp<(int, int)> Resolution { get; }
   public IAutoProp<bool> Fullscreen { get; }
   public IAutoProp<bool> Vsync { get; }
   public IAutoProp<bool> Pixelation { get; }
@@ -28,6 +30,7 @@ public interface IOptionsRepo : IDisposable {
 }
 
 public class OptionsRepo(
+  (int, int) resolution,
   bool fullscreen = true,
   bool vsync = false,
   bool pixelation = true,
@@ -37,6 +40,7 @@ public class OptionsRepo(
   float sfxVolume = 0
 ) : IOptionsRepo {
   private readonly AutoProp<bool> _uiVisible = new(false);
+  private readonly AutoProp<(int, int)> _resolution = new(resolution);
   private readonly AutoProp<bool> _fullscreen = new(fullscreen);
   private readonly AutoProp<bool> _vsync = new(vsync);
   private readonly AutoProp<bool> _dithering = new(dithering);
@@ -46,6 +50,7 @@ public class OptionsRepo(
   private readonly AutoProp<float> _sfxVolume = new(sfxVolume);
 
   public event Action? OptionChanged;
+  public IAutoProp<(int, int)> Resolution => _resolution;
   public IAutoProp<bool> Fullscreen => _fullscreen;
   public IAutoProp<bool> Vsync => _vsync;
   public IAutoProp<bool> UIVisible => _uiVisible;
@@ -54,6 +59,8 @@ public class OptionsRepo(
   public IAutoProp<float> MasterVolume => _masterVolume;
   public IAutoProp<float> MusicVolume => _musicVolume;
   public IAutoProp<float> SFXVolume => _sfxVolume;
+
+
 
   public void SetUIVisible(bool visible) => _uiVisible.OnNext(visible);
 

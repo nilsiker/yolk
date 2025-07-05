@@ -9,7 +9,7 @@ public partial class GameLogic {
         OnAttach(() => Get<IGameRepo>().Ready += OnGameReady);
         OnDetach(() => Get<IGameRepo>().Ready -= OnGameReady);
 
-        this.OnEnter(() => Get<IGameRepo>().BroadcastStarting());
+        this.OnEnter(() => Get<IAppRepo>().RequestBlackout(() => Get<IGameRepo>().BroadcastStarting()));
       }
 
       private void OnGameReady() => Input(new Input.Ready());

@@ -1,5 +1,6 @@
 namespace Yolk.UI;
 
+using System;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
@@ -14,6 +15,8 @@ public partial class OptionsMenu : Control {
   [Dependency] private IGameRepo GameRepo => this.DependOn<IGameRepo>();
   [Dependency] private IAppRepo AppRepo => this.DependOn<IAppRepo>();
 
+  [Node] private CheckButton FullscreenCheckButton { get; set; } = default!;
+  [Node] private CheckButton VsyncCheckButton { get; set; } = default!;
   [Node] private CheckButton PixelationCheckButton { get; set; } = default!;
   [Node] private CheckButton DitheringCheckButton { get; set; } = default!;
   [Node] private HSlider MasterVolumeSlider { get; set; } = default!;
@@ -33,6 +36,8 @@ public partial class OptionsMenu : Control {
     Logic.Set(OptionsRepo);
 
     // TODO move these to logic block!
+    FullscreenCheckButton.Toggled += OnFullscreenCheckButtonToggled;
+    VsyncCheckButton.Toggled += OnVsyncCheckButtonToggled;
     PixelationCheckButton.Toggled += OnPixelationCheckButtonToggled;
     DitheringCheckButton.Toggled += OnDitheringCheckButtonToggled;
     MasterVolumeSlider.ValueChanged += OnMasterVolumeSliderValueChanged;
@@ -53,6 +58,8 @@ public partial class OptionsMenu : Control {
     GameRepo.Starting += () => OptionsRepo.SetUIVisible(false);
   }
 
+  private void OnFullscreenCheckButtonToggled(bool enabled) => OptionsRepo.SetFullscreen(enabled);
+  private void OnVsyncCheckButtonToggled(bool enabled) => OptionsRepo.SetVSync(enabled);
   private void OnPixelationCheckButtonToggled(bool on) => OptionsRepo.SetPixelation(on);
   private void OnDitheringCheckButtonToggled(bool on) => OptionsRepo.SetDithering(on);
   private void OnSFXVolumeSliderValueChanged(double value) => OptionsRepo.SetSFXVolume((float)value);

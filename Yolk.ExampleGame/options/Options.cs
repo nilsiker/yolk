@@ -23,20 +23,22 @@ public partial class Options : Node, IOptions {
 
     return error == Error.Ok
       ? new(
+        (config.GetValue("display", "resolution").AsVector2I().X, config.GetValue("display", "resolution").AsVector2I().Y),
         config.GetValue("display", "fullscreen").AsBool(),
         config.GetValue("display", "vsync").AsBool(),
         config.GetValue("graphics", "pixelation").AsBool(),
         config.GetValue("graphics", "dithering").AsBool(),
-        config.GetValue("audio", "master_volume").AsInt16(),
-        config.GetValue("audio", "music_volume").AsInt16(),
-        config.GetValue("audio", "sfx_volume").AsInt16()
+        (float)config.GetValue("audio", "master_volume").AsDouble(),
+        (float)config.GetValue("audio", "music_volume").AsDouble(),
+        (float)config.GetValue("audio", "sfx_volume").AsDouble()
       )
-      : new();
+      : new((DisplayServer.Singleton.ScreenGetSize().X, DisplayServer.Singleton.ScreenGetSize().Y));
   }
 
   private void SaveOptionsConfigFile() {
     var config = new ConfigFile();
 
+    config.SetValue("display", "resolution", new Vector2I(OptionsRepo.Resolution.Value.Item1, OptionsRepo.Resolution.Value.Item2));
     config.SetValue("display", "fullscreen", OptionsRepo.Fullscreen.Value);
     config.SetValue("display", "vsync", OptionsRepo.Vsync.Value);
     config.SetValue("graphics", "pixelation", OptionsRepo.Pixelation.Value);

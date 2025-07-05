@@ -41,8 +41,48 @@ text = "Options"
 visible = false
 layout_mode = 2
 
+[node name="DisplayContainer" type="MarginContainer" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/DisplayContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/DisplayContainer/VBoxContainer"]
+layout_mode = 2
+text = "Display"
+
+[node name="HSeparator" type="HSeparator" parent="OptionsPanel/MarginContainer/VBoxContainer/DisplayContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FullscreenOption" type="HBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/DisplayContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FullscreenLabel" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/DisplayContainer/VBoxContainer/FullscreenOption"]
+layout_mode = 2
+text = "Fullscreen "
+
+[node name="FullscreenCheckButton" type="CheckButton" parent="OptionsPanel/MarginContainer/VBoxContainer/DisplayContainer/VBoxContainer/FullscreenOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+button_pressed = true
+
+[node name="VsyncOption" type="HBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/DisplayContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VsyncLabel" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer/DisplayContainer/VBoxContainer/VsyncOption"]
+layout_mode = 2
+text = "VSync      "
+
+[node name="VsyncCheckButton" type="CheckButton" parent="OptionsPanel/MarginContainer/VBoxContainer/DisplayContainer/VBoxContainer/VsyncOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+button_pressed = true
+
 [node name="GraphicsContainer" type="MarginContainer" parent="OptionsPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/margin_top = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/GraphicsContainer"]
 layout_mode = 2
@@ -107,9 +147,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("1_d78cj")
-min_value = -80.0
-max_value = 0.0
-step = 10.0
+max_value = 1.0
+step = 0.1
 
 [node name="MusicVolumeOption" type="HBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer"]
 layout_mode = 2
@@ -124,9 +163,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("1_d78cj")
-min_value = -80.0
-max_value = 0.0
-step = 10.0
+max_value = 1.0
+step = 0.1
 
 [node name="SFXVolumeOption" type="HBoxContainer" parent="OptionsPanel/MarginContainer/VBoxContainer/AudioContainer/VBoxContainer"]
 layout_mode = 2
@@ -141,9 +179,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("1_d78cj")
-min_value = -80.0
-max_value = 0.0
-step = 10.0
+max_value = 1.0
+step = 0.1
 
 [node name="CloseButton" type="Button" parent="OptionsPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true

@@ -1,7 +1,7 @@
 @startuml MainMenuLogic
 state "MainMenuLogic State" as Yolk_MainMenuLogic_State {
-  state "Visible" as Yolk_MainMenuLogic_State_Visible
   state "Hidden" as Yolk_MainMenuLogic_State_Hidden
+  state "Visible" as Yolk_MainMenuLogic_State_Visible
 }
 
 Yolk_MainMenuLogic_State --> Yolk_MainMenuLogic_State : OnQuitButtonPressed

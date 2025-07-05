@@ -10,7 +10,7 @@ public partial class WorldLogic {
       public Transitioning() {
         this.OnEnter(() => {
           Get<IGameRepo>().Pause();
-          Get<IAppRepo>().RequestBlackout(LoadAndEnterLevel);
+          Output(new Output.TransitionLevel(Get<Data>().LevelToLoad));
         });
         this.OnExit(() => Get<IGameRepo>().Resume());
 
@@ -23,8 +23,6 @@ public partial class WorldLogic {
 
       public void UnloadLevel() {
       }
-
-      public void LoadAndEnterLevel() => Output(new Output.TransitionLevel(Get<Data>().LevelToLoad));
     }
   }
 }
