@@ -4,15 +4,15 @@
 
 > ⚠️ Yolk is under heavy development and is not currently intended for public use.
 >
-> With that said, feel free to try it out.
+> With that said, feel free to try it out!
 >
 > Do not heistate to reach out, if you have any feedback or ideas!
 
 An opinionated game template for Godot C# using [Chickensoft tools](https://chickensoft.games/).
 
-<div style="text-align: center;">
-<img  alt="a pixelated, cracked egg" src="docs/media/logo.png" />
-</div>
+<p align="center">
+  <img  alt="a pixelated, cracked egg" src="docs/media/logo.png" width="160" />
+</p>
 
 The template provides a set of modules that can help accelerate your next game project in Godot.
 
