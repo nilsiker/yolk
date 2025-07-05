@@ -36,5 +36,27 @@ public partial class Player : CharacterBody2D, IPlayer {
     GlobalRotation = entrypoint.Rotation;
   }
 
+  private float _gravity;
+
+  public override void _PhysicsProcess(double delta) {
+    var inputVector = Inputs.GetMoveVector();
+
+    Velocity = Velocity with {
+      X = inputVector.X * 75,
+      Y = _gravity * 10
+    };
+
+    MoveAndSlide();
+
+    _gravity = IsOnFloor() ? 0 : _gravity + (3 * 9.82f * (float)delta);
+  }
+
+  public override void _UnhandledInput(InputEvent @event) {
+    if (@event.IsActionPressed(Inputs.Jump)) {
+      _gravity = -10;
+    }
+  }
+
+
   public override void _ExitTree() => Binding.Dispose();
 }

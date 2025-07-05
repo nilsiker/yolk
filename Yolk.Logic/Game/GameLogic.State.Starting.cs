@@ -13,6 +13,7 @@ public partial class GameLogic {
       }
 
       private void OnGameReady() => Input(new Input.Ready());
+
       public Transition On(in Input.Ready input) => To<InGame.Playing>();
     }
   }

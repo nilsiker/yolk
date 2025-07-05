@@ -16,7 +16,6 @@ public partial class Options : Node, IOptions {
 
   public void OnResolved() => OptionsRepo.OptionChanged += SaveOptionsConfigFile;
 
-
   private static OptionsRepo GetOptionsRepo() {
     var config = new ConfigFile();
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://dmbkddu7qr6uv"]
 
 [ext_resource type="Script" uid="uid://cm5pm2wrcv8xa" path="res://app/App.cs" id="1_3st5l"]
+[ext_resource type="PackedScene" uid="uid://4l4vo36cuol5" path="res://options/Options.tscn" id="2_l0x3n"]
 [ext_resource type="PackedScene" uid="uid://cywpu6lxdjhuu" path="res://game/Game.tscn" id="2_v0mgf"]
-[ext_resource type="Script" uid="uid://dt4hepqn6oqyj" path="res://options/Options.cs" id="3_ub2di"]
 [ext_resource type="PackedScene" uid="uid://gxsvb52nm7s8" path="res://debug_panel/DebugPanel.tscn" id="5_l0x3n"]
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="6_kv4k2"]
 
@@ -87,25 +87,12 @@ _data = {
 [node name="App" type="Node"]
 script = ExtResource("1_3st5l")
 
-[node name="Options" type="Node" parent="."]
+[node name="Options" parent="." instance=ExtResource("2_l0x3n")]
 unique_name_in_owner = true
-script = ExtResource("3_ub2di")
 
 [node name="Game" parent="." instance=ExtResource("2_v0mgf")]
 
 [node name="AppUI" type="CanvasLayer" parent="."]
-
-[node name="DebugPanel" parent="AppUI" instance=ExtResource("5_l0x3n")]
-process_mode = 3
-top_level = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("6_kv4k2")
 
 [node name="Blackout" type="ColorRect" parent="AppUI"]
 process_mode = 3
@@ -124,3 +111,16 @@ unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_k6vbj")
 }
+speed_scale = 0.75
+
+[node name="DebugPanel" parent="AppUI" instance=ExtResource("5_l0x3n")]
+process_mode = 3
+top_level = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("6_kv4k2")

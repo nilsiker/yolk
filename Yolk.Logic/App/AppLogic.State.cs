@@ -34,9 +34,15 @@ public partial class AppLogic {
         this.OnEnter(() => Output(new Output.SetBlackout(true)));
         this.OnExit(() => {
           var data = Get<Data>();
+
+          var minimumDelay = Task.Delay(500);
+
           if (data.Callback is not null) {
             data.Callback();
           }
+
+          Task.WaitAny(minimumDelay);
+
           Output(new Output.SetBlackout(false));
         });
       }
