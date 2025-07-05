@@ -41,9 +41,13 @@ public partial class Game : Control, IGame {
     SaveFile = new SaveFile<GameData>(
       root: new SaveChunk<GameData>(
         onSave: (chunk) => new() {
-          WorldData = chunk.GetChunkSaveData<WorldData>()
+          WorldData = chunk.GetChunkSaveData<WorldData>(),
+          PlayerData = chunk.GetChunkSaveData<PlayerData>()
         },
-        onLoad: (chunk, data) => chunk.LoadChunkSaveData(data.WorldData)),
+        onLoad: (chunk, data) => {
+          chunk.LoadChunkSaveData(data.WorldData);
+          chunk.LoadChunkSaveData(data.PlayerData);
+        }),
       onSave: async data => {
         GetViewport().SetCanvasCullMaskBit(2, false);
         await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);

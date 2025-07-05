@@ -4,7 +4,7 @@ using Chickensoft.Introspection;
 using Chickensoft.Serialization;
 
 [Meta, Id("world_data")]
-public partial class WorldData {
+public partial record WorldData {
   [Save("current_level_name")]
   public required string CurrentLevelName { get; init; }
 }
