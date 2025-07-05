@@ -17,7 +17,7 @@ public partial class PlayerLogic : LogicBlock<PlayerLogic.State> {
       OnDetach(() => Get<IWorldRepo>().Transitioned -= OnWorldLevelLoaded);
     }
 
-    private void OnWorldLevelLoaded(Entrypoint? entrypoint) {
+    private void OnWorldLevelLoaded(Transform? entrypoint) {
       if (entrypoint is not null) {
         Output(new Output.Teleport(entrypoint));
       }

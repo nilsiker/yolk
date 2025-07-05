@@ -1,5 +1,6 @@
 namespace Yolk.ExampleGame.Level;
 
+using System;
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
@@ -47,7 +48,8 @@ public partial class World2D : Node, IWorld2D {
     Binding = Logic.Bind();
 
     Binding
-      .Handle((in WorldLogic.Output.TransitionLevel output) => OnOutputTransitionLevel(output.LevelName, output.FromLevelName));
+      .Handle((in WorldLogic.Output.TransitionLevel output) => OnOutputTransitionLevel(output.LevelName, output.FromLevelName))
+      .Handle((in WorldLogic.Output.Clear _) => OnOutputClear());
 
     Logic.Set(AppRepo);
     Logic.Set(GameRepo);
@@ -61,24 +63,26 @@ public partial class World2D : Node, IWorld2D {
     this.Provide();
   }
 
-  private void OnOutputTransitionLevel(string levelName, string? fromLevelName) {
-    var pathLevelTo = Level2D.GetLevelPath(levelName);
-    var scene = GD.Load<PackedScene>(pathLevelTo);
-
+  private void OnOutputClear() {
     foreach (var levelChild in Levels.GetChildren()) {
       levelChild.Name += "_Removing";
       levelChild.QueueFree();
     }
+  }
+
+  private void OnOutputTransitionLevel(string levelName, string? fromLevelName) {
+    var pathLevelTo = Level2D.GetLevelPath(levelName);
+    var scene = GD.Load<PackedScene>(pathLevelTo);
 
     var level = scene.Instantiate<Level2D>();
 
     Levels.AddChild(level, true);
 
-    var entrypointTransform = level.GetEntrypointTransform(fromLevelName ?? "Default");
+    var entrypoint = level.GetEntrypointTransform(fromLevelName ?? "Default");
 
-    if (entrypointTransform is not null) {
-      var entrypoint = new Entrypoint(entrypointTransform.Position, entrypointTransform.RotationDegrees);
-      Logic.Input(new WorldLogic.Input.OnTransitioned(entrypoint));
+    if (entrypoint is not null) {
+      var entrypointTransform = new Transform(entrypoint.GlobalPosition.Vec2(), entrypoint.RotationDegrees);
+      Logic.Input(new WorldLogic.Input.OnTransitioned(entrypointTransform));
     }
     else {
       GD.PushError("TRANSITION FAILED: entrypoint not found for ", fromLevelName ?? "Default");

@@ -13,12 +13,12 @@ public partial class PauseMenuLogic {
       OnAttach(() => {
         var game = Get<IGameRepo>();
         game.PauseMode.Sync += OnGamePausedSync;
-        game.QuitRequested += OnGameQuitRequested;
+        game.Quitted += OnGameQuitRequested;
       });
       OnDetach(() => {
         var game = Get<IGameRepo>();
         game.PauseMode.Sync -= OnGamePausedSync;
-        game.QuitRequested -= OnGameQuitRequested;
+        game.Quitted -= OnGameQuitRequested;
       });
     }
 

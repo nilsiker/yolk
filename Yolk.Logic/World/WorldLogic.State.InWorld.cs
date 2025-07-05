@@ -6,14 +6,24 @@ using Yolk.World;
 
 public partial class WorldLogic {
   public abstract partial record State {
-    public record InWorld : State, IGet<Input.Transition> {
+    public record InWorld : State, IGet<Input.Transition>, IGet<Input.Exit> {
 
       public InWorld() {
-        OnAttach(() => Get<IWorldRepo>().Transitioning += OnWorldTransitioning);
-        OnDetach(() => Get<IWorldRepo>().Transitioning -= OnWorldTransitioning);
+        OnAttach(() => {
+          Get<IWorldRepo>().Transitioning += OnWorldTransitioning;
+          Get<IGameRepo>().Quitted += OnGameQuitted;
+        });
+        OnDetach(() => {
+          Get<IWorldRepo>().Transitioning -= OnWorldTransitioning;
+          Get<IGameRepo>().Quitted -= OnGameQuitted;
+        });
 
         this.OnEnter(() => Get<IGameRepo>().BroadcastReady());
+        this.OnExit(() => Output(new Output.Clear()));
       }
+
+      private void OnGameQuitted() => Input(new Input.Exit());
+
 
       private void OnWorldTransitioning(string toLevelName) {
         var previousLevelName = Get<Data>().PreviousLevelName;
@@ -26,6 +36,8 @@ public partial class WorldLogic {
         data.LevelToLoad = input.ToLevelName;
         return To<Transitioning>();
       }
+
+      public Transition On(in Input.Exit input) => To<OutOfWorld>();
     }
   }
 }

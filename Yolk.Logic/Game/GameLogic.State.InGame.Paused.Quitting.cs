@@ -10,7 +10,7 @@ public partial class GameLogic {
           public Quitting() {
             this.OnEnter(() => {
               Output(new Output.QuitGame());
-              Input(new Input.QuittingTransitionFinished());  // TODO implement actual transition
+              Get<IAppRepo>().RequestBlackout(() => Input(new Input.QuittingTransitionFinished()));
             });
             this.OnExit(() => Get<IGameRepo>().BroadcastQuitted());
           }

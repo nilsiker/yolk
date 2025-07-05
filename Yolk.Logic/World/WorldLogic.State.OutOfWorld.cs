@@ -1,5 +1,6 @@
 namespace Yolk.Level;
 
+using Chickensoft.LogicBlocks;
 using Yolk.Game;
 
 public partial class WorldLogic {
@@ -8,6 +9,8 @@ public partial class WorldLogic {
       public OutOfWorld() {
         OnAttach(() => Get<IGameRepo>().Starting += OnGameStarting);
         OnDetach(() => Get<IGameRepo>().Starting -= OnGameStarting);
+
+        this.OnEnter(() => Output(new Output.Clear()));
       }
 
       public Transition On(in Input.Transition input) {

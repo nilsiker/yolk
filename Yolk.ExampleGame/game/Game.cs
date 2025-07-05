@@ -1,6 +1,6 @@
 namespace Yolk.Game;
 
-using System;
+
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;

@@ -31,9 +31,9 @@ public partial class Player : CharacterBody2D, IPlayer {
     Logic.Start();
   }
 
-  private void OnOutputTeleport(Entrypoint entrypoint) {
-    GlobalPosition = new Vector2(entrypoint.PositionX, entrypoint.PositionY);
-    GlobalRotation = entrypoint.RotationZ;
+  private void OnOutputTeleport(ITransform2D entrypoint) {
+    GlobalPosition = new Vector2(entrypoint.Position.X, entrypoint.Position.Y);
+    GlobalRotation = entrypoint.Rotation;
   }
 
   public override void _ExitTree() => Binding.Dispose();

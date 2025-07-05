@@ -7,6 +7,7 @@ public partial class WorldLogic {
     public record struct Transition(string ToLevelName, string? FromLevelName = null);
     public record struct LoadLevel(string LevelName);
     public record struct UnloadLevel(string LevelName);
-    public record struct OnTransitioned(Entrypoint? Entrypoint = null);
+    public record struct OnTransitioned(Transform? Entrypoint = null);
+    public record struct Exit;
   }
 }
