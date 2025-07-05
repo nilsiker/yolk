@@ -13,6 +13,7 @@ public partial class Controls : Node {
 
   private ControlsLogic Logic { get; set; } = new();
   private ControlsLogic.IBinding Binding { get; set; } = default!;
+  public ControlsRepo ControlsRepo = OS.
 
   public void OnResolved() {
     Binding = Logic.Bind();
