@@ -6,7 +6,7 @@
 >
 > With that said, feel free to try it out!
 >
-> Do not heistate to reach out, if you have any feedback or ideas!
+> Do not hesitate to reach out, if you have any feedback or ideas!
 
 An opinionated game template for Godot C# using [Chickensoft tools](https://chickensoft.games/), with a focus on ease-of-understanding.
 
