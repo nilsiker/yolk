@@ -2,8 +2,8 @@
 state "GameLogic State" as Yolk_Game_GameLogic_State {
   state "InGame" as Yolk_Game_GameLogic_State_InGame {
     state "Paused" as Yolk_Game_GameLogic_State_InGame_Paused {
-      state "Over" as Yolk_Game_GameLogic_State_InGame_Paused_Over
       state "Quitting" as Yolk_Game_GameLogic_State_InGame_Paused_Quitting
+      state "Over" as Yolk_Game_GameLogic_State_InGame_Paused_Over
     }
     state "Playing" as Yolk_Game_GameLogic_State_InGame_Playing
   }
@@ -21,6 +21,8 @@ Yolk_Game_GameLogic_State_InGame_Paused --> Yolk_Game_GameLogic_State_InGame_Pla
 Yolk_Game_GameLogic_State_InGame_Paused_Over --> Yolk_Game_GameLogic_State_InGame_Paused_Quitting : OnQuitRequested
 Yolk_Game_GameLogic_State_InGame_Paused_Quitting --> Yolk_Game_GameLogic_State_Standby : QuittingTransitionFinished
 Yolk_Game_GameLogic_State_InGame_Playing --> Yolk_Game_GameLogic_State_InGame_Paused : OnPauseUserInput
+Yolk_Game_GameLogic_State_InGame_Playing --> Yolk_Game_GameLogic_State_InGame_Playing : Quicksave
+Yolk_Game_GameLogic_State_InGame_Playing --> Yolk_Game_GameLogic_State_Loading : Quickload
 Yolk_Game_GameLogic_State_Loading --> Yolk_Game_GameLogic_State_InGame_Playing : OnLoaded
 Yolk_Game_GameLogic_State_Standby --> Yolk_Game_GameLogic_State_Starting : Start
 Yolk_Game_GameLogic_State_Starting --> Yolk_Game_GameLogic_State_InGame_Playing : Ready
@@ -30,7 +32,7 @@ Yolk_Game_GameLogic_State : OnGamePausedSync() → SetPauseMode
 Yolk_Game_GameLogic_State_InGame : OnGameSaveRequested() → SaveGame
 Yolk_Game_GameLogic_State_InGame_Paused_Quitting : OnEnter → QuitGame
 Yolk_Game_GameLogic_State_InGame_Playing : OnEnter → UpdateVisibility
-Yolk_Game_GameLogic_State_InGame_Playing : OnGameLoadRequested() → LoadGame
+Yolk_Game_GameLogic_State_InGame_Playing : OnQuicksave → Quicksave
 Yolk_Game_GameLogic_State_Loading : OnBlackoutFinished() → LoadGame
 
 [*] --> Yolk_Game_GameLogic_State_Standby

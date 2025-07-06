@@ -1,7 +1,8 @@
 namespace Yolk.Game;
 
-using System;
 using Chickensoft.LogicBlocks;
+using Yolk.FS;
+
 
 public partial class GameLogic {
   public abstract partial record State : StateLogic<State>, IGet<Input.Load>, IGet<Input.OnSaved> {
@@ -22,7 +23,7 @@ public partial class GameLogic {
       });
     }
 
-    private void OnGameLoadRequested(string saveName) => Input(new Input.Load(saveName, Yolk.Data.ESaveType.Manual));
+    private void OnGameLoadRequested(string saveName) => Input(new Input.Load(saveName, ESaveType.Manual));
     private void OnGameLastSaveNameSync(string? saveName) => Output(new Output.SetLastSaveName(saveName));
     private void OnGameQuitRequested() => Input(new Input.OnQuitRequested());
 

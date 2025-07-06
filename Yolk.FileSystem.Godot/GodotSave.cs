@@ -8,7 +8,6 @@ using Chickensoft.Collections;
 using Chickensoft.Serialization;
 using Chickensoft.Serialization.Godot;
 using Godot;
-using Yolk.Data;
 
 
 public static class GodotSave {
@@ -23,10 +22,12 @@ public static class GodotSave {
   };
 
   private static string SaveDirectory => new FileSystem().Path.Join(OS.GetUserDataDir(), "saves");
+  private static string SaveThumbnailDirectory => new FileSystem().Path.Join(OS.GetUserDataDir(), "saves", "thumbnails");
 
-  public static void Setup() {
+  public static void Initialize() {
     GodotSerialization.Setup();
     new FileSystem().Directory.CreateDirectory(SaveDirectory);
+    new FileSystem().Directory.CreateDirectory(SaveThumbnailDirectory);
   }
 
   private static string GetSaveFileName(string? requestedName, ESaveType type = ESaveType.Manual)
@@ -52,32 +53,30 @@ public static class GodotSave {
     }
   }
 
-  public static async Task<T> Load<T>(string? saveName, ESaveType type = ESaveType.Manual) {
+  public static async Task<T> Load<T>(string? saveName, ESaveType type) {
     GD.Print($"loading from file... (name: {saveName}, type: {type})");
     var fileSystem = new FileSystem();
     var path = GetSaveFilePath(saveName, type);
+
     if (!fileSystem.File.Exists(path)) {
       GD.Print("No save file to load :'(");
-      throw new SerializationException("could not find save file");
+      throw new FileNotFoundException("could not find save file");
     }
+
     var json = await fileSystem.File.ReadAllTextAsync(path);
     return JsonSerializer.Deserialize<T>(json, JSON_OPTIONS) ?? throw new SerializationException("could not serialize save game data");
   }
 
-  public static bool Exists(string? saveName, ESaveType type = ESaveType.Manual) {
+  public static bool Exists(string? saveName, ESaveType type) {
     var fileSystem = new FileSystem();
     var path = GetSaveFilePath(saveName, type);
     return fileSystem.File.Exists(path);
   }
 
-  public static Texture2D GetPreviewImage(string? saveName, ESaveType type = ESaveType.Manual) {
+  public static Texture2D GetThumbnail(string? saveName) {
     var fileSystem = new FileSystem();
 
-    var imagePath = fileSystem.Path.Join(SaveDirectory, $"{GetSaveFileName(saveName, type)}.png");
-    if (!fileSystem.File.Exists(imagePath)) {
-      GD.Print("No preview image found for save file.");
-      return new PlaceholderTexture2D();
-    }
+    var imagePath = fileSystem.Path.Join(SaveThumbnailDirectory, $"{saveName}.png");
 
     var image = new Image();
     if (image.Load(imagePath) != Error.Ok) {
@@ -89,10 +88,10 @@ public static class GodotSave {
     return texture;
   }
 
-  public static Error SavePreviewImage(string? saveName, ESaveType type, Image image) {
+  public static Error SaveThumbnail(string? saveName, ESaveType type, Image image) {
     var fileSystem = new FileSystem();
     var path = GetSaveFilePath(saveName, type);
-    var imagePath = fileSystem.Path.Join(SaveDirectory, $"{GetSaveFileName(saveName, type)}.png");
+    var imagePath = fileSystem.Path.Join(SaveThumbnailDirectory, $"{GetSaveFileName(saveName, type)}.png");
 
     return image.SavePng(imagePath);
   }

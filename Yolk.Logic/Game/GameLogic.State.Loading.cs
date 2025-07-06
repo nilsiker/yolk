@@ -15,7 +15,8 @@ public partial class GameLogic {
 
       public Transition On(in Input.OnLoaded input) => To<InGame.Playing>();
 
-      public void OnBlackoutFinished() => Output(new Output.LoadGame(Get<Data>().LastSaveName));
+      public void OnBlackoutFinished() => Output(new Output.LoadGame(Get<Data>().LastSaveName));  // TODO different states for different sorts of loading? auto/quick?
+      // Maybe use a data. Maybe just use different states and actions.
     }
   }
 }

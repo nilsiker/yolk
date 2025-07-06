@@ -13,8 +13,4 @@
     <PackageReference Include="Chickensoft.Serialization.Godot" Version="0.7.5" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Yolk.Data\Yolk.Data.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -4,7 +4,6 @@ using System.Linq;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
-using Yolk.Data;
 using Yolk.FS;
 using Yolk.Game;
 
@@ -36,7 +35,7 @@ public partial class GameSavePanel : PanelContainer {
 
     var saveName = string.Join("", SaveFileName.Split('_').SkipLast(1));
 
-    PreviewImage.Texture = GodotSave.GetPreviewImage(saveName, SaveType);
+    PreviewImage.Texture = GodotSave.GetThumbnail(saveName);
 
     SaveNameLabel.Text = saveName;
     SaveNameLabel.Visible = saveName.Length > 0;

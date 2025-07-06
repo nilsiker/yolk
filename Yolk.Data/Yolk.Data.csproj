@@ -8,9 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Chickensoft.Introspection" Version="2.2.0" />
-    <PackageReference Include="Chickensoft.Introspection.Generator" Version="2.2.0"
-      PrivateAssets="all" OutputItemType="analyzer" />
+    <PackageReference Include="Chickensoft.Introspection.Generator" Version="2.2.0" PrivateAssets="all" OutputItemType="analyzer" />
     <PackageReference Include="Chickensoft.Serialization" Version="2.2.0" />
+    <PackageReference Include="Chickensoft.SaveFileBuilder" Version="1.2.0" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Yolk.FileSystem.Godot\Yolk.FS.csproj" />
   </ItemGroup>
 
 </Project>
