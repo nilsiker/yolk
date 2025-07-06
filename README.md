@@ -8,7 +8,7 @@
 >
 > Do not heistate to reach out, if you have any feedback or ideas!
 
-An opinionated game template for Godot C# using [Chickensoft tools](https://chickensoft.games/).
+An opinionated game template for Godot C# using [Chickensoft tools](https://chickensoft.games/), with a focus on ease-of-understanding.
 
 <p align="center">
   <img  alt="a pixelated, cracked egg" src="docs/media/logo.png" width="160" />
@@ -53,7 +53,7 @@ To showcase the template, I'm using assets by the amazing [Kenney](https://kenne
 - [1-Bit Platformer Pack](https://kenney.nl/assets/1-bit-platformer-pack)
 - [1-Bit Input Prompts Pixel 16×](https://kenney.nl/assets/1-bit-input-prompts-pixel-16)
 
-Give his website a look, his assets are great! **And free - consider donating!**
+Give their website a look, their assets are great! **And free - consider donating!**
 
 ## License
 
