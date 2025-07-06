@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=8 format=3 uid="uid://dx8a0hc3h3m6w"]
 
-[ext_resource type="FontFile" uid="uid://c4rqt8pyo8ms8" path="res://fonts/VCR_OSD_MONO_1.001.ttf" id="1_v4ne4"]
+[ext_resource type="FontFile" uid="uid://c4rqt8pyo8ms8" path="res://ui/fonts/VCR_OSD_MONO_1.001.ttf" id="1_v4ne4"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_v4ne4"]
 

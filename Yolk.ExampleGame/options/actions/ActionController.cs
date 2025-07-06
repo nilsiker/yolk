@@ -44,6 +44,8 @@ public partial class ActionController : Node, IProvide<IActionRepo> {
     InputMap.ActionEraseEvents(actionName);
     InputMap.ActionAddEvent(actionName, inputEvent);
 
+    GetViewport().SetInputAsHandled();
+
     GodotConfig.WriteMappedAction(actionName);
   }
 

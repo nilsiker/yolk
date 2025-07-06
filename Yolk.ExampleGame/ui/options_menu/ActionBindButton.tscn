@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpahhf0tdwx5s"]
+
+[ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_ab3b7"]
+[ext_resource type="Script" uid="uid://bjkhq8mnf1drk" path="res://ui/options_menu/ActionBindButton.cs" id="2_2pmu6"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hsjae"]
+load_path = "res://.godot/imported/tile_0550.png-589529356da224d98360f614a784d959.ctex"
+
+[node name="ActionBindButton" type="Button"]
+custom_minimum_size = Vector2(300, 40)
+offset_right = 150.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+theme = ExtResource("1_ab3b7")
+shortcut_feedback = false
+text = " Jump"
+icon = SubResource("CompressedTexture2D_hsjae")
+alignment = 0
+text_overrun_behavior = 3
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("2_2pmu6")
+
+[node name="InputBlocker" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

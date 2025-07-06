@@ -39,6 +39,7 @@
       "program": "${env:GODOT}",
       "args": [
         // These command line flags are used by GoDotTest to run tests.
+        "--headless",
         "--run-tests",
         "--quit-on-finish"
       ],

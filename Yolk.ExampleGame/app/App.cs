@@ -17,6 +17,8 @@ public interface IApp : INode, IProvide<IAppRepo>, IProvide<IOptionsRepo>, IProv
 public partial class App : Node, IApp {
   public override void _Notification(int what) => this.Notify(what);
 
+  [Export] private int BlackoutMinimumWaitTimeMs { get; set; } = 500;
+
   [Node] private IOptions Options { get; set; } = default!;
   [Node] private ActionController Actions { get; set; } = default!;
   [Node] private AnimationPlayer Blackout { get; set; } = default!;
@@ -39,7 +41,8 @@ public partial class App : Node, IApp {
       .Handle((in AppLogic.Output.QuitApp output) => OnOutputQuitApp());
 
     Logic.Set(new AppLogic.Data {
-      Callback = null
+      Callback = null,
+      BlackoutMinimumWaitTimeMs = BlackoutMinimumWaitTimeMs
     });
     Logic.Set(AppRepo);
 

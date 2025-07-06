@@ -35,7 +35,7 @@ public partial class AppLogic {
         this.OnExit(() => {
           var data = Get<Data>();
 
-          var minimumDelay = Task.Delay(500);
+          var minimumDelay = Task.Delay(data.BlackoutMinimumWaitTimeMs);
 
           if (data.Callback is not null) {
             data.Callback();

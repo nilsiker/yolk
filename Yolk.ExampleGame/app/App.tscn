@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://chc70yxvyl6t4" path="res://options/actions/ActionController.cs" id="2_kv4k2"]
 [ext_resource type="PackedScene" uid="uid://4l4vo36cuol5" path="res://options/Options.tscn" id="2_l0x3n"]
 [ext_resource type="PackedScene" uid="uid://cywpu6lxdjhuu" path="res://game/Game.tscn" id="2_v0mgf"]
-[ext_resource type="PackedScene" uid="uid://gxsvb52nm7s8" path="res://debug_panel/DebugPanel.tscn" id="5_l0x3n"]
+[ext_resource type="PackedScene" uid="uid://gxsvb52nm7s8" path="res://ui/debug_panel/DebugPanel.tscn" id="5_l0x3n"]
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="6_kv4k2"]
 
 [sub_resource type="Animation" id="Animation_kv4k2"]
@@ -87,6 +87,7 @@ _data = {
 
 [node name="App" type="Node"]
 script = ExtResource("1_3st5l")
+BlackoutMinimumWaitTimeMs = 250
 
 [node name="Actions" type="Node" parent="."]
 unique_name_in_owner = true

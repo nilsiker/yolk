@@ -21,9 +21,9 @@ public partial class Game : Control, IGame {
   public override void _Notification(int what) => this.Notify(what);
   [Dependency] private IAppRepo AppRepo => this.DependOn<IAppRepo>();
 
-  private IGameRepo GameRepo { get; set; } = default!;
+  public IGameRepo GameRepo { get; set; } = default!;
   // NOTE game currently acts as a service layer for more generally available repos
-  private GameLogic Logic { get; set; } = default!;
+  private GameLogic Logic { get; set; } = new();
   private GameLogic.IBinding Binding { get; set; } = default!;
   private int Slot { get; set; } = -1;
   public SaveFile<GameData> SaveFile { get; set; } = default!;

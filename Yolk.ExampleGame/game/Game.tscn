@@ -1,14 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://cywpu6lxdjhuu"]
+[gd_scene load_steps=10 format=3 uid="uid://cywpu6lxdjhuu"]
 
 [ext_resource type="Script" uid="uid://bjbrxyy5n8jhp" path="res://game/Game.cs" id="1_17mmo"]
 [ext_resource type="Script" uid="uid://buoim3o7kayu0" path="res://sound/sound_spawner/SoundSpawner.cs" id="2_51532"]
 [ext_resource type="PackedScene" uid="uid://ch84hntra3ghi" path="res://screen_effects/ScreenEffects.tscn" id="2_qv7dg"]
-[ext_resource type="PackedScene" uid="uid://b3yir6wkmklbj" path="res://main_menu/MainMenu.tscn" id="3_3d0qh"]
+[ext_resource type="PackedScene" uid="uid://b3yir6wkmklbj" path="res://ui/main_menu/MainMenu.tscn" id="3_3d0qh"]
 [ext_resource type="PackedScene" uid="uid://ddhqqc3jfb0df" path="res://sound/Sound.tscn" id="3_85edk"]
 [ext_resource type="Script" uid="uid://17kismd3rhvu" path="res://yolk_repo_provider/YolkRepoProvider.cs" id="3_ejjr5"]
 [ext_resource type="Script" uid="uid://d245yqet0ckd0" path="res://world/World2D.cs" id="5_qv7dg"]
-[ext_resource type="PackedScene" uid="uid://3mwky8ciwtjk" path="res://pause_menu/PauseMenu.tscn" id="5_yw8km"]
-[ext_resource type="Script" uid="uid://dawsapso2t66k" path="res://game_ui/GameUI.cs" id="8_5a4rm"]
+[ext_resource type="PackedScene" uid="uid://3mwky8ciwtjk" path="res://ui/pause_menu/PauseMenu.tscn" id="5_yw8km"]
 [ext_resource type="PackedScene" uid="uid://djk0n5kradfsr" path="res://player/Player.tscn" id="11_5a4rm"]
 
 [node name="Game" type="Control"]
@@ -19,7 +18,6 @@ script = ExtResource("1_17mmo")
 
 [node name="GameUI" type="CanvasLayer" parent="."]
 layer = 0
-script = ExtResource("8_5a4rm")
 
 [node name="ScreenEffects" parent="GameUI" instance=ExtResource("2_qv7dg")]
 unique_name_in_owner = true

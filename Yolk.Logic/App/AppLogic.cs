@@ -13,6 +13,7 @@ public partial class AppLogic
   public override Transition GetInitialState() => To<State>();
 
   public class Data {
+    public required int BlackoutMinimumWaitTimeMs;
     public BlackoutCallback? Callback;
   }
 }

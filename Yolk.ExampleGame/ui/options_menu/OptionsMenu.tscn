@@ -1,0 +1,219 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6s5ahp5if2vn"]
+
+[ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_d78cj"]
+[ext_resource type="Script" uid="uid://ovytfoh3xfgw" path="res://ui/options_menu/OptionsMenu.cs" id="2_bbeos"]
+[ext_resource type="PackedScene" uid="uid://xrjjl80katne" path="res://ui/options_menu/ActionGrid.tscn" id="3_hy6yp"]
+
+[node name="OptionsUI" type="Control"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_d78cj")
+script = ExtResource("2_bbeos")
+
+[node name="OptionsPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OptionsContainer" type="VBoxContainer" parent="OptionsPanel"]
+layout_mode = 2
+
+[node name="OptionsTabs" type="TabContainer" parent="OptionsPanel/OptionsContainer"]
+layout_mode = 2
+current_tab = 0
+use_hidden_tabs_for_min_size = true
+
+[node name="General" type="MarginContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 0
+
+[node name="GeneralContainer" type="VBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General"]
+layout_mode = 2
+
+[node name="DisplayContainer" type="MarginContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer"]
+layout_mode = 2
+
+[node name="DisplayContainer" type="VBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/DisplayContainer"]
+layout_mode = 2
+
+[node name="DisplayHeading" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/DisplayContainer/DisplayContainer"]
+layout_mode = 2
+text = "Display"
+
+[node name="Separator" type="HSeparator" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/DisplayContainer/DisplayContainer"]
+layout_mode = 2
+
+[node name="FullscreenOption" type="HBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/DisplayContainer/DisplayContainer"]
+layout_mode = 2
+
+[node name="FullscreenLabel" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/DisplayContainer/DisplayContainer/FullscreenOption"]
+layout_mode = 2
+text = "Fullscreen "
+
+[node name="FullscreenCheckButton" type="CheckButton" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/DisplayContainer/DisplayContainer/FullscreenOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+button_pressed = true
+
+[node name="VsyncOption" type="HBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/DisplayContainer/DisplayContainer"]
+layout_mode = 2
+
+[node name="VsyncLabel" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/DisplayContainer/DisplayContainer/VsyncOption"]
+layout_mode = 2
+text = "VSync      "
+
+[node name="VsyncCheckButton" type="CheckButton" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/DisplayContainer/DisplayContainer/VsyncOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+button_pressed = true
+
+[node name="GraphicsContainer" type="MarginContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/GraphicsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/GraphicsContainer/VBoxContainer"]
+layout_mode = 2
+text = "Graphics"
+
+[node name="HSeparator" type="HSeparator" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/GraphicsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PixelationOption" type="HBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/GraphicsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PixelationLabel" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/GraphicsContainer/VBoxContainer/PixelationOption"]
+layout_mode = 2
+text = "Pixelation "
+
+[node name="PixelationCheckButton" type="CheckButton" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/GraphicsContainer/VBoxContainer/PixelationOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+button_pressed = true
+
+[node name="DitheringOption" type="HBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/GraphicsContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DitheringLabel" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/GraphicsContainer/VBoxContainer/DitheringOption"]
+layout_mode = 2
+text = "Dithering  "
+
+[node name="DitheringCheckButton" type="CheckButton" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/GraphicsContainer/VBoxContainer/DitheringOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+button_pressed = true
+
+[node name="AudioContainer" type="MarginContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+text = "Audio"
+
+[node name="HSeparator" type="HSeparator" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterVolumeOption" type="HBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterVolumeLabel" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer/MasterVolumeOption"]
+layout_mode = 2
+text = "Master     "
+
+[node name="MasterVolumeSlider" type="HSlider" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer/MasterVolumeOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_d78cj")
+max_value = 1.0
+step = 0.1
+
+[node name="MusicVolumeOption" type="HBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicVolumeLabel" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer/MusicVolumeOption"]
+layout_mode = 2
+text = "Music      "
+
+[node name="MusicVolumeSlider" type="HSlider" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer/MusicVolumeOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_d78cj")
+max_value = 1.0
+step = 0.1
+
+[node name="SFXVolumeOption" type="HBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SFXVolumeLabel" type="Label" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer/SFXVolumeOption"]
+layout_mode = 2
+text = "SFX        "
+
+[node name="SFXVolumeSlider" type="HSlider" parent="OptionsPanel/OptionsContainer/OptionsTabs/General/GeneralContainer/AudioContainer/VBoxContainer/SFXVolumeOption"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_d78cj")
+max_value = 1.0
+step = 0.1
+
+[node name="Controls" type="MarginContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 1
+
+[node name="ControlsContainer" type="VBoxContainer" parent="OptionsPanel/OptionsContainer/OptionsTabs/Controls"]
+layout_mode = 2
+
+[node name="ActionGrid" parent="OptionsPanel/OptionsContainer/OptionsTabs/Controls/ControlsContainer" instance=ExtResource("3_hy6yp")]
+layout_mode = 2
+columns = 2
+
+[node name="RestoreControlDefaultsButton" type="Button" parent="OptionsPanel/OptionsContainer/OptionsTabs/Controls/ControlsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Restore defaults"
+
+[node name="CloseContainer" type="MarginContainer" parent="OptionsPanel/OptionsContainer"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="OptionsPanel/OptionsContainer/CloseContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 10
+text = "Close"
