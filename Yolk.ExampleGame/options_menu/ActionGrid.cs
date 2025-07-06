@@ -9,7 +9,12 @@ public partial class ActionGrid : GridContainer {
   public override void _Ready() {
     this.ClearChildren();
 
-    foreach (var action in InputMap.GetActions().Where(a => !a.ToString().StartsWith("ui_"))) {
+    var actionsToShow = InputMap.GetActions().Select(a => a.ToString())
+      .Where(a => !a.StartsWith("ui_"))
+      .Where(a => !a.StartsWith("hard_"))
+      .Where(a => !a.StartsWith("debug_"));
+
+    foreach (var action in actionsToShow) {
       var container = _actionContainerScene?.Instantiate<ActionBindButton>() ?? throw new MissingFieldException();
 
       container.Action = action;

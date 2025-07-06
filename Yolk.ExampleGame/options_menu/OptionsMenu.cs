@@ -3,8 +3,9 @@ namespace Yolk.UI;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
+using Yolk.FS;
 using Yolk.Game;
-
+using Yolk.Options.Actions;
 
 [Meta(typeof(IAutoNode))]
 public partial class OptionsMenu : Control {
@@ -13,6 +14,7 @@ public partial class OptionsMenu : Control {
   [Dependency] private IOptionsRepo OptionsRepo => this.DependOn<IOptionsRepo>();
   [Dependency] private IGameRepo GameRepo => this.DependOn<IGameRepo>();
   [Dependency] private IAppRepo AppRepo => this.DependOn<IAppRepo>();
+  [Dependency] private IActionRepo ActionRepo => this.DependOn<IActionRepo>();
 
   [Node] private CheckButton FullscreenCheckButton { get; set; } = default!;
   [Node] private CheckButton VsyncCheckButton { get; set; } = default!;
@@ -22,6 +24,8 @@ public partial class OptionsMenu : Control {
   [Node] private HSlider MusicVolumeSlider { get; set; } = default!;
   [Node] private HSlider SFXVolumeSlider { get; set; } = default!;
   [Node] private Button CloseButton { get; set; } = default!;
+  [Node] private Button RestoreControlDefaultsButton { get; set; } = default!;
+
   private OptionsMenuLogic Logic { get; set; } = new();
   private OptionsMenuLogic.IBinding Binding { get; set; } = default!;
 
@@ -52,9 +56,15 @@ public partial class OptionsMenu : Control {
     OptionsRepo.MusicVolume.Sync += OnOptionsMusicVolumeSync;
     OptionsRepo.SFXVolume.Sync += OnOptionsSFXVolumeSync;
 
+    RestoreControlDefaultsButton.Pressed += () => {
+      GodotConfig.ClearCustomInputMap();
+      InputMap.LoadFromProjectSettings();
+      ActionRepo.BroadcastDefaultsRestored();
+    };
 
     GameRepo.Quitted += () => OptionsRepo.SetUIVisible(false);
     GameRepo.Starting += () => OptionsRepo.SetUIVisible(false);
+
   }
 
   private void OnFullscreenCheckButtonToggled(bool enabled) => OptionsRepo.SetFullscreen(enabled);

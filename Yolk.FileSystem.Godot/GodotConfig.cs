@@ -15,7 +15,7 @@ public static class GodotConfig {
     var config = new ConfigFile();
     var error = config.Load(INPUTMAP_PATH);
 
-    if (error == Error.Ok) {
+    if (error == Error.Ok && config.HasSection(CONTROLS_SECTION)) {
       foreach (var key in config.GetSectionKeys(CONTROLS_SECTION)) {
         var events = (Array<InputEvent>)config.GetValue(CONTROLS_SECTION, key, InputMap.ActionGetEvents(key));
         InputMap.ActionEraseEvents(key);

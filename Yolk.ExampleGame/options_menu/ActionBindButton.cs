@@ -7,15 +7,18 @@ using Chickensoft.Introspection;
 using Chickensoft.LogicBlocks;
 using Godot;
 using Yolk.Controls;
-using Yolk.FS;
+using Yolk.Options.Actions;
+
 
 [Meta(typeof(IAutoNode))]
 public partial class ActionBindButton : Button {
   public override void _Notification(int what) => this.Notify(what);
 
-  public string? Action {
+  public string Action {
     get; set;
-  }
+  } = default!;
+
+  [Dependency] private IActionRepo ActionRepo => this.DependOn<IActionRepo>();
 
   private ActionContainerLogic Logic { get; set; } = default!;
   private ActionContainerLogic.IBinding Binding { get; set; } = default!;
@@ -25,49 +28,64 @@ public partial class ActionBindButton : Button {
     Binding = Logic.Bind();
 
     Binding
-      .Handle((in ActionContainerLogic.Output.BindAction output) => OnOutputBindAction(output.Action, output.Event))
-      .Handle((in ActionContainerLogic.Output.UpdateIcon output) => OnOutputUpdateIcon(output.Icon));
+      .Handle((in ActionContainerLogic.Output.UpdateInputPrompt output) => OnOutputUpdateIcon(output.InputName))
+      .Handle((in ActionContainerLogic.Output.OnDefaultRestored _) => OnDefaultRestored());
 
-    Logic.Set(new ActionContainerLogic.Data());
+    Logic.Set(ActionRepo);
+    Logic.Set(new ActionContainerLogic.Data {
+      Action = Action
+    });
 
     Pressed += OnPressed;
 
-    Text = $" {Action}" ?? "<missing action>";
+    // Set the action to default
+    if (Action is not null) {
+      var input = InputMap.ActionGetEvents(Action)
+            .FirstOrDefault()?
+            .AsText()
+            .Split(" (").FirstOrDefault() ?? "unknown";
+
+      Text = $" {Action} - {input}" ?? "<missing action>";
+    }
   }
 
-  private void OnOutputUpdateIcon(Texture2D? icon) {
-    if (icon is null) {
-      KenneyOneBitInput
-        .Tile(InputMap.ActionGetEvents(Action ?? throw new MissingFieldException("no action specified"))
-        .FirstOrDefault()?
-        .AsText() ?? "unknown");
-      return;
+  private void OnDefaultRestored() {
+    // Reset the button text to the default action
+    var input = InputMap.ActionGetEvents(Action)
+         .FirstOrDefault()?
+         .AsText()
+         .Split(" (").FirstOrDefault() ?? "unknown";
 
+    Text = $" {Action} - {input}";
+  }
+
+
+  private void OnOutputUpdateIcon(string? inputName) {
+    if (string.Empty == inputName) {
+      Text = $" {Action} - Listening...";
+      return;
     }
 
-    Icon = icon;
+    var input = InputMap.ActionGetEvents(Action)
+         .FirstOrDefault()?
+         .AsText()
+         .Split(" (")
+         .FirstOrDefault() ?? "unknown";
+
+    Text = $" {Action} - {input}";
   }
 
 
   private void OnPressed() =>
-    Logic.Input(new ActionContainerLogic.Input.Listen(Action ?? throw new MissingFieldException("no action specified")));
-
-
-  private void OnOutputBindAction(string action, InputEvent @event) {
-    InputMap.ActionEraseEvents(action);
-    InputMap.ActionAddEvent(action, @event);
-
-    GodotConfig.WriteMappedAction(action);
-    GetViewport().SetInputAsHandled();
-  }
+    Logic.Input(new ActionContainerLogic.Input.Listen(Action));
 
   public override void _Input(InputEvent @event) {
     if (@event.IsReleased() || @event.IsEcho() || @event is InputEventMouseMotion) {
       return;
     }
 
-    if (@event.IsAction(Inputs.Pause)) {
-      Logic.Input(new ActionContainerLogic.Input.Cancel());
+    if (@event.IsAction(Inputs.HardCancel)) {
+      Logic.Input(new ActionContainerLogic.Input.Stop());
     }
     else {
       Logic.Input(new ActionContainerLogic.Input.Bind(@event));
@@ -80,45 +98,55 @@ public partial class ActionBindButton : Button {
     public override Transition GetInitialState() => To<State.Idle>();
 
     public class Data {
-      public string? Action { get; set; }
+      public required string Action { get; set; }
     }
 
     public static class Input {
       public readonly record struct Listen(string Action);
       public readonly record struct Bind(InputEvent Event);
-      public readonly record struct Cancel;
+      public readonly record struct Stop;
     }
 
     public static class Output {
-      public readonly record struct BindAction(string Action, InputEvent Event);
-      public readonly record struct UpdateIcon(Texture2D? Icon);
+      public readonly record struct UpdateInputPrompt(string InputName);
+      public readonly record struct OnDefaultRestored;
     }
 
     public abstract partial record State : StateLogic<State> {
-      public partial record Idle : State, IGet<Input.Listen> {
-        public Transition On(in Input.Listen input) {
-          Get<Data>().Action = input.Action;
-          return To<Listening>();
-        }
+      public State() {
+        OnAttach(() => Get<IActionRepo>().DefaultsRestored += OnDefaultsRestored);
+        OnDetach(() => Get<IActionRepo>().DefaultsRestored -= OnDefaultsRestored);
       }
 
-      public partial record Listening : State, IGet<Input.Cancel>, IGet<Input.Bind> {
+      private void OnDefaultsRestored() => Output(new Output.OnDefaultRestored());
+
+      public partial record Idle : State, IGet<Input.Listen> {
+        public Transition On(in Input.Listen input) => To<Listening>();
+      }
+
+      public partial record Listening : State, IGet<Input.Stop>, IGet<Input.Bind> {
         public Listening() {
-          this.OnEnter(() => Output(new Output.UpdateIcon()));
-          this.OnExit(() => Output(new Output.UpdateIcon()));
+          OnAttach(() => Get<IActionRepo>().ActionMapped += OnActionMapped);
+          OnDetach(() => Get<IActionRepo>().ActionMapped -= OnActionMapped);
+
+          this.OnEnter(() => Output(new Output.UpdateInputPrompt("")));
+          this.OnExit(() => Output(new Output.UpdateInputPrompt()));
         }
-        public Transition On(in Input.Cancel input) => To<Idle>();
+
+        private void OnActionMapped(string arg1, InputEvent @event) {
+          if (Get<Data>().Action == arg1) {
+            Output(new Output.UpdateInputPrompt(@event.AsText() ?? "unknown"));
+            Input(new Input.Stop());
+          }
+        }
+
+        public Transition On(in Input.Stop input) => To<Idle>();
         public Transition On(in Input.Bind input) {
           var action = Get<Data>().Action;
 
-          if (action is not null) {
-            Output(new Output.BindAction(action, input.Event));
-          }
-          else {
-            GD.PushWarning("Action was null when in listen state");
-          }
+          Get<IActionRepo>().MapAction(action, input.Event);
 
-          return To<Idle>();
+          return ToSelf();
         }
       }
     }

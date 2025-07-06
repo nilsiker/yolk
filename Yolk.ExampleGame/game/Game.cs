@@ -93,7 +93,7 @@ public partial class Game : Control, IGame {
   private void OnOutputLoadGame(int slot) => SaveFile.Load();
 
   public override void _UnhandledInput(InputEvent @event) {
-    if (@event.IsActionPressed(Pause)) {
+    if (@event.IsActionPressed(HardCancel)) {
       Logic.Input(new GameLogic.Input.OnPauseUserInput());
     }
     else if (@event.IsActionPressed(Quicksave)) {

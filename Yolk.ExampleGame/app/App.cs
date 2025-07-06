@@ -6,9 +6,9 @@ using Chickensoft.Introspection;
 using Godot;
 using Yolk.Generator;
 using Yolk.Options;
+using Yolk.Options.Actions;
 
-
-public interface IApp : INode, IProvide<IAppRepo>, IProvide<IOptionsRepo> {
+public interface IApp : INode, IProvide<IAppRepo>, IProvide<IOptionsRepo>, IProvide<IActionRepo> {
   public void OnOutputQuitApp();
 }
 
@@ -18,6 +18,7 @@ public partial class App : Node, IApp {
   public override void _Notification(int what) => this.Notify(what);
 
   [Node] private IOptions Options { get; set; } = default!;
+  [Node] private ActionController Actions { get; set; } = default!;
   [Node] private AnimationPlayer Blackout { get; set; } = default!;
 
   private IAppRepo AppRepo { get; set; } = new AppRepo();
@@ -26,6 +27,7 @@ public partial class App : Node, IApp {
 
   IAppRepo IProvide<IAppRepo>.Value() => AppRepo;
   IOptionsRepo IProvide<IOptionsRepo>.Value() => Options.OptionsRepo;
+  IActionRepo IProvide<IActionRepo>.Value() => Actions.Value();
 
   public void OnResolved() {
     Binding = Logic.Bind();

@@ -18,7 +18,7 @@ public partial class DebugPanel : PanelContainer {
 
 
   public override void _Input(InputEvent @event) {
-    if (@event.IsActionPressed(Inputs.ToggleDebug)) {
+    if (@event.IsActionPressed(Inputs.DebugToggle)) {
       Visible = !Visible;
     }
   }
