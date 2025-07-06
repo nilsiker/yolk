@@ -3,7 +3,15 @@
 [ext_resource type="Script" uid="uid://burogypn2tgpr" path="res://ui/debug_panel/ui_state_debug_display/StateDebugDisplay.cs" id="1_e4h0w"]
 
 [node name="StateDebugDisplay" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_e4h0w")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text_overrun_behavior = 3

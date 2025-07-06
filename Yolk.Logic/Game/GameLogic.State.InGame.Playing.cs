@@ -27,10 +27,14 @@ public partial class GameLogic {
         }
 
         public Transition On(in Input.OnPauseUserInput input) => To<Paused>();
-        public Transition On(in Input.Quickload input) => To<Loading>();
         public Transition On(in Input.Quicksave input) {
           Output(new Output.Quicksave());
           return ToSelf();
+        }
+
+        public Transition On(in Input.Quickload input) {
+          Get<Data>().LoadType = ELoadType.Quick;
+          return To<Loading>();
         }
       }
     }

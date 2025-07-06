@@ -1,9 +1,9 @@
 namespace Yolk.UI;
 
-using System.Linq;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
+using Yolk.Data;
 using Yolk.FS;
 using Yolk.Game;
 
@@ -12,8 +12,7 @@ public partial class GameSavePanel : PanelContainer {
   public override void _Notification(int what) => this.Notify(what);
 
   public bool AllowSave { get; set; } = true;
-  public string SaveFileName { get; set; } = default!;
-  private ESaveType SaveType { get; set; } = default!;
+  public ISaveInfo SaveInfo { get; set; } = default!;
 
   [Dependency] private IGameRepo GameRepo => this.DependOn<IGameRepo>();
 
@@ -27,21 +26,10 @@ public partial class GameSavePanel : PanelContainer {
   public void OnResolved() {
     SaveButton.Visible = AllowSave;
 
-    SaveType = SaveFileName switch {
-      _ when SaveFileName.EndsWith("quicksave") => ESaveType.Quicksave,
-      _ when SaveFileName.EndsWith("autosave") => ESaveType.Autosave,
-      _ => ESaveType.Manual
-    };
+    PreviewImage.Texture = GodotSave.GetThumbnail(SaveInfo.SaveName);
 
-    var saveName = string.Join("", SaveFileName.Split('_').SkipLast(1));
+    SaveNameLabel.Text = SaveInfo.SaveName;
 
-    PreviewImage.Texture = GodotSave.GetThumbnail(saveName);
-
-    SaveNameLabel.Text = saveName;
-    SaveNameLabel.Visible = saveName.Length > 0;
-    SaveTypeLabel.Text = SaveType.ToString();
-
-
-    LoadButton.Pressed += () => GameRepo.Load(saveName, SaveType);
+    LoadButton.Pressed += () => GameRepo.Load(SaveInfo.SaveName);
   }
 }

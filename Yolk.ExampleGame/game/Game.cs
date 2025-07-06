@@ -1,6 +1,5 @@
 namespace Yolk.Game;
 
-using System;
 
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
@@ -39,23 +38,19 @@ public partial class Game : Control, IGame {
   public void OnResolved() {
     GodotSave.Initialize();
 
-    var rootChunk = new SaveChunk<GameData>(
-      onSave: (chunk) => new GameData {
-        WorldData = chunk.GetChunkSaveData<WorldData>(),
-        PlayerData = chunk.GetChunkSaveData<PlayerData>()
-      },
-      onLoad: (chunk, data) => {
-        chunk.LoadChunkSaveData(data.WorldData);
-        chunk.LoadChunkSaveData(data.PlayerData);
-      }
-    );
-
     SaveFile = new YolkSave<GameData>(
-      GameRepo.LastSaveName.Value,
-      GameRepo.LastSaveType.Value,
-      rootChunk
+      "Default",
+      new SaveChunk<GameData>(
+        onSave: (chunk) => new GameData {
+          WorldData = chunk.GetChunkSaveData<WorldData>(),
+          PlayerData = chunk.GetChunkSaveData<PlayerData>()
+        },
+        onLoad: (chunk, data) => {
+          chunk.LoadChunkSaveData(data.WorldData);
+          chunk.LoadChunkSaveData(data.PlayerData);
+        }
+      )
     );
-
 
     Binding = Logic.Bind();
 
@@ -64,6 +59,8 @@ public partial class Game : Control, IGame {
       .Handle((in GameLogic.Output.SetPauseMode output) => OnOutputSetPauseMode(output.Paused))
       .Handle((in GameLogic.Output.SaveGame output) => OnOutputSaveGame(output.SaveName))
       .Handle((in GameLogic.Output.LoadGame output) => OnOutputLoadGame(output.SaveName))
+      .Handle((in GameLogic.Output.Autosave output) => OnOutputAutosave())
+      .Handle((in GameLogic.Output.Autoload output) => OnOutputAutoload())
       .Handle((in GameLogic.Output.Quicksave output) => OnOutputQuicksave())
       .Handle((in GameLogic.Output.Quickload output) => OnOutputQuickload())
       .Handle((in GameLogic.Output.SetPauseMode output) => OnOutputSetPauseMode(output.Paused))
@@ -71,7 +68,10 @@ public partial class Game : Control, IGame {
 
     Logic.Set(AppRepo);
     Logic.Set(GameRepo);
-    Logic.Set(new GameLogic.Data { });
+    Logic.Set(new GameLogic.Data {
+      SaveName = SaveFile.SaveName,
+      LoadType = ELoadType.Manual,
+    });
 
     Logic.Start();
     this.Provide();
@@ -80,8 +80,18 @@ public partial class Game : Control, IGame {
   private static void OnOutputSetCursorPosition(Vector2 cursorPosition) => Input.WarpMouse(cursorPosition);
   private void OnOutputSetPauseMode(bool paused) => GetTree().Paused = paused;
   private void OnOutputUpdateVisibility(bool visible) => Visible = visible;
-  private void OnOutputSaveGame(string? saveName) => SaveFile.Save();
-  private void OnOutputLoadGame(string? saveName) => SaveFile.Load();
+  private void OnOutputSaveGame(string saveName) {
+    SaveFile.SaveName = saveName;
+    SaveFile.Save();
+  }
+
+  private void OnOutputLoadGame(string saveName) {
+    SaveFile.SaveName = saveName;
+    SaveFile.Load();
+  }
+
+  private void OnOutputAutosave() => SaveFile.Autosave();
+  private void OnOutputAutoload() => SaveFile.Autoload();
   private void OnOutputQuicksave() => SaveFile.Quicksave();
   private void OnOutputQuickload() => SaveFile.Quickload();
 

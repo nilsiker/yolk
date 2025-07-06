@@ -30,20 +30,12 @@ public static class GodotSave {
     new FileSystem().Directory.CreateDirectory(SaveThumbnailDirectory);
   }
 
-  private static string GetSaveFileName(string? requestedName, ESaveType type = ESaveType.Manual)
-    => type == ESaveType.Manual
-      ? string.IsNullOrWhiteSpace(requestedName) ? "Save" : requestedName
-      : $"{(string.IsNullOrWhiteSpace(requestedName) ? "" : requestedName + "_")}{type.ToString().ToLowerInvariant()}";
+  public static string GetSaveFilePath(string? saveName) => new FileSystem().Path.Join(OS.GetUserDataDir(), "saves", $"{saveName}.json");
 
-  public static string GetSaveFilePath(string? saveName, ESaveType type = ESaveType.Manual) {
-    var fileName = GetSaveFileName(saveName, type);
-    return new FileSystem().Path.Join(OS.GetUserDataDir(), "saves", $"{fileName}.json");
-  }
-
-  public static async Task Save<T>(T data, string? saveName, ESaveType type = ESaveType.Manual) {
-    GD.Print($"saving to file... (name: {saveName}, type: {type})");
+  public static async Task Save<T>(T data, string? saveName) {
+    GD.Print($"saving to file... (name: {saveName})");
     var fileSystem = new FileSystem();
-    var path = GetSaveFilePath(saveName, type);
+    var path = GetSaveFilePath(saveName);
     try {
       var json = JsonSerializer.Serialize(data, JSON_OPTIONS);
       await fileSystem.File.WriteAllTextAsync(path, json);
@@ -53,10 +45,10 @@ public static class GodotSave {
     }
   }
 
-  public static async Task<T> Load<T>(string? saveName, ESaveType type) {
-    GD.Print($"loading from file... (name: {saveName}, type: {type})");
+  public static async Task<T> Load<T>(string? saveName) {
+    GD.Print($"loading from file... (name: {saveName})");
     var fileSystem = new FileSystem();
-    var path = GetSaveFilePath(saveName, type);
+    var path = GetSaveFilePath(saveName);
 
     if (!fileSystem.File.Exists(path)) {
       GD.Print("No save file to load :'(");
@@ -67,9 +59,9 @@ public static class GodotSave {
     return JsonSerializer.Deserialize<T>(json, JSON_OPTIONS) ?? throw new SerializationException("could not serialize save game data");
   }
 
-  public static bool Exists(string? saveName, ESaveType type) {
+  public static bool Exists(string? saveName) {
     var fileSystem = new FileSystem();
-    var path = GetSaveFilePath(saveName, type);
+    var path = GetSaveFilePath(saveName);
     return fileSystem.File.Exists(path);
   }
 
@@ -88,10 +80,10 @@ public static class GodotSave {
     return texture;
   }
 
-  public static Error SaveThumbnail(string? saveName, ESaveType type, Image image) {
+  public static Error SaveThumbnail(string? saveName, Image image) {
     var fileSystem = new FileSystem();
-    var path = GetSaveFilePath(saveName, type);
-    var imagePath = fileSystem.Path.Join(SaveThumbnailDirectory, $"{GetSaveFileName(saveName, type)}.png");
+    var path = GetSaveFilePath(saveName);
+    var imagePath = fileSystem.Path.Join(SaveThumbnailDirectory, $"{saveName}.png");
 
     return image.SavePng(imagePath);
   }

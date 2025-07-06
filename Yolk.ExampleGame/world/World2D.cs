@@ -36,12 +36,14 @@ public partial class World2D : Node, IWorld2D {
   private WorldLogic.IBinding Binding { get; set; } = default!;
   private ISaveChunk<WorldData> LevelSaveChunk { get; set; } = default!;
 
-  public void OnResolved() {
-    LevelSaveChunk = new SaveChunk<WorldData>(
+  public void Setup() => LevelSaveChunk = new SaveChunk<WorldData>(
       onSave: chunk => new WorldData {
         CurrentLevelName = "Level_0" // TODO sort this out!
       },
-      onLoad: (chunk, data) => Logic.Input(new WorldLogic.Input.Transition(data.CurrentLevelName)));
+      onLoad: (chunk, data) => Logic.Input(new WorldLogic.Input.Transition(data.CurrentLevelName))
+    );
+
+  public void OnResolved() {
 
     GameSaveChunk.AddChunk(LevelSaveChunk);
     Binding = Logic.Bind();

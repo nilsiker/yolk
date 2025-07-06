@@ -27,10 +27,10 @@ public partial class LoadGamePanel : PanelContainer {
     var saves = GodotSave.GetAllSaves();
 
     foreach (var save in GodotSave.GetAllSaves()) {
-      var savePanel = GameSavePanelScene.Instantiate<GameSavePanel>();
-      savePanel.SaveFileName = save;
-      savePanel.AllowSave = false;
-      GameSaves.AddChild(savePanel);
+      // var savePanel = GameSavePanelScene.Instantiate<GameSavePanel>();
+      // savePanel.SaveInfo = save;
+      // savePanel.AllowSave = false;
+      // GameSaves.AddChild(savePanel);
     }
   }
 

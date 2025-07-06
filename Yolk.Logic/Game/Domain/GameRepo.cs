@@ -2,7 +2,6 @@ namespace Yolk.Game;
 
 using System;
 using Chickensoft.Collections;
-using Yolk.FS;
 
 public interface IGameRepo {
   public event Action? Start;
@@ -15,9 +14,11 @@ public interface IGameRepo {
   public event Action<string>? SaveRequested;
   public event Action<string>? LoadRequested;
   public event Action? Saved;
+  public event Action? AutosaveRequested;
+  public event Action? AutoloadRequested;
+  public event Action? QuicksaveRequested;
+  public event Action? QuickloadRequested;
 
-  public IAutoProp<string?> LastSaveName { get; }
-  public IAutoProp<ESaveType> LastSaveType { get; }
   public IAutoProp<EPauseMode> PauseMode { get; }
 
   public void RequestStart();
@@ -29,9 +30,13 @@ public interface IGameRepo {
   public void BroadcastGameOver();
   public void Pause(bool pausedByPlayer = false);
   public void Resume();
-  public void Save(string saveName, ESaveType saveType);
-  public void Load(string saveName, ESaveType saveType = ESaveType.Manual);
+  public void Save(string saveName);
+  public void Load(string saveName);
   public void BroadcastSaved();
+  public void Autosave();
+  public void Autoload();
+  public void Quicksave();
+  public void Quickload();
 }
 
 public class GameRepo : IGameRepo, IDisposable {
@@ -46,13 +51,14 @@ public class GameRepo : IGameRepo, IDisposable {
   public event Action<string>? LoadRequested;
   public event Action? GameOver;
   public event Action? Saved;
+  public event Action? AutosaveRequested;
+  public event Action? AutoloadRequested;
+  public event Action? QuicksaveRequested;
+  public event Action? QuickloadRequested;
+
 
   private readonly AutoProp<EPauseMode> _pauseMode = new(EPauseMode.NotPaused);
-  private readonly AutoProp<string?> _lastSaveName = new(default);
-  private readonly AutoProp<ESaveType> _lastSaveType = new(ESaveType.Autosave);
   public IAutoProp<EPauseMode> PauseMode => _pauseMode;
-  public IAutoProp<string?> LastSaveName => _lastSaveName;
-  public IAutoProp<ESaveType> LastSaveType => _lastSaveType;
 
 
   public void RequestStart() => Start?.Invoke();
@@ -66,25 +72,17 @@ public class GameRepo : IGameRepo, IDisposable {
   public void Pause(bool pausedByPlayer = false) => _pauseMode.OnNext(pausedByPlayer ? EPauseMode.PausedByPlayer : EPauseMode.Paused);
   public void Resume() => _pauseMode.OnNext(EPauseMode.NotPaused);
 
-  public void Save(string saveName, ESaveType saveType) {
-    _lastSaveName.OnNext(saveName);
-    _lastSaveType.OnNext(saveType);
-    SaveRequested?.Invoke(saveName);
-  }
-
-  public void Load(string saveName, ESaveType saveType = ESaveType.Manual) {
-    _lastSaveName.OnNext(saveName);
-    _lastSaveType.OnNext(saveType);
-    LoadRequested?.Invoke(saveName);
-  }
-
+  public void Save(string saveName) => SaveRequested?.Invoke(saveName);
+  public void Load(string saveName) => LoadRequested?.Invoke(saveName);
   public void BroadcastSaved() => Saved?.Invoke();
+  public void Autosave() => AutosaveRequested?.Invoke();
+  public void Autoload() => AutoloadRequested?.Invoke();
+  public void Quicksave() => QuicksaveRequested?.Invoke();
+  public void Quickload() => QuickloadRequested?.Invoke();
 
   public void Dispose() {
     _pauseMode.OnCompleted();
     _pauseMode.Dispose();
-    _lastSaveName.OnCompleted();
-    _lastSaveName.Dispose();
 
     GC.SuppressFinalize(this);
   }

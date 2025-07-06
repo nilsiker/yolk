@@ -1,25 +1,53 @@
 namespace Yolk.Data;
 
 using Chickensoft.SaveFileBuilder;
+using Godot;
 using Yolk.FS;
+
+public interface ISaveInfo {
+  public string SaveName { get; }
+}
 
 public interface IChunkRoot<T> where T : class {
   public ISaveChunk<T> Root { get; }
 }
 
-public class YolkSave<T>(string saveName, ESaveType saveType, ISaveChunk<T> root) : IChunkRoot<T> where T : class {
-  public string SaveName { get; } = saveName;
-  public ESaveType SaveType { get; } = saveType;
-  public ISaveChunk<T> Root { get; } = root;
-  public SaveFile<T> SaveFile { get; } = CreateSaveFile(root, saveName, ESaveType.Manual);
-  public SaveFile<T> AutosaveFile { get; } = CreateSaveFile(root, saveName, ESaveType.Autosave);
-  public SaveFile<T> QuicksaveFile { get; } = CreateSaveFile(root, saveName, ESaveType.Quicksave);
+public class YolkSave<T> : ISaveInfo, IChunkRoot<T> where T : class {
+  public string SaveName { get; set; }
+  public ISaveChunk<T> Root { get; }
+  public SaveFile<T> SaveFile { get; }
+  public SaveFile<T> AutosaveFile { get; }
+  public SaveFile<T> QuicksaveFile { get; }
 
-  private static SaveFile<T> CreateSaveFile(ISaveChunk<T> root, string saveName, ESaveType type) =>
+  private T? _quickSaveData;
+
+  public YolkSave(string saveName, ISaveChunk<T> root) {
+    SaveName = saveName;
+    Root = root;
+    SaveFile = CreateSaveFile(root, saveName);
+    AutosaveFile = CreateAutosaveFile(root, saveName);
+    QuicksaveFile = CreateQuicksaveFile(root);
+  }
+
+  private static SaveFile<T> CreateSaveFile(ISaveChunk<T> root, string saveName) =>
     new(
       root: root,
-      onSave: async data => await GodotSave.Save(data, saveName, type),
-      onLoad: async () => await GodotSave.Load<T>(saveName, type)
+      onSave: async data => await GodotSave.Save(data, saveName),
+      onLoad: async () => await GodotSave.Load<T>(saveName)
+    );
+
+  private static SaveFile<T> CreateAutosaveFile(ISaveChunk<T> root, string saveName) =>
+    new(
+      root: root,
+      onSave: async data => await GodotSave.Save(data, $"{saveName}_auto"),
+      onLoad: async () => await GodotSave.Load<T>($"{saveName}_auto")
+    );
+
+  private SaveFile<T> CreateQuicksaveFile(ISaveChunk<T> root) =>
+    new(
+      root: root,
+      onSave: async data => { _quickSaveData = data; await Task.CompletedTask; GD.Print("Quicksave data saved."); },
+      onLoad: async () => await Task.FromResult(_quickSaveData)
     );
 
   public void Save() => SaveFile.Save();
@@ -27,5 +55,12 @@ public class YolkSave<T>(string saveName, ESaveType saveType, ISaveChunk<T> root
   public void Autosave() => AutosaveFile.Save();
   public void Autoload() => AutosaveFile.Load();
   public void Quicksave() => QuicksaveFile.Save();
-  public void Quickload() => QuicksaveFile.Load();
+  public void Quickload() {
+    if (_quickSaveData is not null) {
+      QuicksaveFile.Load();
+    }
+    else {
+      GD.PushError("No quicksave data available.");
+    }
+  }
 }

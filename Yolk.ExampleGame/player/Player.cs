@@ -1,18 +1,21 @@
 namespace Yolk.ExampleGame;
 
+using System.Threading.Tasks;
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
 using Chickensoft.SaveFileBuilder;
 using Godot;
 using Yolk.Controls;
+using Yolk.Core;
 using Yolk.Data;
+using Yolk.Game;
 using Yolk.Generator;
 using Yolk.Logic.Player;
 using Yolk.Logic.World;
 using Yolk.World;
 
-public interface IPlayer : ICharacterBody2D;
+public interface IPlayer : ICharacterBody2D, IKillable;
 
 [StateInfo]
 [Meta(typeof(IAutoNode))]
@@ -20,36 +23,50 @@ public partial class Player : CharacterBody2D, IPlayer {
   public override void _Notification(int what) => this.Notify(what);
 
   [Dependency] private IWorldRepo WorldRepo => this.DependOn<IWorldRepo>();
+  [Dependency] private IGameRepo GameRepo => this.DependOn<IGameRepo>();
   [Dependency] private ISaveChunk<GameData> GameChunk => this.DependOn<ISaveChunk<GameData>>();
+
+  void IKillable.Kill() => Logic.Input(new PlayerLogic.Input.Kill());
+
 
   private ISaveChunk<PlayerData> PlayerChunk { get; set; } = default!;
   private PlayerLogic Logic { get; set; } = default!;
   private PlayerLogic.IBinding Binding { get; set; } = default!;
 
-  public void OnResolved() {
-    PlayerChunk = new SaveChunk<PlayerData>(
-      onSave: chunk => new PlayerData {
-        Px = GlobalPosition.X,
-        Py = GlobalPosition.Y,
-      },
-      onLoad: (chunk, data) => {
-        GlobalPosition = new(data.Px, data.Py);
-      });
-    GameChunk.AddChunk(PlayerChunk);
-
-
+  public void Setup() {
     Logic = new();
-    Binding = Logic.Bind();
 
+    PlayerChunk = new SaveChunk<PlayerData>(
+     onSave: chunk => new PlayerData {
+       Px = GlobalPosition.X,
+       Py = GlobalPosition.Y,
+       Logic = Logic
+     },
+     onLoad: async (chunk, data) => {
+       GlobalPosition = new(data.Px, data.Py);
+       // NOTE HACK - we need to wait for two physics frame to ensure the player doesn't trigger new in the level on load.
+       await ToSignal(GetTree(), "physics_frame");
+       await ToSignal(GetTree(), "physics_frame");
+       Logic.RestoreFrom(data.Logic);
+     });
+  }
+
+  public void OnResolved() {
+    GameChunk.OverwriteChunk(PlayerChunk);
+
+    Binding = Logic.Bind();
     Binding.Handle((in PlayerLogic.Output.Teleport output) => OnOutputTeleport(output.Entrypoint));
+    Binding.When<PlayerLogic.State>(state => GD.Print($"Player state changed to {state.GetType().Name}"));
 
     Logic.Set(WorldRepo);
+    Logic.Set(GameRepo);
     Logic.Start();
   }
 
+
   private void OnOutputTeleport(ITransform2D entrypoint) {
+    GD.Print($"Teleporting player to {entrypoint.Position}");
     GlobalPosition = new Vector2(entrypoint.Position.X, entrypoint.Position.Y);
-    GlobalRotation = entrypoint.Rotation;
   }
 
   private float _gravity;
@@ -72,7 +89,6 @@ public partial class Player : CharacterBody2D, IPlayer {
       _gravity = -10;
     }
   }
-
-
   public override void _ExitTree() => Binding.Dispose();
+
 }

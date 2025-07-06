@@ -14,26 +14,28 @@ state "GameLogic State" as Yolk_Game_GameLogic_State {
 
 Yolk_Game_GameLogic_State --> Yolk_Game_GameLogic_State : OnSaved
 Yolk_Game_GameLogic_State --> Yolk_Game_GameLogic_State_Loading : Load
+Yolk_Game_GameLogic_State_InGame --> Yolk_Game_GameLogic_State_InGame : Autosave
 Yolk_Game_GameLogic_State_InGame --> Yolk_Game_GameLogic_State_InGame : Save
 Yolk_Game_GameLogic_State_InGame --> Yolk_Game_GameLogic_State_InGame_Paused_Over : OnGameOverTriggered
 Yolk_Game_GameLogic_State_InGame --> Yolk_Game_GameLogic_State_InGame_Paused_Quitting : OnQuitRequested
+Yolk_Game_GameLogic_State_InGame --> Yolk_Game_GameLogic_State_Loading : Autoload
 Yolk_Game_GameLogic_State_InGame_Paused --> Yolk_Game_GameLogic_State_InGame_Playing : OnPauseUserInput
 Yolk_Game_GameLogic_State_InGame_Paused_Over --> Yolk_Game_GameLogic_State_InGame_Paused_Quitting : OnQuitRequested
 Yolk_Game_GameLogic_State_InGame_Paused_Quitting --> Yolk_Game_GameLogic_State_Standby : QuittingTransitionFinished
 Yolk_Game_GameLogic_State_InGame_Playing --> Yolk_Game_GameLogic_State_InGame_Paused : OnPauseUserInput
 Yolk_Game_GameLogic_State_InGame_Playing --> Yolk_Game_GameLogic_State_InGame_Playing : Quicksave
 Yolk_Game_GameLogic_State_InGame_Playing --> Yolk_Game_GameLogic_State_Loading : Quickload
-Yolk_Game_GameLogic_State_Loading --> Yolk_Game_GameLogic_State_InGame_Playing : OnLoaded
+Yolk_Game_GameLogic_State_Loading --> Yolk_Game_GameLogic_State_InGame_Playing : Ready
 Yolk_Game_GameLogic_State_Standby --> Yolk_Game_GameLogic_State_Starting : Start
 Yolk_Game_GameLogic_State_Starting --> Yolk_Game_GameLogic_State_InGame_Playing : Ready
 
-Yolk_Game_GameLogic_State : OnGameLastSaveNameSync() → SetLastSaveName
 Yolk_Game_GameLogic_State : OnGamePausedSync() → SetPauseMode
+Yolk_Game_GameLogic_State_InGame : OnAutosave → Autosave
 Yolk_Game_GameLogic_State_InGame : OnGameSaveRequested() → SaveGame
 Yolk_Game_GameLogic_State_InGame_Paused_Quitting : OnEnter → QuitGame
 Yolk_Game_GameLogic_State_InGame_Playing : OnEnter → UpdateVisibility
 Yolk_Game_GameLogic_State_InGame_Playing : OnQuicksave → Quicksave
-Yolk_Game_GameLogic_State_Loading : OnBlackoutFinished() → LoadGame
+Yolk_Game_GameLogic_State_Loading : OnBlackoutFinished() → Autoload, LoadGame, Quickload
 
 [*] --> Yolk_Game_GameLogic_State_Standby
 @enduml

@@ -45,4 +45,5 @@ mouse_filter = 2
 
 [node name="StateDebugDisplay" parent="Margins/Contents" instance=ExtResource("1_amyq3")]
 layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 2

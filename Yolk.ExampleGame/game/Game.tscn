@@ -46,4 +46,4 @@ unique_name_in_owner = true
 
 [node name="Player" parent="YolkRepoProvider/World" instance=ExtResource("11_5a4rm")]
 unique_name_in_owner = true
-position = Vector2(456, 325)
+position = Vector2(-71, -76)
