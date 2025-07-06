@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_d78cj"]
 [ext_resource type="Script" uid="uid://ovytfoh3xfgw" path="res://options_menu/OptionsMenu.cs" id="2_bbeos"]
-[ext_resource type="PackedScene" uid="uid://c4t0naagugh14" path="res://options_menu/ActionGrid.tscn" id="3_hy6yp"]
+[ext_resource type="PackedScene" uid="uid://xrjjl80katne" path="res://options_menu/ActionGrid.tscn" id="3_hy6yp"]
 
 [node name="OptionsUI" type="Control"]
 z_index = 5

@@ -1,7 +1,7 @@
 @startuml PauseMenuLogic
 state "PauseMenuLogic State" as Yolk_PauseMenuLogic_State {
-  state "Visible" as Yolk_PauseMenuLogic_State_Visible
   state "Hidden" as Yolk_PauseMenuLogic_State_Hidden
+  state "Visible" as Yolk_PauseMenuLogic_State_Visible
 }
 
 Yolk_PauseMenuLogic_State --> Yolk_PauseMenuLogic_State : OnOptionsPressed

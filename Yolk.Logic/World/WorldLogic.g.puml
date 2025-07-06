@@ -1,8 +1,8 @@
 @startuml WorldLogic
 state "WorldLogic State" as Yolk_Level_WorldLogic_State {
-  state "Transitioning" as Yolk_Level_WorldLogic_State_Transitioning
-  state "InWorld" as Yolk_Level_WorldLogic_State_InWorld
   state "OutOfWorld" as Yolk_Level_WorldLogic_State_OutOfWorld
+  state "InWorld" as Yolk_Level_WorldLogic_State_InWorld
+  state "Transitioning" as Yolk_Level_WorldLogic_State_Transitioning
 }
 
 Yolk_Level_WorldLogic_State_InWorld --> Yolk_Level_WorldLogic_State_OutOfWorld : Exit

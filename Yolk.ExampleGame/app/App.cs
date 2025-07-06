@@ -4,13 +4,11 @@ using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
 using Godot;
-using Yolk.Controls;
 using Yolk.Generator;
-using Yolk.Logic.Controls;
 using Yolk.Options;
 
 
-public interface IApp : INode, IProvide<IAppRepo>, IProvide<IOptionsRepo>, IProvide<ControlsRepo> {
+public interface IApp : INode, IProvide<IAppRepo>, IProvide<IOptionsRepo> {
   public void OnOutputQuitApp();
 }
 
@@ -20,7 +18,6 @@ public partial class App : Node, IApp {
   public override void _Notification(int what) => this.Notify(what);
 
   [Node] private IOptions Options { get; set; } = default!;
-  [Node] private Controls Controls { get; set; } = default!;
   [Node] private AnimationPlayer Blackout { get; set; } = default!;
 
   private IAppRepo AppRepo { get; set; } = new AppRepo();
@@ -29,7 +26,6 @@ public partial class App : Node, IApp {
 
   IAppRepo IProvide<IAppRepo>.Value() => AppRepo;
   IOptionsRepo IProvide<IOptionsRepo>.Value() => Options.OptionsRepo;
-  ControlsRepo IProvide<ControlsRepo>.Value() => Controls.ControlsRepo;
 
   public void OnResolved() {
     Binding = Logic.Bind();

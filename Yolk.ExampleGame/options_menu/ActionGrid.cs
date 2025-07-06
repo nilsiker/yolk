@@ -10,7 +10,7 @@ public partial class ActionGrid : GridContainer {
     this.ClearChildren();
 
     foreach (var action in InputMap.GetActions().Where(a => !a.ToString().StartsWith("ui_"))) {
-      var container = _actionContainerScene?.Instantiate<ActionContainer>() ?? throw new MissingFieldException();
+      var container = _actionContainerScene?.Instantiate<ActionBindButton>() ?? throw new MissingFieldException();
 
       container.Action = action;
       AddChild(container);

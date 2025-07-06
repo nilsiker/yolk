@@ -1,0 +1,16 @@
+@startuml ActionContainerLogic
+state "ActionContainerLogic State" as Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State {
+  state "Idle" as Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Idle
+  state "Listening" as Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Listening
+}
+
+Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Idle --> Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Listening : Listen
+Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Listening --> Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Idle : Bind
+Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Listening --> Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Idle : Cancel
+
+Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Listening : OnBind → BindAction
+Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Listening : OnEnter → UpdateIcon
+Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Listening : OnExit → UpdateIcon
+
+[*] --> Yolk_UI_Options_ActionBindButton_ActionContainerLogic_State_Idle
+@enduml

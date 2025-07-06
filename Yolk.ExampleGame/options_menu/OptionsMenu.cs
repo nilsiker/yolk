@@ -1,6 +1,5 @@
 namespace Yolk.UI;
 
-using System;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;

@@ -5,6 +5,7 @@ using Godot.Collections;
 
 public static class GodotConfig {
   private const string OPTIONS_PATH = "user://options.cfg";
+  private const string INPUTMAP_PATH = "user://inputmap.cfg";
   private const string CONTROLS_SECTION = "controls";
   private const string DISPLAY_SECTION = "display";
   private const string GRAPHICS_SECTION = "graphics";
@@ -12,7 +13,7 @@ public static class GodotConfig {
 
   public static void ImportInputMap() {
     var config = new ConfigFile();
-    var error = config.Load(OPTIONS_PATH);
+    var error = config.Load(INPUTMAP_PATH);
 
     if (error == Error.Ok) {
       foreach (var key in config.GetSectionKeys(CONTROLS_SECTION)) {
@@ -26,15 +27,21 @@ public static class GodotConfig {
     }
   }
 
+  public static void ClearCustomInputMap() {
+    var config = new ConfigFile();
+    config.Clear();
+    config.Save(INPUTMAP_PATH);
+  }
+
   public static void WriteMappedAction(string action) {
     var events = InputMap.ActionGetEvents(action);
 
     var config = new ConfigFile();
-    config.Load(OPTIONS_PATH);
+    config.Load(INPUTMAP_PATH);
 
     config.SetValue(CONTROLS_SECTION, action, events);
 
-    var error = config.Save(OPTIONS_PATH);
+    var error = config.Save(INPUTMAP_PATH);
 
     if (error != Error.Ok) {
       GD.PushWarning("failed to save inputs");

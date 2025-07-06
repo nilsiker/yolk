@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4t0naagugh14"]
+[gd_scene load_steps=3 format=3 uid="uid://xrjjl80katne"]
 
 [ext_resource type="Script" uid="uid://t4v2nsvnaxd7" path="res://options_menu/ActionGrid.cs" id="1_jo2h2"]
-[ext_resource type="PackedScene" uid="uid://cdvpp54grfmaq" path="res://options_menu/ActionContainer.tscn" id="2_jo2h2"]
+[ext_resource type="PackedScene" uid="uid://dpahhf0tdwx5s" path="res://options_menu/ActionBindButton.tscn" id="2_jo2h2"]
 
 [node name="ActionGrid" type="GridContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 5
 columns = 2
@@ -12,6 +19,7 @@ _actionContainerScene = ExtResource("2_jo2h2")
 
 [node name="ActionContainer" parent="." instance=ExtResource("2_jo2h2")]
 layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="ActionContainer2" parent="." instance=ExtResource("2_jo2h2")]
 layout_mode = 2
