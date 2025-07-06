@@ -25,7 +25,6 @@ public partial class Game : Control, IGame {
   // NOTE game currently acts as a service layer for more generally available repos
   private GameLogic Logic { get; set; } = new();
   private GameLogic.IBinding Binding { get; set; } = default!;
-  private int Slot { get; set; } = -1;
   public SaveFile<GameData> SaveFile { get; set; } = default!;
 
   IGameRepo IProvide<IGameRepo>.Value() => GameRepo;
@@ -53,14 +52,19 @@ public partial class Game : Control, IGame {
         GetViewport().SetCanvasCullMaskBit(2, false);
         await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
         var image = GetViewport().GetTexture().GetImage();
-        var error = image.SavePng($"{OS.GetUserDataDir()}/slot{Slot}.png");
+        var error = GodotSave.SavePreviewImage(
+          GameRepo.LastSaveName.Value,
+          GameRepo.LastSaveType.Value,
+          image);
         GetViewport().SetCanvasCullMaskBit(2, true);
 
-        await GodotSave.Save(data, Slot);
+        // Use LastSaveName and SaveType.Normal for now; you can adjust as needed
+        await GodotSave.Save(data, GameRepo.LastSaveName.Value, GameRepo.LastSaveType.Value);
+        Logic.Input(new GameLogic.Input.OnSaved());
       },
       onLoad: async () => {
-        var data = await GodotSave.Load<GameData>(Slot);
-        Logic.Input(new GameLogic.Input.OnLoaded()); // TODO this does not get called if load fails. Needs more robust load logic...
+        var data = await GodotSave.Load<GameData>(GameRepo.LastSaveName.Value, GameRepo.LastSaveType.Value);
+        Logic.Input(new GameLogic.Input.OnLoaded());
         return data;
       });
 
@@ -76,30 +80,32 @@ public partial class Game : Control, IGame {
 
     Logic.Set(AppRepo);
     Logic.Set(GameRepo);
-    Logic.Set(new GameLogic.Data {
-      LastSaveName = "Autosave"
-    });
+    Logic.Set(new GameLogic.Data { });
 
     Logic.Start();
     this.Provide();
   }
 
-  private void OnOutputSetSlot(int slot) => Slot = slot;
   private static void OnOutputSetCursorPosition(Vector2 cursorPosition) => Input.WarpMouse(cursorPosition);
   private void OnOutputSetPauseMode(bool paused) => GetTree().Paused = paused;
   private void OnOutputUpdateVisibility(bool visible) => Visible = visible;
-  private void OnOutputSaveGame(string saveName) => SaveFile.Save();
-  private void OnOutputLoadGame(string saveName) => SaveFile.Load();
+  private void OnOutputSaveGame(string? saveName) => SaveFile.Save();
+  private void OnOutputLoadGame(string? saveName) => SaveFile.Load();
 
   public override void _UnhandledInput(InputEvent @event) {
     if (@event.IsActionPressed(HardCancel)) {
       Logic.Input(new GameLogic.Input.OnPauseUserInput());
     }
     else if (@event.IsActionPressed(Quicksave)) {
-      Logic.Input(new GameLogic.Input.Save());
+      Logic.Input(new GameLogic.Input.Save(GameRepo.LastSaveName.Value, ESaveType.Quicksave));
     }
     else if (@event.IsActionPressed(Quickload)) {
-      Logic.Input(new GameLogic.Input.Load());
+      if (GodotSave.Exists(GameRepo.LastSaveName.Value, ESaveType.Quicksave)) {
+        Logic.Input(new GameLogic.Input.Load(GameRepo.LastSaveName.Value, ESaveType.Quicksave));
+      }
+      else {
+        GD.PushWarning("Quickload failed: No quicksave found.");
+      }
     }
   }
 

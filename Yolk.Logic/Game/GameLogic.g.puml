@@ -12,6 +12,7 @@ state "GameLogic State" as Yolk_Game_GameLogic_State {
   state "Starting" as Yolk_Game_GameLogic_State_Starting
 }
 
+Yolk_Game_GameLogic_State --> Yolk_Game_GameLogic_State : OnSaved
 Yolk_Game_GameLogic_State --> Yolk_Game_GameLogic_State_Loading : Load
 Yolk_Game_GameLogic_State_InGame --> Yolk_Game_GameLogic_State_InGame : Save
 Yolk_Game_GameLogic_State_InGame --> Yolk_Game_GameLogic_State_InGame_Paused_Over : OnGameOverTriggered

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfytm7qeslqrq"]
 
-[ext_resource type="Texture2D" uid="uid://cv8q4i3hrnhxv" path="res://player/icon.png" id="1_lqyj4"]
-[ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="2_qa4kh"]
+[ext_resource type="PackedScene" uid="uid://cc8340ejx6eqp" path="res://ui/game_save_panel/GameSavePanel.tscn" id="1_hsnrp"]
+[ext_resource type="Script" uid="uid://ctjoc0ffbc1s5" path="res://ui/load_game_panel/LoadGamePanel.cs" id="1_xodft"]
 
 [node name="LoadGamePanel" type="PanelContainer"]
 anchors_preset = 15
@@ -9,6 +9,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_xodft")
+GameSavePanelScene = ExtResource("1_hsnrp")
 
 [node name="Margins" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -17,118 +19,6 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margins"]
+[node name="GameSaves" type="VBoxContainer" parent="Margins"]
+unique_name_in_owner = true
 layout_mode = 2
-
-[node name="GameSavePanel" type="PanelContainer" parent="Margins/VBoxContainer"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Margins/VBoxContainer/GameSavePanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Margins/VBoxContainer/GameSavePanel/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 40
-
-[node name="PreviewImage" type="TextureRect" parent="Margins/VBoxContainer/GameSavePanel/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-texture = ExtResource("1_lqyj4")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Margins/VBoxContainer/GameSavePanel/MarginContainer/HBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="AreaLabel" type="Label" parent="Margins/VBoxContainer/GameSavePanel/MarginContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_qa4kh")
-theme_override_font_sizes/font_size = 24
-text = "Apartment Stairwell"
-
-[node name="SaveDateLabel" type="Label" parent="Margins/VBoxContainer/GameSavePanel/MarginContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_qa4kh")
-theme_override_font_sizes/font_size = 24
-text = "2005-05-04 14:38"
-
-[node name="GameSavePanel2" type="PanelContainer" parent="Margins/VBoxContainer"]
-modulate = Color(1, 1, 1, 0.392157)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Margins/VBoxContainer/GameSavePanel2"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Margins/VBoxContainer/GameSavePanel2/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 40
-
-[node name="PreviewImage" type="TextureRect" parent="Margins/VBoxContainer/GameSavePanel2/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-texture = ExtResource("1_lqyj4")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Margins/VBoxContainer/GameSavePanel2/MarginContainer/HBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="AreaLabel" type="Label" parent="Margins/VBoxContainer/GameSavePanel2/MarginContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_qa4kh")
-theme_override_font_sizes/font_size = 24
-text = "Apartment Stairwell"
-
-[node name="SaveDateLabel" type="Label" parent="Margins/VBoxContainer/GameSavePanel2/MarginContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_qa4kh")
-theme_override_font_sizes/font_size = 24
-text = "2005-05-04 14:38"
-
-[node name="GameSavePanel3" type="PanelContainer" parent="Margins/VBoxContainer"]
-modulate = Color(1, 1, 1, 0.392157)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Margins/VBoxContainer/GameSavePanel3"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Margins/VBoxContainer/GameSavePanel3/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 40
-
-[node name="PreviewImage" type="TextureRect" parent="Margins/VBoxContainer/GameSavePanel3/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-texture = ExtResource("1_lqyj4")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Margins/VBoxContainer/GameSavePanel3/MarginContainer/HBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="AreaLabel" type="Label" parent="Margins/VBoxContainer/GameSavePanel3/MarginContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_qa4kh")
-theme_override_font_sizes/font_size = 24
-text = "Apartment Stairwell"
-
-[node name="SaveDateLabel" type="Label" parent="Margins/VBoxContainer/GameSavePanel3/MarginContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_qa4kh")
-theme_override_font_sizes/font_size = 24
-text = "2005-05-04 14:38"

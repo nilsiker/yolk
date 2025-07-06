@@ -1,5 +1,6 @@
 namespace Yolk.Game.Test;
 
+using System;
 using System.Threading.Tasks;
 using Chickensoft.AutoInject;
 using Chickensoft.GoDotTest;
@@ -8,7 +9,7 @@ using Godot;
 using Moq;
 using Shouldly;
 
-public class GameTest(Node testScene) : TestClass(testScene) {
+public class GameTest(Node testScene) : TestClass(testScene), System.IDisposable {
   private Fixture _fixture = default!;
   private Mock<IAppRepo> _appRepo = default!;
   private Mock<IGameRepo> _gameRepo = default!;
@@ -93,4 +94,17 @@ public class GameTest(Node testScene) : TestClass(testScene) {
     _game.OnExitTree();
     // No exceptions = pass
   }
+
+  public void Dispose() {
+    _game?.OnExitTree();
+    _binding?.Dispose();
+    _game = null!;
+    _logic = null!;
+    _appRepo = null!;
+    _gameRepo = null!;
+    _binding = null!;
+
+    GC.SuppressFinalize(this);
+  }
+
 }

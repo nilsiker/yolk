@@ -26,7 +26,7 @@ public partial class GameLogic {
 
       public Transition On(in Input.OnQuitRequested input) => To<Paused.Quitting>();
       public Transition On(in Input.Save input) {
-        Get<IGameRepo>().Save(input.SaveName);
+        Get<IGameRepo>().Save(input.SaveName, input.SaveType);
         return ToSelf();
       }
 
