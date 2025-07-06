@@ -69,16 +69,15 @@ public partial class Game : Control, IGame {
     // Bind functions to state outputs here
     Binding
       .Handle((in GameLogic.Output.SetPauseMode output) => OnOutputSetPauseMode(output.Paused))
-      .Handle((in GameLogic.Output.SetSlot output) => OnOutputSetSlot(output.Slot))
-      .Handle((in GameLogic.Output.SaveGame output) => OnOutputSaveGame(output.Slot))
-      .Handle((in GameLogic.Output.LoadGame output) => OnOutputLoadGame(output.Slot))
+      .Handle((in GameLogic.Output.SaveGame output) => OnOutputSaveGame(output.SaveName))
+      .Handle((in GameLogic.Output.LoadGame output) => OnOutputLoadGame(output.SaveName))
       .Handle((in GameLogic.Output.SetPauseMode output) => OnOutputSetPauseMode(output.Paused))
       .Handle((in GameLogic.Output.UpdateVisibility output) => OnOutputUpdateVisibility(output.Visible));
 
     Logic.Set(AppRepo);
     Logic.Set(GameRepo);
     Logic.Set(new GameLogic.Data {
-      Slot = Slot
+      LastSaveName = "Autosave"
     });
 
     Logic.Start();
@@ -89,8 +88,8 @@ public partial class Game : Control, IGame {
   private static void OnOutputSetCursorPosition(Vector2 cursorPosition) => Input.WarpMouse(cursorPosition);
   private void OnOutputSetPauseMode(bool paused) => GetTree().Paused = paused;
   private void OnOutputUpdateVisibility(bool visible) => Visible = visible;
-  private void OnOutputSaveGame(int slot) => SaveFile.Save();
-  private void OnOutputLoadGame(int slot) => SaveFile.Load();
+  private void OnOutputSaveGame(string saveName) => SaveFile.Save();
+  private void OnOutputLoadGame(string saveName) => SaveFile.Load();
 
   public override void _UnhandledInput(InputEvent @event) {
     if (@event.IsActionPressed(HardCancel)) {

@@ -15,7 +15,7 @@ public partial class GameLogic {
 
       public Transition On(in Input.OnLoaded input) => To<InGame.Playing>();
 
-      public void OnBlackoutFinished() => Output(new Output.LoadGame(Get<Data>().Slot));
+      public void OnBlackoutFinished() => Output(new Output.LoadGame(Get<Data>().LastSaveName));
     }
   }
 }

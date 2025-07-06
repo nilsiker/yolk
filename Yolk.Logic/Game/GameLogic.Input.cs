@@ -7,8 +7,8 @@ public partial class GameLogic {
     public record struct OnQuitRequested;
     public record struct Start();
     public record struct OnGameOverTriggered;
-    public record struct Save(int Slot);
-    public record struct Load(int Slot);
+    public record struct Save(string SaveName);
+    public record struct Load(string SaveName);
     public record struct BlackoutFinished;
     public record struct OnLoaded;
     public record struct QuittingTransitionFinished;

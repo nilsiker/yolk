@@ -25,7 +25,7 @@ public partial class GameLogic {
           });
         }
 
-        private void OnGameLoadRequested(int slot) => Output(new Output.LoadGame(slot));
+        private void OnGameLoadRequested(string saveName) => Output(new Output.LoadGame(saveName));
         public Transition On(in Input.OnPauseUserInput input) => To<Paused>();
       }
     }

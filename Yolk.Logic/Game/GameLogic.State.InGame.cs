@@ -22,11 +22,11 @@ public partial class GameLogic {
       }
 
       private void OnGameOverRequested() => Input(new Input.OnGameOverTriggered());
-      private void OnGameSaveRequested(int slot) => Output(new Output.SaveGame(slot));
+      private void OnGameSaveRequested(string saveName) => Output(new Output.SaveGame(saveName));
 
       public Transition On(in Input.OnQuitRequested input) => To<Paused.Quitting>();
       public Transition On(in Input.Save input) {
-        Get<IGameRepo>().Save(input.Slot);
+        Get<IGameRepo>().Save(input.SaveName);
         return ToSelf();
       }
 
