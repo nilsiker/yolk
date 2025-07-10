@@ -30,6 +30,12 @@ unique_name_in_owner = true
 [node name="PauseMenu" parent="GameUI" instance=ExtResource("5_yw8km")]
 visible = false
 
+[node name="Label" type="Label" parent="GameUI"]
+visibility_layer = 2
+offset_right = 40.0
+offset_bottom = 23.0
+text = "TEST"
+
 [node name="YolkRepoProvider" type="Node2D" parent="."]
 script = ExtResource("3_ejjr5")
 

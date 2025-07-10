@@ -1,36 +1,47 @@
-namespace Yolk.Game;
+namespace Yolk.FS;
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Godot;
 
 public static class GodotScreenshot {
-  public static async void Save(string filePath, List<uint> hideLayers) {
+  public static async void Save(string filePath, List<uint> hideLayers) => await SaveAsync(filePath, hideLayers);
+
+  public static async Task SaveAsync(string filePath, List<uint> hideLayers) {
     var tree = Engine.GetMainLoop() as SceneTree;
     if (tree?.CurrentScene == null) {
       GD.PrintErr("Cannot take screenshot: No current scene");
       return;
     }
 
-    var mainViewport = tree.Root;
+    var mainViewport = tree.CurrentScene.GetViewport();
 
+    // Hide layers on main thread
     foreach (var layer in hideLayers) {
       mainViewport.SetCanvasCullMaskBit(layer, false);
     }
 
-    var image = mainViewport.GetTexture().GetImage();
     await tree.ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
 
-    var error = image.SavePng(filePath);
+    // Capture the image - this must happen on main thread
+    var image = mainViewport.GetTexture().GetImage();
 
-    if (error != Error.Ok) {
-      GD.PrintErr($"Failed to save screenshot to {filePath}: {error}");
-    }
-    else {
-      GD.Print($"Screenshot saved to {filePath}");
-    }
-
+    // Restore layers on main thread
     foreach (var layer in hideLayers) {
       mainViewport.SetCanvasCullMaskBit(layer, true);
     }
+
+    // Save the image asynchronously on a background thread
+    await Task.Run(() => {
+      var error = image.SavePng(filePath);
+
+      if (error != Error.Ok) {
+        // Use CallDeferred to safely call GD.PrintErr from background thread
+        Callable.From(() => GD.PrintErr($"Failed to save screenshot to {filePath}: {error}")).CallDeferred();
+      }
+      else {
+        Callable.From(() => GD.Print($"Screenshot saved to {filePath}")).CallDeferred();
+      }
+    });
   }
 }

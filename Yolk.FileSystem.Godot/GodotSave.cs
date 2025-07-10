@@ -35,10 +35,20 @@ public static class GodotSave {
   public static async Task Save<T>(T data, string? saveName) {
     GD.Print($"saving to file... (name: {saveName})");
     var fileSystem = new FileSystem();
+
+    // Start screenshot capture asynchronously
+    var screenshotTask = GodotScreenshot.SaveAsync($"{SaveThumbnailDirectory}/{saveName}.png", [1]);
+
     var path = GetSaveFilePath(saveName);
     try {
-      var json = JsonSerializer.Serialize(data, JSON_OPTIONS);
-      await fileSystem.File.WriteAllTextAsync(path, json);
+      // Serialize on a background thread
+      var json = await Task.Run(() => JsonSerializer.Serialize(data, JSON_OPTIONS));
+
+      // Wait for both operations to complete
+      await Task.WhenAll(
+        screenshotTask,
+        fileSystem.File.WriteAllTextAsync(path, json)
+      );
     }
     catch (Exception e) {
       GD.PushError($"Failed to save game: {e}");
