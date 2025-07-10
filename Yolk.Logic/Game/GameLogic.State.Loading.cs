@@ -11,15 +11,13 @@ public partial class GameLogic {
         OnDetach(() => Get<IGameRepo>().Ready -= OnGameReady);
 
         this.OnEnter(() => {
-          Get<IAppRepo>().RequestBlackout(OnBlackoutFinished!);
+          Get<IAppRepo>().RequestBlackout(OnBlackoutFinished);
           Get<IGameRepo>().Pause();
         });
         this.OnExit(() => Get<IGameRepo>().Pause());
       }
 
       private void OnGameReady() => Input(new Input.Ready());
-
-      public Transition On(in Input.OnLoaded input) => To<InGame.Playing>();
 
       public Transition On(in Input.Ready input) => To<InGame.Playing>();
 
@@ -38,8 +36,6 @@ public partial class GameLogic {
           default:
             break;
         }
-
-        Input(new Input.OnLoaded());
       }
     }
   }

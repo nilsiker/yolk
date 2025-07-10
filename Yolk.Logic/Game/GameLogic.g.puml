@@ -2,8 +2,8 @@
 state "GameLogic State" as Yolk_Game_GameLogic_State {
   state "InGame" as Yolk_Game_GameLogic_State_InGame {
     state "Paused" as Yolk_Game_GameLogic_State_InGame_Paused {
-      state "Quitting" as Yolk_Game_GameLogic_State_InGame_Paused_Quitting
       state "Over" as Yolk_Game_GameLogic_State_InGame_Paused_Over
+      state "Quitting" as Yolk_Game_GameLogic_State_InGame_Paused_Quitting
     }
     state "Playing" as Yolk_Game_GameLogic_State_InGame_Playing
   }
