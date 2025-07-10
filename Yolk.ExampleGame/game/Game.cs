@@ -103,7 +103,12 @@ public partial class Game : Control, IGame {
       Logic.Input(new GameLogic.Input.Quicksave());
     }
     else if (@event.IsActionPressed(Quickload)) {
-      Logic.Input(new GameLogic.Input.Quickload());
+      if (SaveFile.HasQuicksave) {
+        Logic.Input(new GameLogic.Input.Quickload());
+      }
+      else {
+        GD.PrintErr("Cannot quicksave, save file does not exist.");
+      }
     }
   }
 

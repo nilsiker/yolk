@@ -1,6 +1,5 @@
 namespace Yolk.ExampleGame;
 
-using System.Threading.Tasks;
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
@@ -28,7 +27,6 @@ public partial class Player : CharacterBody2D, IPlayer {
 
   void IKillable.Kill() => Logic.Input(new PlayerLogic.Input.Kill());
 
-
   private ISaveChunk<PlayerData> PlayerChunk { get; set; } = default!;
   private PlayerLogic Logic { get; set; } = default!;
   private PlayerLogic.IBinding Binding { get; set; } = default!;
@@ -42,11 +40,8 @@ public partial class Player : CharacterBody2D, IPlayer {
        Py = GlobalPosition.Y,
        Logic = Logic
      },
-     onLoad: async (chunk, data) => {
+     onLoad: (chunk, data) => {
        GlobalPosition = new(data.Px, data.Py);
-       // NOTE HACK - we need to wait for two physics frame to ensure the player doesn't trigger new in the level on load.
-       await ToSignal(GetTree(), "physics_frame");
-       await ToSignal(GetTree(), "physics_frame");
        Logic.RestoreFrom(data.Logic);
      });
   }
@@ -55,14 +50,16 @@ public partial class Player : CharacterBody2D, IPlayer {
     GameChunk.OverwriteChunk(PlayerChunk);
 
     Binding = Logic.Bind();
-    Binding.Handle((in PlayerLogic.Output.Teleport output) => OnOutputTeleport(output.Entrypoint));
-    Binding.When<PlayerLogic.State>(state => GD.Print($"Player state changed to {state.GetType().Name}"));
+    Binding
+      .Handle((in PlayerLogic.Output.Teleport output) => OnOutputTeleport(output.Entrypoint))
+      .Handle((in PlayerLogic.Output.SetEnabled output) => OnOutputSetEnabled(output.Enabled));
 
     Logic.Set(WorldRepo);
     Logic.Set(GameRepo);
     Logic.Start();
   }
 
+  private void OnOutputSetEnabled(bool enabled) => SetCollisionLayerValue(1, enabled);
 
   private void OnOutputTeleport(ITransform2D entrypoint) {
     GD.Print($"Teleporting player to {entrypoint.Position}");

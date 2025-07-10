@@ -6,6 +6,7 @@ using Yolk.FS;
 
 public interface ISaveInfo {
   public string SaveName { get; }
+  public bool HasQuicksave { get; }
 }
 
 public interface IChunkRoot<T> where T : class {
@@ -18,6 +19,8 @@ public class YolkSave<T> : ISaveInfo, IChunkRoot<T> where T : class {
   public SaveFile<T> SaveFile { get; }
   public SaveFile<T> AutosaveFile { get; }
   public SaveFile<T> QuicksaveFile { get; }
+
+  public bool HasQuicksave => _quickSaveData is not null;
 
   private T? _quickSaveData;
 

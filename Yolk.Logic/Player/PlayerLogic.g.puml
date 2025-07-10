@@ -7,6 +7,8 @@ state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
 Yolk_Logic_Player_PlayerLogic_State_Enabled --> Yolk_Logic_Player_PlayerLogic_State_Disabled : Kill
 
 Yolk_Logic_Player_PlayerLogic_State : OnWorldLevelLoaded() → Teleport
+Yolk_Logic_Player_PlayerLogic_State_Disabled : OnEnter → SetEnabled
+Yolk_Logic_Player_PlayerLogic_State_Enabled : OnEnter → SetEnabled
 
 [*] --> Yolk_Logic_Player_PlayerLogic_State_Enabled
 @enduml
