@@ -14,6 +14,7 @@ public static class GodotScreenshot {
       return;
     }
 
+    // TODO revert to tree if dropping viewport idea
     var mainViewport = tree.CurrentScene.GetNode("%Game").GetViewport();
 
     // Hide layers on main thread
