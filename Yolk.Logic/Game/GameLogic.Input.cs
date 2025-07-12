@@ -9,6 +9,7 @@ public partial class GameLogic {
     public record struct OnGameOverTriggered;
     public record struct Save(string SaveName);
     public record struct Load(string SaveName);
+    public record struct DeleteSave(string SaveName);
     public record struct Autosave;
     public record struct Autoload;
     public record struct Quicksave;

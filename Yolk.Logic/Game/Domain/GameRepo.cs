@@ -13,7 +13,8 @@ public interface IGameRepo {
   public event Action? Quitted;
   public event Action<string>? SaveRequested;
   public event Action<string>? LoadRequested;
-  public event Action? Saved;
+  public event Action<string>? DeleteRequested;
+  public event Action? GameSavesUpdated;
   public event Action? AutosaveRequested;
   public event Action? AutoloadRequested;
   public event Action? QuicksaveRequested;
@@ -32,7 +33,8 @@ public interface IGameRepo {
   public void Resume();
   public void Save(string saveName);
   public void Load(string saveName);
-  public void BroadcastSaved();
+  public void Delete(string saveName);
+  public void BroadcastGameSavesUpdated();
   public void Autosave();
   public void Autoload();
   public void Quicksave();
@@ -49,8 +51,9 @@ public class GameRepo : IGameRepo, IDisposable {
   public event Action? GameOverRequested;
   public event Action<string>? SaveRequested;
   public event Action<string>? LoadRequested;
+  public event Action<string>? DeleteRequested;
   public event Action? GameOver;
-  public event Action? Saved;
+  public event Action? GameSavesUpdated;
   public event Action? AutosaveRequested;
   public event Action? AutoloadRequested;
   public event Action? QuicksaveRequested;
@@ -74,7 +77,8 @@ public class GameRepo : IGameRepo, IDisposable {
 
   public void Save(string saveName) => SaveRequested?.Invoke(saveName);
   public void Load(string saveName) => LoadRequested?.Invoke(saveName);
-  public void BroadcastSaved() => Saved?.Invoke();
+  public void Delete(string saveName) => DeleteRequested?.Invoke(saveName);
+  public void BroadcastGameSavesUpdated() => GameSavesUpdated?.Invoke();
   public void Autosave() => AutosaveRequested?.Invoke();
   public void Autoload() => AutoloadRequested?.Invoke();
   public void Quicksave() => QuicksaveRequested?.Invoke();

@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://cc8340ejx6eqp"]
 
-[ext_resource type="Script" uid="uid://b84vi7v337f36" path="res://ui/game_save_panel/GameSavePanel.cs" id="1_831ac"]
+[ext_resource type="Script" uid="uid://b84vi7v337f36" path="res://ui/game_save_slot/GameSaveSlot.cs" id="1_831ac"]
 [ext_resource type="Texture2D" uid="uid://cv8q4i3hrnhxv" path="res://player/icon.png" id="1_t77mt"]
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="2_831ac"]
 
-[node name="GameSavePanel" type="PanelContainer"]
+[node name="GameSaveSlot" type="PanelContainer"]
 theme = ExtResource("2_831ac")
 script = ExtResource("1_831ac")
 
@@ -33,20 +33,13 @@ layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="SaveTypeLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.52549)
-layout_mode = 2
-theme = ExtResource("2_831ac")
-theme_override_font_sizes/font_size = 24
-text = "Manual"
-
 [node name="SaveNameLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_831ac")
 theme_override_font_sizes/font_size = 24
 text = "Level 1"
+text_overrun_behavior = 3
 
 [node name="SaveDateLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true

@@ -42,3 +42,4 @@ ProgressBar/font_sizes/font_size = 32
 ProgressBar/fonts/font = ExtResource("1_v4ne4")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_1qd87")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_4wcyv")
+TextEdit/constants/line_spacing = 8

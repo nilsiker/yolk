@@ -1,5 +1,6 @@
 namespace Yolk.UI;
 
+using System;
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
@@ -19,10 +20,12 @@ public partial class PauseMenu : Control, IPauseMenu {
   [Dependency] private IOptionsRepo OptionsRepo => this.DependOn<IOptionsRepo>();
 
   [Node] private Button ResumeButton { get; set; } = default!;
+  [Node] private Button SaveGameButton { get; set; } = default!;
   [Node] private Button OptionsButton { get; set; } = default!;
 
   [Node] private Button QuitMainMenuButton { get; set; } = default!;
   [Node] private Button QuitDesktopButton { get; set; } = default!;
+  [Node] private Control SaveGamePanel { get; set; } = default!;
   private PauseMenuLogic Logic { get; set; } = new();
   private PauseMenuLogic.IBinding Binding { get; set; } = default!;
 
@@ -41,11 +44,13 @@ public partial class PauseMenu : Control, IPauseMenu {
     Logic.Start();
 
     ResumeButton.Pressed += OnResumeButtonPressed;
+    SaveGameButton.Pressed += OnSaveGameButtonPressed;
     OptionsButton.Pressed += OnOptionsButtonPressed;
     QuitMainMenuButton.Pressed += OnQuitMainMenuButtonPressed;
     QuitDesktopButton.Pressed += OnQuitDesktopButtonPressed;
   }
 
+  private void OnSaveGameButtonPressed() => SaveGamePanel.Visible = true;
   private void OnResumeButtonPressed() => Logic.Input(new PauseMenuLogic.Input.OnResumePressed());
   private void OnOptionsButtonPressed() => Logic.Input(new PauseMenuLogic.Input.OnOptionsPressed());
   private void OnQuitMainMenuButtonPressed() => Logic.Input(new PauseMenuLogic.Input.OnQuitPressed(false));

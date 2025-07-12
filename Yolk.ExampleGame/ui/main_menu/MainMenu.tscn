@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b3yir6wkmklbj"]
+[gd_scene load_steps=8 format=3 uid="uid://b3yir6wkmklbj"]
 
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_4ia3c"]
 [ext_resource type="Script" uid="uid://yofr8m5jd46t" path="res://ui/main_menu/MainMenu.cs" id="2_0rgyt"]
-[ext_resource type="PackedScene" uid="uid://cfytm7qeslqrq" path="res://ui/load_game_panel/LoadGamePanel.tscn" id="3_0rgyt"]
+[ext_resource type="PackedScene" uid="uid://cfytm7qeslqrq" path="res://ui/save_game_panel/SaveGamePanel.tscn" id="3_0rgyt"]
+[ext_resource type="PackedScene" uid="uid://cc8340ejx6eqp" path="res://ui/game_save_slot/GameSaveSlot.tscn" id="4_2ijps"]
 [ext_resource type="PackedScene" uid="uid://c6s5ahp5if2vn" path="res://ui/options_menu/OptionsMenu.tscn" id="4_yt4ty"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4ia3c"]
@@ -86,11 +87,11 @@ text = "Quit"
 flat = true
 alignment = 0
 
-[node name="LoadGamePanel" parent="MarginContainer" instance=ExtResource("3_0rgyt")]
+[node name="SaveGamePanel" parent="MarginContainer" instance=ExtResource("3_0rgyt")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
+GameSaveSlotScene = ExtResource("4_2ijps")
 
 [node name="OptionsMenu" parent="MarginContainer" instance=ExtResource("4_yt4ty")]
 unique_name_in_owner = true

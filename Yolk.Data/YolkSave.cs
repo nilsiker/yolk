@@ -6,7 +6,6 @@ using Yolk.FS;
 
 public interface ISaveInfo {
   public string SaveName { get; }
-  public bool HasQuicksave { get; }
 }
 
 public interface IChunkRoot<T> where T : class {
@@ -14,11 +13,20 @@ public interface IChunkRoot<T> where T : class {
 }
 
 public class YolkSave<T> : ISaveInfo, IChunkRoot<T> where T : class {
-  public string SaveName { get; set; }
+  private string _saveName;
+  public string SaveName {
+    get => _saveName;
+    set {
+      _saveName = value;
+      SaveFile = CreateSaveFile(Root, value);
+      AutosaveFile = CreateAutosaveFile(Root, value);
+      QuicksaveFile = CreateQuicksaveFile(Root);
+    }
+  }
   public ISaveChunk<T> Root { get; }
-  public SaveFile<T> SaveFile { get; }
-  public SaveFile<T> AutosaveFile { get; }
-  public SaveFile<T> QuicksaveFile { get; }
+  public SaveFile<T> SaveFile { get; private set; }
+  public SaveFile<T> AutosaveFile { get; private set; }
+  public SaveFile<T> QuicksaveFile { get; private set; }
 
   public bool HasQuicksave => _quickSaveData is not null;
 
@@ -42,8 +50,8 @@ public class YolkSave<T> : ISaveInfo, IChunkRoot<T> where T : class {
   private static SaveFile<T> CreateAutosaveFile(ISaveChunk<T> root, string saveName) =>
     new(
       root: root,
-      onSave: async data => await GodotSave.Save(data, $"{saveName}_auto"),
-      onLoad: async () => await GodotSave.Load<T>($"{saveName}_auto")
+      onSave: async data => await GodotSave.Save(data, $"[AUTO] {saveName}"),
+      onLoad: async () => await GodotSave.Load<T>($"[AUTO] {saveName}")
     );
 
   private SaveFile<T> CreateQuicksaveFile(ISaveChunk<T> root) =>
@@ -53,11 +61,11 @@ public class YolkSave<T> : ISaveInfo, IChunkRoot<T> where T : class {
       onLoad: async () => await Task.FromResult(_quickSaveData)
     );
 
-  public void Save() => SaveFile.Save();
+  public async Task Save() => await SaveFile.Save();
   public void Load() => SaveFile.Load();
-  public void Autosave() => AutosaveFile.Save();
+  public async Task Autosave() => await AutosaveFile.Save();
   public void Autoload() => AutosaveFile.Load();
-  public void Quicksave() => QuicksaveFile.Save();
+  public async Task Quicksave() => await QuicksaveFile.Save();
   public void Quickload() {
     if (_quickSaveData is not null) {
       QuicksaveFile.Load();

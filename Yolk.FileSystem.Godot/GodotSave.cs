@@ -1,6 +1,7 @@
 
 namespace Yolk.FS;
 
+using System.Data;
 using System.IO.Abstractions;
 using System.Runtime.Serialization;
 using System.Text.Json;
@@ -8,7 +9,6 @@ using Chickensoft.Collections;
 using Chickensoft.Serialization;
 using Chickensoft.Serialization.Godot;
 using Godot;
-
 
 public static class GodotSave {
   private static readonly IReadOnlyBlackboard _upgradeDependencies = new Blackboard();
@@ -21,8 +21,8 @@ public static class GodotSave {
     WriteIndented = true
   };
 
-  private static string SaveDirectory => new FileSystem().Path.Join(OS.GetUserDataDir(), "saves");
-  private static string SaveThumbnailDirectory => new FileSystem().Path.Join(OS.GetUserDataDir(), "saves", "thumbnails");
+  public static string SaveDirectory => new FileSystem().Path.Join(OS.GetUserDataDir(), "saves");
+  public static string SaveThumbnailDirectory => new FileSystem().Path.Join(OS.GetUserDataDir(), "saves", "thumbnails");
 
   public static void Initialize() {
     GodotSerialization.Setup();
@@ -69,6 +69,25 @@ public static class GodotSave {
     return JsonSerializer.Deserialize<T>(json, JSON_OPTIONS) ?? throw new SerializationException("could not serialize save game data");
   }
 
+  public static void Delete(string saveName) {
+    GD.Print($"deleting save file... (name: {saveName})");
+    var fileSystem = new FileSystem();
+    var path = GetSaveFilePath(saveName);
+
+    if (!fileSystem.File.Exists(path)) {
+      GD.Print("No save file to delete :'(");
+      return;
+    }
+
+    try {
+      fileSystem.File.Delete(path);
+      GD.Print($"Deleted save file: {path}");
+    }
+    catch (Exception e) {
+      GD.PushError($"Failed to delete save file: {e}");
+    }
+  }
+
   public static bool Exists(string? saveName) {
     var fileSystem = new FileSystem();
     var path = GetSaveFilePath(saveName);
@@ -98,7 +117,7 @@ public static class GodotSave {
     return image.SavePng(imagePath);
   }
 
-  public static string[] GetAllSaves() {
+  public static IEnumerable<SaveFileInfo<T>> GetAllSaveInfo<T>() {
     var fileSystem = new FileSystem();
     var savesDir = fileSystem.Path.Join(OS.GetUserDataDir(), "saves");
     if (!fileSystem.Directory.Exists(savesDir)) {
@@ -107,6 +126,37 @@ public static class GodotSave {
     }
 
     var files = fileSystem.Directory.GetFiles(savesDir, "*.json");
-    return [.. files.Select(file => fileSystem.Path.GetFileNameWithoutExtension(file))];
+
+    var allSaveData = files.Select(file => {
+      var content = fileSystem.File.ReadAllText(file);
+      var data = JsonSerializer.Deserialize<T>(content, JSON_OPTIONS) ?? throw new SerializationException($"Failed to deserialize save data from {file}");
+
+      return new SaveFileInfo<T>(
+        saveName: fileSystem.Path.GetFileNameWithoutExtension(file),
+        data: data
+      );
+    });
+
+    return allSaveData;
   }
+}
+
+public interface ISaveFileInfo {
+  public string SaveName { get; }
+  public string ThumbnailPath { get; }
+  public bool HasThumbnail();
+  public Texture2D GetThumbnail();
+}
+
+public class SaveFileInfo<T>(string saveName, T data) : ISaveFileInfo {
+  public string SaveName { get; set; } = saveName;
+  public string ThumbnailPath { get; set; } = $"{GodotSave.SaveThumbnailDirectory}/{saveName}.png";
+  public T Data { get; set; } = data;
+
+  public bool HasThumbnail() {
+    var fileSystem = new FileSystem();
+    return fileSystem.File.Exists(ThumbnailPath);
+  }
+
+  public Texture2D GetThumbnail() => GodotSave.GetThumbnail(SaveName);
 }

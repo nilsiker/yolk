@@ -8,6 +8,7 @@ public partial class GameLogic {
     public record struct QuitGame;
     public record struct SaveGame(string SaveName);
     public record struct LoadGame(string SaveName);
+    public record struct DeleteSave(string SaveName);
     public record struct Autosave;
     public record struct Autoload;
     public record struct Quicksave;

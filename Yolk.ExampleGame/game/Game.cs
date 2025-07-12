@@ -1,5 +1,6 @@
 namespace Yolk.Game;
 
+using System;
 
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
@@ -59,6 +60,7 @@ public partial class Game : Control, IGame {
       .Handle((in GameLogic.Output.SetPauseMode output) => OnOutputSetPauseMode(output.Paused))
       .Handle((in GameLogic.Output.SaveGame output) => OnOutputSaveGame(output.SaveName))
       .Handle((in GameLogic.Output.LoadGame output) => OnOutputLoadGame(output.SaveName))
+      .Handle((in GameLogic.Output.DeleteSave output) => OnOutputDeleteSave(output.SaveName))
       .Handle((in GameLogic.Output.Autosave output) => OnOutputAutosave())
       .Handle((in GameLogic.Output.Autoload output) => OnOutputAutoload())
       .Handle((in GameLogic.Output.Quicksave output) => OnOutputQuicksave())
@@ -77,12 +79,13 @@ public partial class Game : Control, IGame {
     this.Provide();
   }
 
+  private static void OnOutputDeleteSave(string saveName) => GodotSave.Delete(saveName);
   private static void OnOutputSetCursorPosition(Vector2 cursorPosition) => Input.WarpMouse(cursorPosition);
   private void OnOutputSetPauseMode(bool paused) => GetTree().Paused = paused;
   private void OnOutputUpdateVisibility(bool visible) => Visible = visible;
   private void OnOutputSaveGame(string saveName) {
     SaveFile.SaveName = saveName;
-    SaveFile.Save();
+    SaveFile.Save().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved()));
   }
 
   private void OnOutputLoadGame(string saveName) {
@@ -90,9 +93,9 @@ public partial class Game : Control, IGame {
     SaveFile.Load();
   }
 
-  private void OnOutputAutosave() => SaveFile.Autosave();
+  private void OnOutputAutosave() => SaveFile.Autosave().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved()));
   private void OnOutputAutoload() => SaveFile.Autoload();
-  private void OnOutputQuicksave() => SaveFile.Quicksave();
+  private void OnOutputQuicksave() => SaveFile.Quicksave().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved()));
   private void OnOutputQuickload() => SaveFile.Quickload();
 
   public override void _UnhandledInput(InputEvent @event) {

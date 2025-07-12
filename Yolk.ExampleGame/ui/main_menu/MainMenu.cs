@@ -23,7 +23,7 @@ public partial class MainMenu : Control, IMainMenu {
   [Node] private Button LoadButton { get; set; } = default!;
   [Node] private Button OptionsButton { get; set; } = default!;
   [Node] private Button QuitButton { get; set; } = default!;
-  [Node] private Control LoadGamePanel { get; set; } = default!;
+  [Node] private Control SaveGamePanel { get; set; } = default!;
 
   private MainMenuLogic Logic { get; set; } = new();
   private MainMenuLogic.IBinding Binding { get; set; } = default!;
@@ -63,7 +63,7 @@ public partial class MainMenu : Control, IMainMenu {
 
   private void OnLoadButtonUnfocused() => LoadButton.Text = "Load Game";
   private void OnLoadButtonFocused() => LoadButton.Text = "> Load Game";
-  private void OnLoadButtonPressed() => LoadGamePanel.Visible = true;
+  private void OnLoadButtonPressed() => SaveGamePanel.Visible = true;
 
   private void OnOptionsButtonFocused() => OptionsButton.Text = "> Options";
   private void OnOptionsButtonUnfocused() => OptionsButton.Text = "Options";
