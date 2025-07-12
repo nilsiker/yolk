@@ -68,12 +68,14 @@ public static class GodotSaver {
 
   public static void Delete(string saveName) {
     GD.Print($"deleting save file... (name: {saveName})");
-    var path = GetSaveFilePath(saveName);
 
-    if (!Exists(path)) {
+    if (!Exists(saveName)) {
       GD.Print("No save file to delete :'(");
       return;
     }
+
+
+    var path = GetSaveFilePath(saveName);
 
     try {
       _fs.File.Delete(path);
