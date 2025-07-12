@@ -33,7 +33,7 @@ public class YolkSave<T> : ISaveInfo, IChunkRoot<T> where T : class {
   private T? _quickSaveData;
 
   public YolkSave(string saveName, ISaveChunk<T> root) {
-    SaveName = saveName;
+    _saveName = saveName;
     Root = root;
     SaveFile = CreateSaveFile(root, saveName);
     AutosaveFile = CreateAutosaveFile(root, saveName);
