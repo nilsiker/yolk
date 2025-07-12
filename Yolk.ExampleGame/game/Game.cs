@@ -93,9 +93,9 @@ public partial class Game : Control, IGame {
     SaveFile.Load();
   }
 
-  private void OnOutputAutosave() => SaveFile.Autosave().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved("Autosave")));
+  private async void OnOutputAutosave() => await SaveFile.Autosave().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved("Autosave")));
   private void OnOutputAutoload() => SaveFile.Autoload();
-  private void OnOutputQuicksave() => SaveFile.Quicksave().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved()));
+  private async void OnOutputQuicksave() => await SaveFile.Quicksave().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved()));
   private void OnOutputQuickload() => SaveFile.Quickload();
 
   public override void _UnhandledInput(InputEvent @event) {
