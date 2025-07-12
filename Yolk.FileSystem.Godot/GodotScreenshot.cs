@@ -14,7 +14,7 @@ public static class GodotScreenshot {
       return;
     }
 
-    var mainViewport = tree.CurrentScene.GetViewport();
+    var mainViewport = tree.CurrentScene.GetNode("%Game").GetViewport();
 
     // Hide layers on main thread
     foreach (var layer in hideLayers) {

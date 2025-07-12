@@ -42,7 +42,6 @@ public partial class SaveGamePanel : PanelContainer {
     }
   }
 
-
   private void OnGameSaveDeleted(string saveName) {
     var slot = Saves.GetChildren()
           .OfType<GameSaveSlot>()

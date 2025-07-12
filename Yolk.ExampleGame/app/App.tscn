@@ -96,11 +96,40 @@ script = ExtResource("2_kv4k2")
 [node name="Options" parent="." instance=ExtResource("2_l0x3n")]
 unique_name_in_owner = true
 
-[node name="Game" parent="." instance=ExtResource("2_v0mgf")]
+[node name="GameContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+stretch = true
 
-[node name="AppUI" type="CanvasLayer" parent="."]
+[node name="GameViewport" type="SubViewport" parent="GameContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
 
-[node name="Blackout" type="ColorRect" parent="AppUI"]
+[node name="Game" parent="GameContainer/GameViewport" instance=ExtResource("2_v0mgf")]
+unique_name_in_owner = true
+mouse_filter = 1
+
+[node name="AppUIContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="AppUIViewport" type="SubViewport" parent="AppUIContainer"]
+transparent_bg = true
+gui_disable_input = true
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Blackout" type="ColorRect" parent="AppUIContainer/AppUIViewport"]
 process_mode = 3
 visible = false
 modulate = Color(1, 1, 1, 0)
@@ -112,14 +141,14 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Blackout" type="AnimationPlayer" parent="AppUI/Blackout"]
+[node name="Blackout" type="AnimationPlayer" parent="AppUIContainer/AppUIViewport/Blackout"]
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_k6vbj")
 }
 speed_scale = 0.75
 
-[node name="DebugPanel" parent="AppUI" instance=ExtResource("5_l0x3n")]
+[node name="DebugPanel" parent="AppUIContainer/AppUIViewport" instance=ExtResource("5_l0x3n")]
 process_mode = 3
 top_level = true
 anchors_preset = 15
