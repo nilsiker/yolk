@@ -15,7 +15,8 @@ public partial class GameLogic {
     public record struct Quicksave;
     public record struct Quickload;
     public record struct BlackoutFinished;
-    public record struct OnSaved;
+    public record struct OnSaved(string SaveName);
+    public record struct OnDeleted(string SaveName);
     public record struct OnLoaded;
     public record struct QuittingTransitionFinished;
   }

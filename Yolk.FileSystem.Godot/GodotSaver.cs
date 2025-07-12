@@ -108,6 +108,19 @@ public static class GodotSaver {
     return image.SavePng(imagePath);
   }
 
+  public static GodotSave<T>? GetSaveInfo<T>(string saveName) {
+    if (!Exists(saveName)) {
+      GD.Print($"No save info found for {saveName}");
+      return null;
+    }
+
+    var path = GetSaveFilePath(saveName);
+    var json = _fs.File.ReadAllText(path);
+    var data = JsonSerializer.Deserialize<T>(json, JSON_OPTIONS) ?? throw new SerializationException($"Failed to deserialize save data from {path}");
+
+    return new GodotSave<T>(saveName, data);
+  }
+
   public static IEnumerable<GodotSave<T>> GetAllSaveInfo<T>() {
     var savesDir = _fs.Path.Join(OS.GetUserDataDir(), "saves");
     if (!_fs.Directory.Exists(savesDir)) {

@@ -85,7 +85,7 @@ public partial class Game : Control, IGame {
   private void OnOutputUpdateVisibility(bool visible) => Visible = visible;
   private void OnOutputSaveGame(string saveName) {
     SaveFile.SaveName = saveName;
-    SaveFile.Save().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved()));
+    SaveFile.Save().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved(SaveFile.SaveName)));
   }
 
   private void OnOutputLoadGame(string saveName) {
@@ -93,7 +93,7 @@ public partial class Game : Control, IGame {
     SaveFile.Load();
   }
 
-  private void OnOutputAutosave() => SaveFile.Autosave().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved()));
+  private void OnOutputAutosave() => SaveFile.Autosave().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved("Autosave")));
   private void OnOutputAutoload() => SaveFile.Autoload();
   private void OnOutputQuicksave() => SaveFile.Quicksave().ContinueWith((_) => Logic.Input(new GameLogic.Input.OnSaved()));
   private void OnOutputQuickload() => SaveFile.Quickload();

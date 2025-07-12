@@ -50,8 +50,8 @@ public class YolkSave<T> : ISaveInfo, IChunkRoot<T> where T : class {
   private static SaveFile<T> CreateAutosaveFile(ISaveChunk<T> root, string saveName) =>
     new(
       root: root,
-      onSave: async data => await GodotSaver.Save(data, $"[AUTO] {saveName}"),
-      onLoad: async () => await GodotSaver.Load<T>($"[AUTO] {saveName}")
+      onSave: async data => await GodotSaver.Save(data, $"Autosave"),
+      onLoad: async () => await GodotSaver.Load<T>($"Autosave")
     );
 
   private SaveFile<T> CreateQuicksaveFile(ISaveChunk<T> root) =>
