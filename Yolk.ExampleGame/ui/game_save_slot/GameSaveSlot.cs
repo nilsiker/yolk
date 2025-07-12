@@ -11,7 +11,7 @@ public partial class GameSaveSlot : PanelContainer {
   public override void _Notification(int what) => this.Notify(what);
 
   public bool AllowSave { get; set; } = true;
-  public ISaveFileInfo SaveInfo { get; set; } = default!;
+  public IGodotSaveInfo SaveInfo { get; set; } = default!;
 
   [Dependency] private IGameRepo GameRepo => this.DependOn<IGameRepo>();
 
@@ -24,7 +24,7 @@ public partial class GameSaveSlot : PanelContainer {
   public void OnResolved() {
     SaveButton.Visible = AllowSave;
 
-    PreviewImage.Texture = GodotSave.GetThumbnail(SaveInfo.SaveName);
+    PreviewImage.Texture = GodotSaver.GetThumbnail(SaveInfo.SaveName);
 
     SaveNameLabel.Text = SaveInfo.SaveName;
 

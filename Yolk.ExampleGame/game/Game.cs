@@ -37,7 +37,7 @@ public partial class Game : Control, IGame {
   }
 
   public void OnResolved() {
-    GodotSave.Initialize();
+    GodotSaver.Initialize();
 
     SaveFile = new YolkSave<GameData>(
       "Default",
@@ -79,7 +79,7 @@ public partial class Game : Control, IGame {
     this.Provide();
   }
 
-  private static void OnOutputDeleteSave(string saveName) => GodotSave.Delete(saveName);
+  private static void OnOutputDeleteSave(string saveName) => GodotSaver.Delete(saveName);
   private static void OnOutputSetCursorPosition(Vector2 cursorPosition) => Input.WarpMouse(cursorPosition);
   private void OnOutputSetPauseMode(bool paused) => GetTree().Paused = paused;
   private void OnOutputUpdateVisibility(bool visible) => Visible = visible;

@@ -30,7 +30,7 @@ public partial class SaveGamePanel : PanelContainer {
   private void UpdateGameSavesList() {
     Callable.From(GameSaves.ClearChildren).CallDeferred();
 
-    foreach (var save in GodotSave.GetAllSaveInfo<GameData>()) {
+    foreach (var save in GodotSaver.GetAllSaveInfo<GameData>()) {
       var savePanel = GameSaveSlotScene.Instantiate<GameSaveSlot>();
       savePanel.AllowSave = _allowSave; // Disable saving in load panel
       savePanel.SaveInfo = save;
