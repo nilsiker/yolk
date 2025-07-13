@@ -49,6 +49,7 @@ public partial class OptionsMenu : Control {
     CloseButton.Pressed += OnCloseButtonPressed;
 
     OptionsRepo.UIVisible.Sync += OnOutputUpdateVisibility;
+    VisibilityChanged += () => OptionsRepo.SetUIVisible(Visible); // TODO a lil hacky?
 
     OptionsRepo.Pixelation.Sync += OnOptionsPixelationSync;
     OptionsRepo.Dithering.Sync += OnOptionsDitheringSync;

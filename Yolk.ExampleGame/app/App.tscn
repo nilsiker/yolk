@@ -108,7 +108,6 @@ stretch = true
 [node name="GameViewport" type="SubViewport" parent="GameContainer"]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-canvas_item_default_texture_repeat = 1
 size = Vector2i(1280, 720)
 render_target_update_mode = 4
 
@@ -128,7 +127,8 @@ stretch = true
 [node name="AppUIViewport" type="SubViewport" parent="AppUIContainer"]
 transparent_bg = true
 handle_input_locally = false
-canvas_item_default_texture_filter = 0
+canvas_item_default_texture_filter = 3
+gui_snap_controls_to_pixels = false
 size = Vector2i(1280, 720)
 render_target_update_mode = 4
 

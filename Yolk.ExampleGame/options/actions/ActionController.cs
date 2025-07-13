@@ -15,7 +15,6 @@ public interface IActionRepo {
 }
 
 public class ActionRepo : IActionRepo {
-  // Implement the methods defined in IActionsRepo
   public event Action<string, InputEvent>? ActionMapped;
   public event Action? DefaultsRestored;
   public void MapAction(string actionName, InputEvent inputEvent) => ActionMapped?.Invoke(actionName, inputEvent);
@@ -27,9 +26,7 @@ public partial class ActionController : Node, IProvide<IActionRepo> {
   public override void _Notification(int what) => this.Notify(what);
 
   private ActionRepo ActionRepo { get; set; } = new();
-
   public IActionRepo Value() => ActionRepo;
-
 
   public void OnResolved() {
     ActionRepo.ActionMapped += OnActionMapped;
@@ -38,7 +35,6 @@ public partial class ActionController : Node, IProvide<IActionRepo> {
 
     this.Provide();
   }
-
 
   private void OnActionMapped(string actionName, InputEvent inputEvent) {
     InputMap.ActionEraseEvents(actionName);

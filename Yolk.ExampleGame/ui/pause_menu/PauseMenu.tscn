@@ -1,10 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://3mwky8ciwtjk"]
+[gd_scene load_steps=13 format=3 uid="uid://3mwky8ciwtjk"]
 
 [ext_resource type="Script" uid="uid://rqm8nt4pb2qs" path="res://ui/pause_menu/PauseMenu.cs" id="1_fhjix"]
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_xhb88"]
 [ext_resource type="PackedScene" uid="uid://cfytm7qeslqrq" path="res://ui/save_game_panel/SaveGamePanel.tscn" id="3_hkmon"]
 [ext_resource type="PackedScene" uid="uid://c6s5ahp5if2vn" path="res://ui/options_menu/OptionsMenu.tscn" id="3_s3m1y"]
 [ext_resource type="PackedScene" uid="uid://cc8340ejx6eqp" path="res://ui/game_save_slot/GameSaveSlot.tscn" id="4_h0m3w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h0m3w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85xbt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vm67l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u074n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nig44"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4fce1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6olan"]
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -69,16 +83,43 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Quit To Desktop"
 
-[node name="SaveGamePanel" parent="PanelContainer/MarginContainer" instance=ExtResource("3_hkmon")]
-unique_name_in_owner = true
-layout_mode = 2
+[node name="CenterTabPanel" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -217.0
+offset_right = 320.0
+offset_bottom = 217.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
-GameSaveSlotScene = ExtResource("4_h0m3w")
-_allowSave = true
+size_flags_vertical = 4
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_h0m3w")
+theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_85xbt")
+theme_override_styles/tabbar_background = SubResource("StyleBoxEmpty_vm67l")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_u074n")
+theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_nig44")
+theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_4fce1")
+theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_6olan")
+current_tab = 0
+tabs_visible = false
+use_hidden_tabs_for_min_size = true
 
-[node name="OptionsMenu" parent="PanelContainer/MarginContainer" instance=ExtResource("3_s3m1y")]
+[node name="SaveGamePanel" parent="CenterTabPanel" instance=ExtResource("3_hkmon")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+GameSaveSlotScene = ExtResource("4_h0m3w")
+metadata/_tab_index = 0
+
+[node name="OptionsMenu" parent="CenterTabPanel" instance=ExtResource("3_s3m1y")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+metadata/_tab_index = 1

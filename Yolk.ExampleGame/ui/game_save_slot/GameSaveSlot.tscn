@@ -5,6 +5,8 @@
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="2_831ac"]
 
 [node name="GameSaveSlot" type="PanelContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("2_831ac")
 script = ExtResource("1_831ac")
 
@@ -17,19 +19,20 @@ theme_override_constants/margin_bottom = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 20
 
 [node name="PreviewImage" type="TextureRect" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 150)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 theme = ExtResource("2_831ac")
 texture = ExtResource("1_t77mt")
-expand_mode = 4
+expand_mode = 2
 stretch_mode = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 10
 alignment = 1
 

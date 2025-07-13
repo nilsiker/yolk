@@ -27,10 +27,12 @@ size_flags_vertical = 3
 [node name="MainMenu" parent="GameUI" instance=ExtResource("3_3d0qh")]
 unique_name_in_owner = true
 visibility_layer = 2
+texture_filter = 2
 
 [node name="PauseMenu" parent="GameUI" instance=ExtResource("5_yw8km")]
 visible = false
 visibility_layer = 2
+texture_filter = 2
 
 [node name="YolkRepoProvider" type="Node2D" parent="."]
 script = ExtResource("3_ejjr5")

@@ -1,18 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfytm7qeslqrq"]
+[gd_scene load_steps=5 format=3 uid="uid://cfytm7qeslqrq"]
 
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_3rhie"]
 [ext_resource type="Script" uid="uid://ctjoc0ffbc1s5" path="res://ui/save_game_panel/SaveGamePanel.cs" id="1_xodft"]
+[ext_resource type="PackedScene" uid="uid://cc8340ejx6eqp" path="res://ui/game_save_slot/GameSaveSlot.tscn" id="3_l3mec"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3rhie"]
 bg_color = Color(0.205117, 0.205117, 0.205117, 1)
 
 [node name="SaveGamePanel" type="PanelContainer"]
-custom_minimum_size = Vector2(550, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 611.0
+offset_bottom = 392.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
 theme = ExtResource("1_3rhie")
 theme_override_styles/panel = SubResource("StyleBoxFlat_3rhie")
 script = ExtResource("1_xodft")
@@ -50,9 +49,18 @@ text = "Save"
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
 
 [node name="Saves" type="VBoxContainer" parent="Margins/VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
+
+[node name="GameSaveSlot" parent="Margins/VBoxContainer/ScrollContainer/Saves" instance=ExtResource("3_l3mec")]
+layout_mode = 2
+
+[node name="GameSaveSlot2" parent="Margins/VBoxContainer/ScrollContainer/Saves" instance=ExtResource("3_l3mec")]
+layout_mode = 2
+
+[node name="GameSaveSlot3" parent="Margins/VBoxContainer/ScrollContainer/Saves" instance=ExtResource("3_l3mec")]
+layout_mode = 2

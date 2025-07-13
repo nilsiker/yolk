@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3yir6wkmklbj"]
+[gd_scene load_steps=15 format=3 uid="uid://b3yir6wkmklbj"]
 
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_4ia3c"]
 [ext_resource type="Script" uid="uid://yofr8m5jd46t" path="res://ui/main_menu/MainMenu.cs" id="2_0rgyt"]
@@ -10,6 +10,20 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0rgyt"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ijps"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vmw4a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3vjg6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wuivf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o6kyq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_olnjm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bcai1"]
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -20,7 +34,7 @@ grow_vertical = 2
 theme = ExtResource("1_4ia3c")
 script = ExtResource("2_0rgyt")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Margins" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,25 +43,25 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 100
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="LeftMenu" type="VBoxContainer" parent="Margins"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 alignment = 1
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="Margins/LeftMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Yolk"
 
-[node name="Subtitle" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Subtitle" type="Label" parent="Margins/LeftMenu"]
 layout_mode = 2
 text = "A demo"
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Margins/LeftMenu"]
 layout_mode = 2
 
-[node name="PlayButton" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="Margins/LeftMenu"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
@@ -57,7 +71,7 @@ text = "New Game"
 flat = true
 alignment = 0
 
-[node name="LoadButton" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="LoadButton" type="Button" parent="Margins/LeftMenu"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
@@ -67,7 +81,7 @@ text = "Load Game"
 flat = true
 alignment = 0
 
-[node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="Margins/LeftMenu"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
@@ -77,7 +91,7 @@ text = "Options"
 flat = true
 alignment = 0
 
-[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="Margins/LeftMenu"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
@@ -87,15 +101,32 @@ text = "Quit"
 flat = true
 alignment = 0
 
-[node name="SaveGamePanel" parent="MarginContainer" instance=ExtResource("3_0rgyt")]
-unique_name_in_owner = true
+[node name="CenterTabPanel" type="TabContainer" parent="Margins"]
 layout_mode = 2
 size_flags_horizontal = 4
-GameSaveSlotScene = ExtResource("4_2ijps")
+size_flags_vertical = 4
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_2ijps")
+theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_vmw4a")
+theme_override_styles/tabbar_background = SubResource("StyleBoxEmpty_3vjg6")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wuivf")
+theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_o6kyq")
+theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_olnjm")
+theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_bcai1")
+current_tab = 0
+tabs_visible = false
+use_hidden_tabs_for_min_size = true
 
-[node name="OptionsMenu" parent="MarginContainer" instance=ExtResource("4_yt4ty")]
+[node name="SaveGamePanel" parent="Margins/CenterTabPanel" instance=ExtResource("3_0rgyt")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+GameSaveSlotScene = ExtResource("4_2ijps")
+metadata/_tab_index = 0
+
+[node name="OptionsMenu" parent="Margins/CenterTabPanel" instance=ExtResource("4_yt4ty")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+metadata/_tab_index = 1
