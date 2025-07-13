@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk.Data", "Yolk.Data\Yolk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk.Generator", "Yolk.Generator\Yolk.Generator.csproj", "{4196A1F3-5EC1-4D90-820D-938CB34FD690}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk.FS", "Yolk.FileSystem.Godot\Yolk.FS.csproj", "{78180C07-518B-4D78-8D88-598EDCB1B703}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yolk.FS", "Yolk.FS\Yolk.FS.csproj", "{78180C07-518B-4D78-8D88-598EDCB1B703}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

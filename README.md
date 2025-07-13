@@ -36,7 +36,6 @@ It provides an opinionated way to manage:
 
 ### 💾 Saving & Loading
 
-
 The module `Yolk.Data` provides a generic `YolkSave`, currently implemented to support:
 
 - Multiple named saves
@@ -58,6 +57,7 @@ The `Yolk.FS` module provides way to read from and write to the file system, usi
   - Currently serializes to JSON.
 - Read and write settings files - `GodotConfig`
   - Such as volume, display, and graphics settings.
+- (🧪 EXPERIMENTAL) Taking screenshots - `GodotScreenshot`
 
 ### 🔮 Planned
 

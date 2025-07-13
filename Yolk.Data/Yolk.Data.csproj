@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Yolk.FileSystem.Godot\Yolk.FS.csproj" />
+    <ProjectReference Include="..\Yolk.FS\Yolk.FS.csproj" />
     <ProjectReference Include="..\Yolk.Logic\Yolk.Logic.csproj" />
   </ItemGroup>
 
