@@ -1,7 +1,7 @@
 @startuml OptionsMenuLogic
 state "OptionsMenuLogic State" as Yolk_UI_OptionsMenuLogic_State {
-  state "Visible" as Yolk_UI_OptionsMenuLogic_State_Visible
   state "Hidden" as Yolk_UI_OptionsMenuLogic_State_Hidden
+  state "Visible" as Yolk_UI_OptionsMenuLogic_State_Visible
 }
 
 Yolk_UI_OptionsMenuLogic_State_Hidden --> Yolk_UI_OptionsMenuLogic_State_Visible : Show

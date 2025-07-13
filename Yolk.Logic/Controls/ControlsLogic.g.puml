@@ -1,9 +1,9 @@
 @startuml ControlsLogic
 state "ControlsLogic State" as Yolk_Logic_Controls_ControlsLogic_State {
+  state "Idle" as Yolk_Logic_Controls_ControlsLogic_State_Idle
   state "Listening" as Yolk_Logic_Controls_ControlsLogic_State_Listening {
     state "Key" as Yolk_Logic_Controls_ControlsLogic_State_Listening_Key
   }
-  state "Idle" as Yolk_Logic_Controls_ControlsLogic_State_Idle
 }
 
 Yolk_Logic_Controls_ControlsLogic_State_Idle --> Yolk_Logic_Controls_ControlsLogic_State_Idle : Listen
