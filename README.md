@@ -16,35 +16,58 @@ An opinionated game template for Godot C# using [Chickensoft tools](https://chic
 
 The template provides a set of modules that can help accelerate your next game project in Godot.
 
-## Core modules
+## 📦 Modules
 
-### 💻 App
+> 🙋🏼‍♂️ Below you'll find a quick overview of what Yolk provides. There is no detailed description just yet, but I'm planning to fully describe the modules, their contents, and examples on how they can be used!
 
-The `App` module provides an easy interface to:
+Yolk is composed of several modules, each providing a specific set of functionality. Each module is implemented in a separate .NET project and is designed to be reusable and composable. This allows you to pick and choose the features you need for your game!
 
-- **Shut down the app**
-- **Obscure and revealing the application screen**
-  - Optionally executing an arbitrary callback function mid-transition
+### 🧠 Logic
 
-### 🕹️ Game
+The `Yolk.Logic` module acts as the brain for your game and includes a set of classes and interfaces that make up the foundational building blocks of your game.
 
-The `Game` module provides an easy interface to:
+It provides an opinionated way to manage:
 
-- Start a new game
-- Save a game
-- Load a saved game
-- Delete a saved game
-- Quit a game
+- App lifecycle
+- Game state
+- Main menu
+- Pause menu
+- and more!
 
-### TODO add remaining modules
+### 💾 Saving & Loading
 
-...
 
-## Built with
+The module `Yolk.Data` provides a generic `YolkSave`, currently implemented to support:
 
-This game is built using the Godot engine, utilizing free assets and some custom made.
+- Multiple named saves
+- One (1) global autosave
+- One (1) in-memory quicksave slot.
 
-- Godot 4.4
+It uses save chunks from `Chickensoft.SaveFileBuilder` to store save data of your choice, in a generic and composable way.
+
+This module only provides the data structures for saving and loading. It does not assume what state your game needs to store or how to grab a hold of it.
+
+Neither does it handle the actual reading and writing of files. For that, you can use the `Yolk.FS` module.
+
+### 📁 File System
+
+The `Yolk.FS` module provides way to read from and write to the file system, using the standard Godot user directory `user://`.
+
+- Read and write save files - `GodotSaver`
+  - Save data is handled in a generic way, allowing you to save any data type.
+  - Currently serializes to JSON.
+- Read and write settings files - `GodotConfig`
+  - Such as volume, display, and graphics settings.
+
+### 🔮 Planned
+
+And more to come!
+
+## 🛠️ Built with
+
+Yolk is built using .NET 8 and heavily relies on [Chickensoft tools](https://chickensoft.games/), such as `Chickensoft.LogicBlocks` and `Chickensoft.SaveFileBuilder`.
+
+The showcase game is built using Godot 4.4.
 
 ## Attributions
 

@@ -66,6 +66,7 @@ public partial class Player : CharacterBody2D, IPlayer {
     GlobalPosition = new Vector2(entrypoint.Position.X, entrypoint.Position.Y);
   }
 
+  private float _gravityForce = 9.82f * 3.0f;
   private float _gravity;
 
   public override void _PhysicsProcess(double delta) {
@@ -78,7 +79,11 @@ public partial class Player : CharacterBody2D, IPlayer {
 
     MoveAndSlide();
 
-    _gravity = IsOnFloor() ? 0 : _gravity + (3 * 9.82f * (float)delta);
+    _gravity = (IsOnFloor(), IsOnCeiling()) switch {
+      (false, false) => _gravity + (_gravityForce * (float)delta),
+      (false, true) => _gravityForce * (float)delta,
+      _ => 0
+    };
   }
 
   public override void _UnhandledInput(InputEvent @event) {
@@ -87,5 +92,4 @@ public partial class Player : CharacterBody2D, IPlayer {
     }
   }
   public override void _ExitTree() => Binding.Dispose();
-
 }
