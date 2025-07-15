@@ -5,6 +5,7 @@ using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
 using Yolk.Data;
+using Yolk.Extensions;
 using Yolk.FS;
 using Yolk.Game;
 

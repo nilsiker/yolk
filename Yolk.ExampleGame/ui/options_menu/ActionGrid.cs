@@ -3,6 +3,8 @@ namespace Yolk.UI.Options;
 using System;
 using System.Linq;
 using Godot;
+using Yolk.Extensions;
+
 
 public partial class ActionGrid : GridContainer {
   [Export] private PackedScene _actionContainerScene = default!;

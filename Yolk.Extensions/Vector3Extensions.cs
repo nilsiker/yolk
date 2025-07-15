@@ -1,5 +1,5 @@
 
-namespace Yolk.Core;
+namespace Yolk.Extensions;
 
 using Godot;
 
