@@ -1,6 +1,5 @@
 namespace Yolk.ExampleGame;
 
-using System;
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
@@ -79,6 +78,8 @@ public partial class Player : CharacterBody2D, IPlayer {
   public override void _PhysicsProcess(double delta) {
     var inputVector = Inputs.GetMoveVector();
 
+    var pushingAgainstWall = IsOnWall() && !GetWallNormal().IsZeroApprox() && Mathf.Abs(inputVector.X + GetWallNormal().X) < Mathf.Epsilon;
+
     if (inputVector.X != 0) {
       _horizontalForce = 0;
       Sprite.FlipH = inputVector.X < 0;
@@ -92,7 +93,7 @@ public partial class Player : CharacterBody2D, IPlayer {
       Anim.Play("jump");
     }
 
-    if (IsOnWallOnly()) {
+    if (pushingAgainstWall) {
       Anim.Play("hang");
     }
 
@@ -110,10 +111,9 @@ public partial class Player : CharacterBody2D, IPlayer {
     };
 
     _horizontalForce = IsOnFloor() ? 0 : Mathf.MoveToward(_horizontalForce, 0, (float)delta * 10);
-    GD.Print(_horizontalForce);
     MoveAndSlide();
 
-    _gravity = (IsOnFloor(), IsOnCeiling(), IsOnWall() && inputVector.X + GetWallNormal().X < Mathf.Epsilon) switch {
+    _gravity = (IsOnFloor(), IsOnCeiling(), IsOnWall() && pushingAgainstWall) switch {
       (false, false, false) => _gravity + (_gravityForce * (float)delta),
       (false, true, false) => _gravityForce * (float)delta,
       (false, false, true) => _gravityForce / 15.0f,
