@@ -8,13 +8,11 @@ using Godot;
 
 
 public interface IInventoryRepo : IDisposable {
-  public IAutoProp<float> FlashlightEnergy { get; }  // TODO this could be in its own repo?
   public IAutoProp<IEnumerable<IItem>> Items { get; }
 
   public event Action<IItem>? ItemAdded;
   public event Action<IItem>? ItemRemoved;
 
-  public void SetEnergy(float energy);
   public void AddItem(IItem item);
   public void RemoveItem(IItem item);
   public bool Contains(IItem item);
@@ -23,8 +21,6 @@ public interface IInventoryRepo : IDisposable {
 }
 
 public class InventoryRepo : IInventoryRepo {
-  private readonly AutoProp<float> _flashlightEnergy = new(0f);  // TODO this could be in its own repo?
-  public IAutoProp<float> FlashlightEnergy => _flashlightEnergy;  // TODO this could be in its own repo?
   private readonly AutoProp<IEnumerable<IItem>> _items = new([]);
   public IAutoProp<IEnumerable<IItem>> Items => _items;
 
@@ -49,14 +45,11 @@ public class InventoryRepo : IInventoryRepo {
 
   public IItem? Get(int index) => _items.Value.ElementAtOrDefault(index);
 
-  public void SetEnergy(float energy) => _flashlightEnergy.OnNext(energy);
 
   public void Dispose() {
     ItemAdded = null;
     ItemRemoved = null;
 
-    _flashlightEnergy.OnCompleted();
-    _flashlightEnergy.Dispose();
     _items.OnCompleted();
     _items.Dispose();
 

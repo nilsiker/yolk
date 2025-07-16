@@ -1,9 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://b3yir6wkmklbj"]
+[gd_scene load_steps=17 format=3 uid="uid://b3yir6wkmklbj"]
 
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_4ia3c"]
 [ext_resource type="Script" uid="uid://yofr8m5jd46t" path="res://ui/main_menu/MainMenu.cs" id="2_0rgyt"]
 [ext_resource type="PackedScene" uid="uid://cfytm7qeslqrq" path="res://ui/save_game_panel/SaveGamePanel.tscn" id="3_0rgyt"]
+[ext_resource type="Script" uid="uid://bj3twvxio6cmr" path="res://sound_effects/ButtonSoundsComponent.cs" id="3_vmw4a"]
 [ext_resource type="PackedScene" uid="uid://cc8340ejx6eqp" path="res://ui/game_save_slot/GameSaveSlot.tscn" id="4_2ijps"]
+[ext_resource type="Resource" uid="uid://du3p42su6rrys" path="res://sound_effects/resources/button_sounds_mainmenu.tres" id="4_3vjg6"]
 [ext_resource type="PackedScene" uid="uid://c6s5ahp5if2vn" path="res://ui/options_menu/OptionsMenu.tscn" id="4_yt4ty"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4ia3c"]
@@ -71,6 +73,10 @@ text = "New Game"
 flat = true
 alignment = 0
 
+[node name="ButtonSoundsComponent" type="Node" parent="Margins/LeftMenu/PlayButton"]
+script = ExtResource("3_vmw4a")
+ButtonSounds = ExtResource("4_3vjg6")
+
 [node name="LoadButton" type="Button" parent="Margins/LeftMenu"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -80,6 +86,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_4ia3c")
 text = "Load Game"
 flat = true
 alignment = 0
+
+[node name="ButtonSoundsComponent" type="Node" parent="Margins/LeftMenu/LoadButton"]
+script = ExtResource("3_vmw4a")
+ButtonSounds = ExtResource("4_3vjg6")
 
 [node name="OptionsButton" type="Button" parent="Margins/LeftMenu"]
 unique_name_in_owner = true
@@ -91,6 +101,10 @@ text = "Options"
 flat = true
 alignment = 0
 
+[node name="ButtonSoundsComponent" type="Node" parent="Margins/LeftMenu/OptionsButton"]
+script = ExtResource("3_vmw4a")
+ButtonSounds = ExtResource("4_3vjg6")
+
 [node name="QuitButton" type="Button" parent="Margins/LeftMenu"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -100,6 +114,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_0rgyt")
 text = "Quit"
 flat = true
 alignment = 0
+
+[node name="ButtonSoundsComponent" type="Node" parent="Margins/LeftMenu/QuitButton"]
+script = ExtResource("3_vmw4a")
+ButtonSounds = ExtResource("4_3vjg6")
 
 [node name="CenterTabPanel" type="TabContainer" parent="Margins"]
 layout_mode = 2

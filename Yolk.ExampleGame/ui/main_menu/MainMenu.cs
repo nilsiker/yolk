@@ -6,6 +6,8 @@ using Chickensoft.Introspection;
 using Godot;
 using Yolk.Game;
 using Yolk.Generator;
+using Yolk.Logic.SoundEffects;
+
 
 public interface IMainMenu : IControl {
 }

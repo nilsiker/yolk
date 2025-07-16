@@ -1,4 +1,4 @@
-namespace Yolk.App;
+namespace Yolk.ExampleGame.App;
 
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
@@ -8,7 +8,10 @@ using Yolk.Generator;
 using Yolk.Options;
 using Yolk.Options.Actions;
 
-public interface IApp : INode, IProvide<IAppRepo>, IProvide<IOptionsRepo>, IProvide<IActionRepo> {
+public interface IApp : INode,
+  IProvide<IAppRepo>,
+  IProvide<IOptionsRepo>,
+  IProvide<IActionRepo> {
   public void OnOutputQuitApp();
 }
 
@@ -75,4 +78,5 @@ public partial class App : Node, IApp {
     Logic.Stop();
     Binding.Dispose();
   }
+
 }

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ButtonSounds" load_steps=3 format=3 uid="uid://du3p42su6rrys"]
+
+[ext_resource type="AudioStream" uid="uid://dru84xmwfxv0a" path="res://sound_effects/streams/select_001.ogg" id="1_cd0ll"]
+[ext_resource type="Script" uid="uid://5yoodqi7ptgs" path="res://sound_effects/ButtonSounds.cs" id="2_0yjrk"]
+
+[resource]
+script = ExtResource("2_0yjrk")
+ButtonUpSound = ExtResource("1_cd0ll")
+FocusEnteredSound = ExtResource("1_cd0ll")
+metadata/_custom_type_script = "uid://5yoodqi7ptgs"

@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://cywpu6lxdjhuu"]
 
 [ext_resource type="Script" uid="uid://bjbrxyy5n8jhp" path="res://game/Game.cs" id="1_17mmo"]
-[ext_resource type="Script" uid="uid://buoim3o7kayu0" path="res://sound/sound_spawner/SoundSpawner.cs" id="2_51532"]
+[ext_resource type="Script" uid="uid://ccj1nobacdf5w" path="res://music/MusicManager.cs" id="2_5a4rm"]
 [ext_resource type="PackedScene" uid="uid://ch84hntra3ghi" path="res://screen_effects/ScreenEffects.tscn" id="2_qv7dg"]
 [ext_resource type="PackedScene" uid="uid://b3yir6wkmklbj" path="res://ui/main_menu/MainMenu.tscn" id="3_3d0qh"]
-[ext_resource type="PackedScene" uid="uid://ddhqqc3jfb0df" path="res://sound/Sound.tscn" id="3_85edk"]
+[ext_resource type="Script" uid="uid://0hw03rhihrh5" path="res://sound_effects/SoundEffectsManager.cs" id="3_8t8sv"]
 [ext_resource type="Script" uid="uid://17kismd3rhvu" path="res://yolk_repo_provider/YolkRepoProvider.cs" id="3_ejjr5"]
 [ext_resource type="Script" uid="uid://d245yqet0ckd0" path="res://world/World2D.cs" id="5_qv7dg"]
 [ext_resource type="PackedScene" uid="uid://3mwky8ciwtjk" path="res://ui/pause_menu/PauseMenu.tscn" id="5_yw8km"]
@@ -16,30 +16,36 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_17mmo")
 
-[node name="GameUI" type="CanvasLayer" parent="."]
+[node name="YolkRepoProvider" type="Node" parent="."]
+script = ExtResource("3_ejjr5")
+
+[node name="MusicManager" type="Node" parent="YolkRepoProvider"]
+script = ExtResource("2_5a4rm")
+
+[node name="Track1" type="AudioStreamPlayer" parent="YolkRepoProvider/MusicManager"]
+
+[node name="Track2" type="AudioStreamPlayer" parent="YolkRepoProvider/MusicManager"]
+
+[node name="SoundEffectsManager" type="Node" parent="YolkRepoProvider"]
+script = ExtResource("3_8t8sv")
+
+[node name="GameUI" type="CanvasLayer" parent="YolkRepoProvider"]
 layer = 0
 
-[node name="ScreenEffects" parent="GameUI" instance=ExtResource("2_qv7dg")]
+[node name="ScreenEffects" parent="YolkRepoProvider/GameUI" instance=ExtResource("2_qv7dg")]
 unique_name_in_owner = true
 size_flags_horizontal = 2
 size_flags_vertical = 3
 
-[node name="MainMenu" parent="GameUI" instance=ExtResource("3_3d0qh")]
+[node name="MainMenu" parent="YolkRepoProvider/GameUI" instance=ExtResource("3_3d0qh")]
 unique_name_in_owner = true
 visibility_layer = 2
 texture_filter = 2
 
-[node name="PauseMenu" parent="GameUI" instance=ExtResource("5_yw8km")]
+[node name="PauseMenu" parent="YolkRepoProvider/GameUI" instance=ExtResource("5_yw8km")]
 visible = false
 visibility_layer = 2
 texture_filter = 2
-
-[node name="YolkRepoProvider" type="Node2D" parent="."]
-script = ExtResource("3_ejjr5")
-
-[node name="SoundSpawner" type="Node" parent="YolkRepoProvider"]
-script = ExtResource("2_51532")
-_soundScene = ExtResource("3_85edk")
 
 [node name="World" type="Node2D" parent="YolkRepoProvider"]
 process_mode = 1
