@@ -44,10 +44,10 @@ tracks/1/path = NodePath(".:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_8i5je"]
@@ -103,6 +103,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
+mouse_filter = 0
 stretch = true
 
 [node name="GameViewport" type="SubViewport" parent="GameContainer"]
@@ -121,6 +123,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 mouse_filter = 2
 stretch = true
 
@@ -128,6 +131,7 @@ stretch = true
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 3
+gui_disable_input = true
 gui_snap_controls_to_pixels = false
 size = Vector2i(1280, 720)
 render_target_update_mode = 4

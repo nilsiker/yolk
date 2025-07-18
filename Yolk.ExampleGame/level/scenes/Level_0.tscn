@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=4 uid="uid://cjm6d8ntikt0l"]
+[gd_scene load_steps=9 format=4 uid="uid://cjm6d8ntikt0l"]
 
 [ext_resource type="Script" uid="uid://chpix4kvvscx5" path="res://level/Level2D.cs" id="1_oeeqn"]
 [ext_resource type="TileSet" uid="uid://6n4yysue5b31" path="res://tilemap/tileset_1bit_platformer.tres" id="1_qcnnt"]
+[ext_resource type="Script" uid="uid://dr07pwbt0tisf" path="res://music/MusicReady.cs" id="2_8mqcm"]
+[ext_resource type="AudioStream" uid="uid://o4rhrftbw3xr" path="res://music/streams/Juhani Junkala [Retro Game Music Pack] Level 1.wav" id="3_hucfi"]
 [ext_resource type="Script" uid="uid://cuu2ns0fr3p3b" path="res://core/AutosavePoint.cs" id="3_tws20"]
 [ext_resource type="Script" uid="uid://c3a3yimmyy3lt" path="res://core/KillPlane.cs" id="4_tws20"]
 
@@ -11,6 +13,10 @@
 
 [node name="Level 0" type="Node2D"]
 script = ExtResource("1_oeeqn")
+
+[node name="MusicReady" type="Node" parent="."]
+script = ExtResource("2_8mqcm")
+Music = ExtResource("3_hucfi")
 
 [node name="Entrypoints" type="Node" parent="."]
 unique_name_in_owner = true
