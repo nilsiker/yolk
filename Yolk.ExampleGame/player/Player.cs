@@ -64,6 +64,10 @@ public partial class Player : CharacterBody2D, IPlayer {
     Logic.Set(WorldRepo);
     Logic.Set(GameRepo);
     Logic.Set(PlayerRepo);
+    Logic.Set(new PlayerLogic.Data {
+      VelocityX = 0,
+      VelocityY = 0
+    });
     Logic.Start();
 
     Hurtbox.BodyEntered += OnHurtboxBodyEntered;

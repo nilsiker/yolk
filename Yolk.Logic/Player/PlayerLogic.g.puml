@@ -6,15 +6,15 @@ state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
   }
   state "Enabled" as Yolk_Logic_Player_PlayerLogic_State_Enabled {
     state "Alive" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive {
+      state "Airborne" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_Airborne {
+        state "Falling" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_Airborne_Falling
+        state "Jumping" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_Airborne_Jumping
+      }
       state "Grounded" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_Grounded {
         state "Idle" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_Grounded_Idle
         state "Walking" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_Grounded_Walking
       }
       state "OnWall" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_OnWall
-      state "Airborne" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_Airborne {
-        state "Falling" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_Airborne_Falling
-        state "Jumping" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive_Airborne_Jumping
-      }
     }
   }
 }
@@ -22,6 +22,7 @@ state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
 Yolk_Logic_Player_PlayerLogic_State_Disabled_Hurt --> Yolk_Logic_Player_PlayerLogic_State_Disabled_Hurt : AnimationFinished
 Yolk_Logic_Player_PlayerLogic_State_Disabled_Hurt --> Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive : BlackoutFinished
 Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive --> Yolk_Logic_Player_PlayerLogic_State_Disabled_Dead : Die
+Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive --> Yolk_Logic_Player_PlayerLogic_State_Disabled_Hurt : TakeDamage
 
 Yolk_Logic_Player_PlayerLogic_State : OnWorldLevelLoaded() → Teleport
 Yolk_Logic_Player_PlayerLogic_State_Disabled : OnEnter → SetEnabled

@@ -157,11 +157,10 @@ speed_scale = 0.75
 [node name="DebugPanel" parent="AppUIContainer/AppUIViewport" instance=ExtResource("5_l0x3n")]
 process_mode = 3
 top_level = true
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
 offset_right = 0.0
-offset_bottom = 0.0
+offset_bottom = 68.0
 grow_horizontal = 2
-grow_vertical = 2
+size_flags_vertical = 0
 theme = ExtResource("6_kv4k2")

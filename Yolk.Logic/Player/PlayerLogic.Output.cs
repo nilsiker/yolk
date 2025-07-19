@@ -9,5 +9,6 @@ public partial class PlayerLogic {
     public readonly record struct Died;
     public readonly record struct SetEnabled(bool Enabled);
     public readonly record struct Animate(string Animation);
+    public readonly record struct UpdateVelocity(float X, float Y);
   }
 }

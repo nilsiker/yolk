@@ -19,7 +19,6 @@ public partial class PlayerLogic {
           return ToSelf();
         }
 
-
         public Transition On(in Input.BlackoutFinished input) => To<Enabled.Alive>();
       }
     }
