@@ -1,14 +1,23 @@
 @startuml PlayerLogic
 state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
-  state "Disabled" as Yolk_Logic_Player_PlayerLogic_State_Disabled
-  state "Enabled" as Yolk_Logic_Player_PlayerLogic_State_Enabled
+  state "Disabled" as Yolk_Logic_Player_PlayerLogic_State_Disabled {
+    state "Damaged" as Yolk_Logic_Player_PlayerLogic_State_Disabled_Damaged
+    state "Dead" as Yolk_Logic_Player_PlayerLogic_State_Disabled_Dead
+  }
+  state "Enabled" as Yolk_Logic_Player_PlayerLogic_State_Enabled {
+    state "Alive" as Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive
+  }
 }
 
-Yolk_Logic_Player_PlayerLogic_State_Enabled --> Yolk_Logic_Player_PlayerLogic_State_Disabled : Kill
+Yolk_Logic_Player_PlayerLogic_State_Disabled_Damaged --> Yolk_Logic_Player_PlayerLogic_State_Disabled_Damaged : AnimationFinished
+Yolk_Logic_Player_PlayerLogic_State_Disabled_Damaged --> Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive : BlackoutFinished
+Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive --> Yolk_Logic_Player_PlayerLogic_State_Disabled_Damaged : TakeDamage
+Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive --> Yolk_Logic_Player_PlayerLogic_State_Disabled_Dead : Die
 
 Yolk_Logic_Player_PlayerLogic_State : OnWorldLevelLoaded() → Teleport
 Yolk_Logic_Player_PlayerLogic_State_Disabled : OnEnter → SetEnabled
+Yolk_Logic_Player_PlayerLogic_State_Disabled_Damaged : OnEnter → Animate
 Yolk_Logic_Player_PlayerLogic_State_Enabled : OnEnter → SetEnabled
 
-[*] --> Yolk_Logic_Player_PlayerLogic_State_Enabled
+[*] --> Yolk_Logic_Player_PlayerLogic_State_Enabled_Alive
 @enduml

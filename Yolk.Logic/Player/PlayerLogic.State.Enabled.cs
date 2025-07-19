@@ -9,11 +9,10 @@ public partial class PlayerLogic {
 
   public abstract partial record State {
     [Meta, Id("playerlogic_state_enabled")]
-    public partial record Enabled : State, IGet<Input.Kill> {
+    public partial record Enabled : State {
       public Enabled() {
         this.OnEnter(() => Output(new Output.SetEnabled(true)));
       }
-      public Transition On(in Input.Kill input) => To<Disabled>();
     }
   }
 }

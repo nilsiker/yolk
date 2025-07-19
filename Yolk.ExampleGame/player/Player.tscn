@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://djk0n5kradfsr"]
+[gd_scene load_steps=13 format=3 uid="uid://djk0n5kradfsr"]
 
 [ext_resource type="Script" uid="uid://cm1bxdjpja664" path="res://player/Player.cs" id="1_3c3w1"]
 [ext_resource type="Texture2D" uid="uid://ulfby5p5i5rg" path="res://tilemap/1bit_platformer/monochrome_tilemap_transparent_packed.png" id="2_3c3w1"]
@@ -84,9 +84,25 @@ tracks/0/keys = {
 "values": [242, 241, 243, 241]
 }
 
+[sub_resource type="Animation" id="Animation_gskgj"]
+resource_name = "damaged"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [246]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_aqcbf"]
 _data = {
 &"RESET": SubResource("Animation_x8kxw"),
+&"damaged": SubResource("Animation_gskgj"),
 &"hang": SubResource("Animation_aqcbf"),
 &"idle": SubResource("Animation_3c3w1"),
 &"jump": SubResource("Animation_83hs8"),

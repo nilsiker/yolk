@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cywpu6lxdjhuu"]
+[gd_scene load_steps=13 format=3 uid="uid://cywpu6lxdjhuu"]
 
 [ext_resource type="Script" uid="uid://bjbrxyy5n8jhp" path="res://game/Game.cs" id="1_17mmo"]
 [ext_resource type="Script" uid="uid://ccj1nobacdf5w" path="res://music/MusicManager.cs" id="2_5a4rm"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://3mwky8ciwtjk" path="res://ui/pause_menu/PauseMenu.tscn" id="5_yw8km"]
 [ext_resource type="Script" uid="uid://dr07pwbt0tisf" path="res://music/MusicReady.cs" id="7_5a4rm"]
 [ext_resource type="AudioStream" uid="uid://meihifsy81nf" path="res://music/streams/Juhani Junkala [Retro Game Music Pack] Title Screen.wav" id="8_8t8sv"]
+[ext_resource type="PackedScene" uid="uid://daaf4nkbl1i78" path="res://ui/hud/HUD.tscn" id="10_8t8sv"]
 [ext_resource type="PackedScene" uid="uid://djk0n5kradfsr" path="res://player/Player.tscn" id="11_5a4rm"]
 
 [node name="Game" type="Control"]
@@ -60,6 +61,8 @@ Delay = 0.5
 visible = false
 visibility_layer = 2
 texture_filter = 2
+
+[node name="HUD" parent="YolkRepoProvider/GameUI" instance=ExtResource("10_8t8sv")]
 
 [node name="World" type="Node2D" parent="YolkRepoProvider"]
 process_mode = 1

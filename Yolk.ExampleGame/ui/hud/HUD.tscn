@@ -1,0 +1,134 @@
+[gd_scene load_steps=9 format=3 uid="uid://daaf4nkbl1i78"]
+
+[ext_resource type="Script" uid="uid://883rqv5tac8g" path="res://ui/hud/Gauges.cs" id="1_lhd7q"]
+[ext_resource type="Script" uid="uid://d28aeh8ieppoa" path="res://ui/hud/HUD.cs" id="1_ttn8j"]
+[ext_resource type="PackedScene" uid="uid://dm1kkt4pvvk30" path="res://ui/hud/scenes/HeartUI.tscn" id="2_fdx20"]
+[ext_resource type="PackedScene" uid="uid://dcq33tklxfidx" path="res://ui/hud/scenes/ChargeUI.tscn" id="3_ttn8j"]
+
+[sub_resource type="Animation" id="Animation_ttn8j"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_i41ai"]
+resource_name = "hide"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lhd7q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nsdl4"]
+_data = {
+&"RESET": SubResource("Animation_lhd7q"),
+&"hide": SubResource("Animation_i41ai"),
+&"show": SubResource("Animation_ttn8j")
+}
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ttn8j")
+
+[node name="Margins" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="Gauges" type="VBoxContainer" parent="Margins"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = -10
+script = ExtResource("1_lhd7q")
+_heartScene = ExtResource("2_fdx20")
+_chargeScene = ExtResource("3_ttn8j")
+
+[node name="Hearts" type="HBoxContainer" parent="Margins/Gauges"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="HeartUI" parent="Margins/Gauges/Hearts" instance=ExtResource("2_fdx20")]
+layout_mode = 2
+texture = null
+
+[node name="HeartUI2" parent="Margins/Gauges/Hearts" instance=ExtResource("2_fdx20")]
+layout_mode = 2
+texture = null
+
+[node name="HeartUI3" parent="Margins/Gauges/Hearts" instance=ExtResource("2_fdx20")]
+layout_mode = 2
+texture = null
+
+[node name="Charges" type="HBoxContainer" parent="Margins/Gauges"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="ChargeUI" parent="Margins/Gauges/Charges" instance=ExtResource("3_ttn8j")]
+layout_mode = 2
+texture = null
+
+[node name="ChargeUI2" parent="Margins/Gauges/Charges" instance=ExtResource("3_ttn8j")]
+layout_mode = 2
+texture = null
+
+[node name="ChargeUI3" parent="Margins/Gauges/Charges" instance=ExtResource("3_ttn8j")]
+layout_mode = 2
+texture = null
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_nsdl4")
+}

@@ -6,6 +6,6 @@ namespace Yolk.Core;
 /// <br/>
 /// Entity is responsible for calling any appropriate death logic.
 /// </summary>
-public interface IKillable {
-  public void Kill();
+public interface IDamageable {
+  public void TakeDamage(int amount);
 }

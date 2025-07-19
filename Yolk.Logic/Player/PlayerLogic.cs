@@ -6,5 +6,5 @@ using Chickensoft.LogicBlocks;
 
 [Meta, Id("playerlogic"), LogicBlock(typeof(State), Diagram = true)]
 public partial class PlayerLogic : LogicBlock<PlayerLogic.State> {
-  public override Transition GetInitialState() => To<State.Enabled>();
+  public override Transition GetInitialState() => To<State.Enabled.Alive>();
 }

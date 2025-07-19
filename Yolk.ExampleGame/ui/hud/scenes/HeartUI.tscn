@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://dm1kkt4pvvk30"]
+
+[ext_resource type="Texture2D" uid="uid://0tna6g4hasie" path="res://tilemap/1bit_platformer/Tiles/Transparent/tile_0041.png" id="1_j06x2"]
+[ext_resource type="Script" uid="uid://co20vto7l2qd2" path="res://ui/hud/PipUI.cs" id="2_m4l75"]
+[ext_resource type="Texture2D" uid="uid://bue1vuojmqpdd" path="res://tilemap/1bit_platformer/Tiles/Transparent/tile_0040.png" id="3_fv0pp"]
+
+[node name="HeartUI" type="TextureRect"]
+custom_minimum_size = Vector2(64, 64)
+mouse_filter = 2
+texture = ExtResource("1_j06x2")
+script = ExtResource("2_m4l75")
+_texture = ExtResource("1_j06x2")
+_emptyTexture = ExtResource("3_fv0pp")

@@ -1,7 +1,5 @@
 namespace Yolk.Core;
 
-using System;
-
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
@@ -15,9 +13,8 @@ public partial class KillPlane : Area2D {
   [Dependency] private IGameRepo GameRepo => this.DependOn<IGameRepo>();
 
   public void OnResolved() => BodyEntered += (body) => {
-    if (body is IKillable killable) {
-      killable.Kill();
+    if (body is IDamageable damageable) {
+      damageable.TakeDamage(1);
     }
   };
-
 }

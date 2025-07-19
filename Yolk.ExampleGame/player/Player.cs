@@ -1,5 +1,6 @@
 namespace Yolk.ExampleGame;
 
+using System;
 using Chickensoft.AutoInject;
 using Chickensoft.GodotNodeInterfaces;
 using Chickensoft.Introspection;
@@ -14,13 +15,14 @@ using Yolk.Logic.Player;
 using Yolk.Logic.World;
 using Yolk.World;
 
-public interface IPlayer : ICharacterBody2D, IKillable;
+public interface IPlayer : ICharacterBody2D, IDamageable;
 
 [StateInfo]
 [Meta(typeof(IAutoNode))]
 public partial class Player : CharacterBody2D, IPlayer {
   public override void _Notification(int what) => this.Notify(what);
 
+  [Dependency] private IPlayerRepo PlayerRepo => this.DependOn<IPlayerRepo>();
   [Dependency] private IWorldRepo WorldRepo => this.DependOn<IWorldRepo>();
   [Dependency] private IGameRepo GameRepo => this.DependOn<IGameRepo>();
   [Dependency] private ISaveChunk<GameData> GameChunk => this.DependOn<ISaveChunk<GameData>>();
@@ -29,7 +31,7 @@ public partial class Player : CharacterBody2D, IPlayer {
   [Node] private AnimationPlayer Anim { get; set; } = default!;
   [Node] private Area2D Hurtbox { get; set; } = default!;
 
-  void IKillable.Kill() => Logic.Input(new PlayerLogic.Input.Kill());
+  void IDamageable.TakeDamage(int amount) => Logic.Input(new PlayerLogic.Input.TakeDamage(amount));
 
   private ISaveChunk<PlayerData> PlayerChunk { get; set; } = default!;
   private PlayerLogic Logic { get; set; } = default!;
@@ -56,16 +58,20 @@ public partial class Player : CharacterBody2D, IPlayer {
     Binding = Logic.Bind();
     Binding
       .Handle((in PlayerLogic.Output.Teleport output) => OnOutputTeleport(output.Entrypoint))
+      .Handle((in PlayerLogic.Output.Animate output) => OnOutputAnimate(output.Animation))
       .Handle((in PlayerLogic.Output.SetEnabled output) => OnOutputSetEnabled(output.Enabled));
 
     Logic.Set(WorldRepo);
     Logic.Set(GameRepo);
+    Logic.Set(PlayerRepo);
     Logic.Start();
 
     Hurtbox.BodyEntered += OnHurtboxBodyEntered;
   }
 
-  private void OnHurtboxBodyEntered(Node2D body) => (this as IKillable).Kill();
+  private void OnOutputAnimate(string animation) => Anim.Play(animation);
+  private void OnHurtboxBodyEntered(Node2D body) => (this as IDamageable).TakeDamage(1);
+
   private void OnOutputSetEnabled(bool enabled) => SetCollisionLayerValue(1, enabled);
 
   private void OnOutputTeleport(ITransform2D entrypoint) {
