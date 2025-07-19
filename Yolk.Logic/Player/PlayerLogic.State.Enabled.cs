@@ -13,6 +13,8 @@ public partial class PlayerLogic {
       public Enabled() {
         this.OnEnter(() => Output(new Output.SetEnabled(true)));
       }
+
+
     }
   }
 }

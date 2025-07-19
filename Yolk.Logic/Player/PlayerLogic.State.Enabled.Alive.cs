@@ -9,15 +9,21 @@ public partial class PlayerLogic {
   public abstract partial record State {
     public partial record Enabled {
       [Meta, Id("playerlogic_state_enabled_alive")]
-      public partial record Alive : Enabled, IGet<Input.TakeDamage>, IGet<Input.Die> {
+      public partial record Alive : Enabled,
+        IGet<Input.TakeDamage>,
+        IGet<Input.Die>,
+        IGet<Input.Move> {
         public Alive() {
           OnAttach(() => Get<IPlayerRepo>().OutOfHearts += OnPlayerOutOfHearts);
           OnDetach(() => Get<IPlayerRepo>().OutOfHearts -= OnPlayerOutOfHearts);
         }
 
         private void OnPlayerOutOfHearts() => Input(new Input.Die());
-
-
+        public Transition On(in Input.Move input) {
+          var data = Get<Data>();
+          data.MoveDirectionX = input.X;
+          return ToSelf();
+        }
         public Transition On(in Input.TakeDamage input) {
           Get<IPlayerRepo>().Damage(input.Amount);
           return To<Disabled.Hurt>();

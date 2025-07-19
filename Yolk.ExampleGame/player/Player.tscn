@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://djk0n5kradfsr"]
+[gd_scene load_steps=14 format=3 uid="uid://djk0n5kradfsr"]
 
 [ext_resource type="Script" uid="uid://cm1bxdjpja664" path="res://player/Player.cs" id="1_3c3w1"]
 [ext_resource type="Texture2D" uid="uid://ulfby5p5i5rg" path="res://tilemap/1bit_platformer/monochrome_tilemap_transparent_packed.png" id="2_3c3w1"]
@@ -120,6 +120,10 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0, 0.5)
 
+[sub_resource type="Gradient" id="Gradient_wnvi2"]
+offsets = PackedFloat32Array(0, 0.668571)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
 [node name="Player" type="CharacterBody2D"]
 slide_on_ceiling = false
 script = ExtResource("1_3c3w1")
@@ -158,3 +162,18 @@ shape = SubResource("CapsuleShape2D_3c3w1")
 visible = false
 position = Vector2(0, -6)
 texture = SubResource("GradientTexture2D_wnvi2")
+
+[node name="JumpParticles" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 0.95
+emission_shape = 3
+emission_rect_extents = Vector2(4, 0)
+direction = Vector2(0, -1)
+gravity = Vector2(0, 200)
+initial_velocity_min = 30.0
+initial_velocity_max = 50.0
+scale_amount_max = 2.0
+color_ramp = SubResource("Gradient_wnvi2")

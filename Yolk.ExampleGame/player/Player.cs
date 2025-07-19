@@ -22,14 +22,16 @@ public interface IPlayer : ICharacterBody2D, IDamageable;
 public partial class Player : CharacterBody2D, IPlayer {
   public override void _Notification(int what) => this.Notify(what);
 
-  [Dependency] private IPlayerRepo PlayerRepo => this.DependOn<IPlayerRepo>();
-  [Dependency] private IWorldRepo WorldRepo => this.DependOn<IWorldRepo>();
+  [Dependency] private IAppRepo AppRepo => this.DependOn<IAppRepo>();
   [Dependency] private IGameRepo GameRepo => this.DependOn<IGameRepo>();
+  [Dependency] private IWorldRepo WorldRepo => this.DependOn<IWorldRepo>();
+  [Dependency] private IPlayerRepo PlayerRepo => this.DependOn<IPlayerRepo>();
   [Dependency] private ISaveChunk<GameData> GameChunk => this.DependOn<ISaveChunk<GameData>>();
 
   [Node] private Sprite2D Sprite { get; set; } = default!;
   [Node] private AnimationPlayer Anim { get; set; } = default!;
   [Node] private Area2D Hurtbox { get; set; } = default!;
+  [Node] private CpuParticles2D JumpParticles { get; set; } = default!;
 
   void IDamageable.TakeDamage(int amount) => Logic.Input(new PlayerLogic.Input.TakeDamage(amount));
 
@@ -59,8 +61,13 @@ public partial class Player : CharacterBody2D, IPlayer {
     Binding
       .Handle((in PlayerLogic.Output.Teleport output) => OnOutputTeleport(output.Entrypoint))
       .Handle((in PlayerLogic.Output.Animate output) => OnOutputAnimate(output.Animation))
-      .Handle((in PlayerLogic.Output.SetEnabled output) => OnOutputSetEnabled(output.Enabled));
+      .Handle((in PlayerLogic.Output.SetEnabled output) => OnOutputSetEnabled(output.Enabled))
+      .Handle((in PlayerLogic.Output.MoveAndSlide output) => OnOutputMoveAndSlide(output.X, output.Y))
+      .Handle((in PlayerLogic.Output.FaceRight _) => Sprite.FlipH = false)
+      .Handle((in PlayerLogic.Output.FaceLeft _) => Sprite.FlipH = true)
+      .Handle((in PlayerLogic.Output.OnJump output) => OnOutputOnJump());
 
+    Logic.Set(AppRepo);
     Logic.Set(WorldRepo);
     Logic.Set(GameRepo);
     Logic.Set(PlayerRepo);
@@ -71,10 +78,20 @@ public partial class Player : CharacterBody2D, IPlayer {
     Logic.Start();
 
     Hurtbox.BodyEntered += OnHurtboxBodyEntered;
+    Anim.AnimationFinished += OnAnimationFinished;
   }
 
-  private void OnOutputAnimate(string animation) => Anim.Play(animation);
+  private void OnOutputOnJump() => JumpParticles.Restart();
   private void OnHurtboxBodyEntered(Node2D body) => (this as IDamageable).TakeDamage(1);
+  private void OnAnimationFinished(StringName animName) => Logic.Input(new PlayerLogic.Input.AnimationFinished());
+
+  private void OnOutputMoveAndSlide(float x, float y) {
+    Velocity = new Vector2(x, y);
+    MoveAndSlide();
+  }
+
+
+  private void OnOutputAnimate(string animation) => Anim.Play(animation);
 
   private void OnOutputSetEnabled(bool enabled) => SetCollisionLayerValue(1, enabled);
 
@@ -83,67 +100,29 @@ public partial class Player : CharacterBody2D, IPlayer {
     GlobalPosition = new Vector2(entrypoint.Position.X, entrypoint.Position.Y);
   }
 
-  private float _gravityForce = 9.82f * 3.0f;
-  private float _gravity;
-  private float _horizontalForce;
-  private float _coyoteTime;
-  private float _wallCoyoteTime;
-
   public override void _PhysicsProcess(double delta) {
     var inputVector = Inputs.GetMoveVector();
+    Logic.Input(new PlayerLogic.Input.OnGrounded(IsOnFloor()));
+    Logic.Input(new PlayerLogic.Input.Move(inputVector.X, inputVector.Y));
 
-    var pushingAgainstWall = IsOnWall() && !GetWallNormal().IsZeroApprox() && Mathf.Abs(inputVector.X + GetWallNormal().X) < Mathf.Epsilon;
 
-    if (inputVector.X != 0) {
-      _horizontalForce = 0;
-      Sprite.FlipH = inputVector.X < 0;
-      Anim.Play("walk");
-    }
-    else {
-      Anim.Play("idle");
+    if (IsOnCeiling()) {
+      Logic.Input(new PlayerLogic.Input.HitCeiling());
     }
 
-    if (!IsOnFloor()) {
-      Anim.Play("jump");
+    if (IsOnWall()) {
+      Logic.Input(new PlayerLogic.Input.ClingToWall());
     }
 
-    if (pushingAgainstWall) {
-      Anim.Play("hang");
-    }
-
-    _coyoteTime = IsOnFloor()
-      ? 0.05f
-      : Mathf.MoveToward(_coyoteTime, 0, (float)delta);
-
-    _wallCoyoteTime = IsOnWall()
-      ? 0.1f
-      : Mathf.MoveToward(_wallCoyoteTime, 0, (float)delta);
-
-    Velocity = Velocity with {
-      X = (inputVector.X * 75) + _horizontalForce,
-      Y = _gravity * 10
-    };
-
-    _horizontalForce = IsOnFloor() ? 0 : Mathf.MoveToward(_horizontalForce, 0, (float)delta * 10);
-    MoveAndSlide();
-
-    _gravity = (IsOnFloor(), IsOnCeiling(), IsOnWall() && pushingAgainstWall) switch {
-      (false, false, false) => _gravity + (_gravityForce * (float)delta),
-      (false, true, false) => _gravityForce * (float)delta,
-      (false, false, true) => _gravityForce / 15.0f,
-      _ => 0
-    };
+    Logic.Input(new PlayerLogic.Input.PhysicsTick((float)delta));
   }
 
   public override void _UnhandledInput(InputEvent @event) {
     if (@event.IsActionPressed(Inputs.Jump)) {
-      if (_coyoteTime > 0) {
-        _gravity = -10;
-      }
-      else if (_wallCoyoteTime > 0) {
-        _gravity = -8f;
-        _horizontalForce = GetWallNormal().X * 50;
-      }
+      Logic.Input(new PlayerLogic.Input.Jump());
+    }
+    else if (@event.IsActionReleased(Inputs.Jump)) {
+      Logic.Input(new PlayerLogic.Input.StopJump());
     }
   }
   public override void _ExitTree() => Binding.Dispose();
