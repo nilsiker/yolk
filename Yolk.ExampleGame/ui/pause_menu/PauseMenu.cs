@@ -22,6 +22,7 @@ public partial class PauseMenu : Control, IPauseMenu {
   [Node] private Button ResumeButton { get; set; } = default!;
   [Node] private Button SaveGameButton { get; set; } = default!;
   [Node] private Button OptionsButton { get; set; } = default!;
+  [Node] private AnimationPlayer Anim { get; set; } = default!;
 
   [Node] private Button QuitMainMenuButton { get; set; } = default!;
   [Node] private Button QuitDesktopButton { get; set; } = default!;
@@ -59,7 +60,11 @@ public partial class PauseMenu : Control, IPauseMenu {
   private void OnOutputUpdateVisibility(bool visible) {
     Visible = visible;
     if (visible) {
+      Anim.Play("show");
       ResumeButton.GrabFocus();
+    }
+    else {
+      Anim.Play("hide");
     }
   }
 
