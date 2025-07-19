@@ -20,7 +20,7 @@ public partial class PlayerLogic {
 
         public Transition On(in Input.TakeDamage input) {
           Get<IPlayerRepo>().Damage(input.Amount);
-          return To<Disabled.Damaged>();
+          return To<Disabled.Hurt>();
         }
 
         public Transition On(in Input.Die input) => To<Disabled.Dead>();
