@@ -27,6 +27,7 @@ public partial class Player : CharacterBody2D, IPlayer {
 
   [Node] private Sprite2D Sprite { get; set; } = default!;
   [Node] private AnimationPlayer Anim { get; set; } = default!;
+  [Node] private Area2D Hurtbox { get; set; } = default!;
 
   void IKillable.Kill() => Logic.Input(new PlayerLogic.Input.Kill());
 
@@ -60,8 +61,11 @@ public partial class Player : CharacterBody2D, IPlayer {
     Logic.Set(WorldRepo);
     Logic.Set(GameRepo);
     Logic.Start();
+
+    Hurtbox.BodyEntered += OnHurtboxBodyEntered;
   }
 
+  private void OnHurtboxBodyEntered(Node2D body) => (this as IKillable).Kill();
   private void OnOutputSetEnabled(bool enabled) => SetCollisionLayerValue(1, enabled);
 
   private void OnOutputTeleport(ITransform2D entrypoint) {

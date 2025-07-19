@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://djk0n5kradfsr"]
+[gd_scene load_steps=12 format=3 uid="uid://djk0n5kradfsr"]
 
 [ext_resource type="Script" uid="uid://cm1bxdjpja664" path="res://player/Player.cs" id="1_3c3w1"]
 [ext_resource type="Texture2D" uid="uid://ulfby5p5i5rg" path="res://tilemap/1bit_platformer/monochrome_tilemap_transparent_packed.png" id="2_3c3w1"]
@@ -93,6 +93,17 @@ _data = {
 &"walk": SubResource("Animation_wnvi2")
 }
 
+[sub_resource type="Gradient" id="Gradient_3c3w1"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wnvi2"]
+gradient = SubResource("Gradient_3c3w1")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0.5)
+
 [node name="Player" type="CharacterBody2D"]
 slide_on_ceiling = false
 script = ExtResource("1_3c3w1")
@@ -118,3 +129,16 @@ libraries = {
 &"": SubResource("AnimationLibrary_aqcbf")
 }
 autoplay = "walk"
+
+[node name="Hurtbox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -6)
+shape = SubResource("CapsuleShape2D_3c3w1")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, -6)
+texture = SubResource("GradientTexture2D_wnvi2")
