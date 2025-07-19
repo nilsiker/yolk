@@ -7,13 +7,11 @@ using Chickensoft.LogicBlocks;
 public partial class PlayerLogic {
 
   public abstract partial record State {
-    public partial record Enabled {
-      public partial record Alive {
+    public partial record Alive {
+      public partial record Enabled {
         public partial record Airborne {
-          [Meta, Id("playerlogic_state_enabled_alive_airborne_falling")]
+          [Meta, Id("playerlogic_state_alive_enabled_airborne_falling")]
           public partial record Falling : Airborne,
-            IGet<Input.PhysicsTick>,
-            IGet<Input.Move>,
             IGet<Input.OnGrounded>,
             IGet<Input.Jump> {
             public Falling() {

@@ -5,6 +5,8 @@ using Chickensoft.Collections;
 
 public interface IPlayerRepo : IDisposable {
   public event Action? OutOfHearts;
+  public event Action? Damaged;
+  public event Action? Healed;
   public IAutoProp<int> Hearts { get; }
   public IAutoProp<int> MaxHearts { get; }
   public IAutoProp<int> Charges { get; }
@@ -23,6 +25,9 @@ public class PlayerRepo(int initialHearts, int initialCharges) : IPlayerRepo {
   private readonly AutoProp<int> _maxCharges = new(1);
 
   public event Action? OutOfHearts;
+  public event Action? Damaged;
+  public event Action? Healed;
+
   public IAutoProp<int> Hearts => _hearts;
   public IAutoProp<int> MaxHearts => _maxHearts;
   public IAutoProp<int> Charges => _charges;
@@ -34,11 +39,13 @@ public class PlayerRepo(int initialHearts, int initialCharges) : IPlayerRepo {
     if (newHearts == 0) {
       OutOfHearts?.Invoke();
     }
+    Damaged?.Invoke();
   }
 
   public void Heal(int amount = 1) {
     var newHearts = Math.Min(_hearts.Value + amount, _maxHearts.Value);
     _hearts.OnNext(newHearts);
+    Healed?.Invoke();
   }
 
   public void AddCharge(int amount = 1) {

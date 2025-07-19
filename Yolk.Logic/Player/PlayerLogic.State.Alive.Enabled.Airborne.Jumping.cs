@@ -7,10 +7,10 @@ using Chickensoft.LogicBlocks;
 public partial class PlayerLogic {
 
   public abstract partial record State {
-    public partial record Enabled {
-      public partial record Alive {
+    public partial record Alive {
+      public partial record Enabled {
         public partial record Airborne {
-          [Meta, Id("playerlogic_state_enabled_alive_airborne_jumping")]
+          [Meta, Id("playerlogic_state_alive_enabled_airborne_jumping")]
           public partial record Jumping : Airborne, IGet<Input.StopJump>, IGet<Input.PhysicsTick> {
             private float _jumpTimer;
 
@@ -29,6 +29,9 @@ public partial class PlayerLogic {
               _jumpTimer += input.Delta;
 
               var data = Get<Data>();
+
+              data.VelocityX = data.MoveDirectionX * data.Speed;
+
               Output(new Output.MoveAndSlide(data.VelocityX, data.VelocityY));
               return _jumpTimer < 0.25f // Allow jumping for a short duration
                 ? ToSelf()

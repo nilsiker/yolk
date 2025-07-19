@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://djk0n5kradfsr"]
+[gd_scene load_steps=15 format=3 uid="uid://djk0n5kradfsr"]
 
 [ext_resource type="Script" uid="uid://cm1bxdjpja664" path="res://player/Player.cs" id="1_3c3w1"]
 [ext_resource type="Texture2D" uid="uid://ulfby5p5i5rg" path="res://tilemap/1bit_platformer/monochrome_tilemap_transparent_packed.png" id="2_3c3w1"]
+[ext_resource type="Script" uid="uid://sg6i34k836ua" path="res://player/PlayerCamera.cs" id="2_wnvi2"]
 
 [sub_resource type="Animation" id="Animation_x8kxw"]
 length = 0.001
@@ -135,8 +136,9 @@ libraries = {
 }
 autoplay = "walk"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="PlayerCamera" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+script = ExtResource("2_wnvi2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)

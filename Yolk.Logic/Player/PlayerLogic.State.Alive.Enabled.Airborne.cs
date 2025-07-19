@@ -2,14 +2,15 @@
 namespace Yolk.Logic.Player;
 
 using Chickensoft.Introspection;
+using Godot;
 
 public partial class PlayerLogic {
 
   public abstract partial record State {
-    public partial record Enabled {
-      public partial record Alive {
-        [Meta, Id("playerlogic_state_enabled_alive_airborne")]
-        public partial record Airborne : Alive, IGet<Input.PhysicsTick>, IGet<Input.HitCeiling> {
+    public partial record Alive {
+      public partial record Enabled {
+        [Meta, Id("playerlogic_state_alive_enabled_airborne")]
+        public partial record Airborne : Enabled, IGet<Input.PhysicsTick>, IGet<Input.HitCeiling> {
 
           public Transition On(in Input.PhysicsTick input) {
             var data = Get<Data>();
@@ -23,7 +24,7 @@ public partial class PlayerLogic {
             }
 
             data.VelocityX = data.MoveDirectionX * data.Speed;
-
+            GD.Print(data.VelocityX);
             Output(new Output.MoveAndSlide(data.VelocityX, data.VelocityY));
             return ToSelf();
           }

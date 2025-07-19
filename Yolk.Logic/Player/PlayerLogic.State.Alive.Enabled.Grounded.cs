@@ -7,10 +7,10 @@ using Chickensoft.LogicBlocks;
 public partial class PlayerLogic {
 
   public abstract partial record State {
-    public partial record Enabled {
-      public partial record Alive {
-        [Meta, Id("playerlogic_state_enabled_alive_grounded")]
-        public partial record Grounded : Alive, IGet<Input.OnGrounded>, IGet<Input.Jump>, IGet<Input.PhysicsTick> {
+    public partial record Alive {
+      public partial record Enabled {
+        [Meta, Id("playerlogic_state_alive_enabled_grounded")]
+        public partial record Grounded : Enabled, IGet<Input.OnGrounded>, IGet<Input.Jump>, IGet<Input.PhysicsTick> {
           public Grounded() {
             this.OnEnter(() => {
               Get<Data>().VelocityY = 0.0f;

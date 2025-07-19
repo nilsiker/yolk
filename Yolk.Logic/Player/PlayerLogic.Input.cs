@@ -15,5 +15,6 @@ public partial class PlayerLogic {
     public readonly record struct ClingToWall;
     public readonly record struct OnGrounded(bool IsGrounded);
     public readonly record struct HitCeiling;
+    public readonly record struct RegisterCheckpoint(float X, float Y);
   }
 }

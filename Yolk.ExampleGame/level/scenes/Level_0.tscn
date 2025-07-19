@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://cjm6d8ntikt0l"]
+[gd_scene load_steps=14 format=4 uid="uid://cjm6d8ntikt0l"]
 
 [ext_resource type="Script" uid="uid://chpix4kvvscx5" path="res://level/Level2D.cs" id="1_oeeqn"]
 [ext_resource type="TileSet" uid="uid://6n4yysue5b31" path="res://tilemap/tileset_1bit_platformer.tres" id="1_qcnnt"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cuu2ns0fr3p3b" path="res://core/AutosavePoint.cs" id="3_tws20"]
 [ext_resource type="Script" uid="uid://c3a3yimmyy3lt" path="res://core/KillPlane.cs" id="4_tws20"]
 [ext_resource type="Script" uid="uid://doejqe1sx0oea" path="res://music/MusicArea2D.cs" id="7_187le"]
+[ext_resource type="PackedScene" uid="uid://dlcaf5itmm87h" path="res://pickup/Pickup.tscn" id="8_6b0ys"]
 [ext_resource type="AudioStream" uid="uid://bs561qssrnf6v" path="res://music/streams/Juhani Junkala [Retro Game Music Pack] Ending.wav" id="8_bplb7"]
 
 [sub_resource type="Gradient" id="Gradient_bplb7"]
@@ -56,10 +57,11 @@ tile_set = ExtResource("1_qcnnt")
 collision_enabled = false
 
 [node name="DebugSavePoint" type="Area2D" parent="."]
+position = Vector2(-35, -16)
 script = ExtResource("3_tws20")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DebugSavePoint"]
-position = Vector2(-31, -32)
+position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_oeeqn")
 
 [node name="KillPlane" type="Area2D" parent="."]
@@ -81,3 +83,6 @@ shape = SubResource("RectangleShape2D_hucfi")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
 color = Color(0, 0, 0, 1)
+
+[node name="Pickup" parent="." instance=ExtResource("8_6b0ys")]
+position = Vector2(-150, 8)

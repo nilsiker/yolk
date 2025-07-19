@@ -71,5 +71,6 @@
     <ProjectReference Include="..\Yolk.Data\Yolk.Data.csproj" />
     <ProjectReference Include="..\Yolk.Extensions\Yolk.Extensions.csproj" />
     <ProjectReference Include="..\Yolk.Logic\Yolk.Logic.csproj" />
+    <ProjectReference Include="..\Yolk.Nodes\Yolk.Nodes.csproj" />
   </ItemGroup>
 </Project>

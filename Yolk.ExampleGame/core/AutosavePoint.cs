@@ -13,8 +13,9 @@ public partial class AutosavePoint : Area2D {
   [Dependency] private IGameRepo GameRepo => this.DependOn<IGameRepo>();
 
   public void OnResolved() => BodyEntered += (body) => {
-    if (body is Player player) {
+    if (body is IPlayer player) {
       GameRepo.Autosave();
+      player.RegisterCheckpoint(GlobalPosition.X, GlobalPosition.Y);
     }
   };
 }
