@@ -35,7 +35,7 @@ public partial class Gauges : Control {
       Hearts.AddChild(pip);
     }
 
-    Callable.From(() => FillHearts(count));
+    FillHearts(count);
   }
 
   private void OnPlayerMaxChargesSync(int count) {
@@ -46,7 +46,7 @@ public partial class Gauges : Control {
       Charges.AddChild(pip);
     }
 
-    Callable.From(() => FillCharges(count));
+    FillCharges(count);
   }
 
   public void FillHearts(int count) {
