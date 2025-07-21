@@ -2,15 +2,18 @@
 namespace Yolk.Logic.Player;
 
 using Chickensoft.Collections;
+using Yolk.Logic.World;
 
 public interface IPlayerRepo : IDisposable {
   public event Action? OutOfHearts;
   public event Action? Damaged;
   public event Action? Healed;
+  public event Action<ITransform2D>? Respawned;
   public IAutoProp<int> Health { get; }
   public IAutoProp<int> MaxHealth { get; }
   public IAutoProp<int> Charges { get; }
   public IAutoProp<int> MaxCharges { get; }
+
 
   public void SetHealth(int hearts);
   public void SetMaxHealth(int maxHearts);
@@ -20,6 +23,7 @@ public interface IPlayerRepo : IDisposable {
   public void Heal(int amount = 1);
   public void AddCharge(int amount = 1);
   public void RemoveCharge(int amount = 1);
+  public void Respawn(ITransform2D transform);
 }
 
 public class PlayerRepo(int initialHearts, int initialCharges) : IPlayerRepo {
@@ -31,6 +35,7 @@ public class PlayerRepo(int initialHearts, int initialCharges) : IPlayerRepo {
   public event Action? OutOfHearts;
   public event Action? Damaged;
   public event Action? Healed;
+  public event Action<ITransform2D>? Respawned;
 
   public IAutoProp<int> Health => _hearts;
   public IAutoProp<int> MaxHealth => _maxHearts;
@@ -74,6 +79,7 @@ public class PlayerRepo(int initialHearts, int initialCharges) : IPlayerRepo {
     var newCharges = Math.Max(_charges.Value - amount, 0);
     _charges.OnNext(newCharges);
   }
+  public void Respawn(ITransform2D transform) => Respawned?.Invoke(transform);
 
   public void Dispose() {
     _hearts.OnCompleted();
@@ -88,4 +94,5 @@ public class PlayerRepo(int initialHearts, int initialCharges) : IPlayerRepo {
 
     GC.SuppressFinalize(this);
   }
+
 }

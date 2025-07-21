@@ -130,13 +130,13 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_wuivf")
 theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_o6kyq")
 theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_olnjm")
 theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_bcai1")
+current_tab = 0
 tabs_visible = false
 use_hidden_tabs_for_min_size = true
 deselect_enabled = true
 
 [node name="SaveGamePanel" parent="Margins/CenterTabPanel" instance=ExtResource("3_0rgyt")]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 GameSaveSlotScene = ExtResource("4_2ijps")

@@ -61,4 +61,11 @@ public partial class PlayerCamera : Camera2D {
     _zoomTween.TweenProperty(this, "zoom", new Vector2(3.8f, 3.8f), 0.25f);
     _zoomTween.TweenProperty(this, "zoom", new Vector2(4, 4), 0.25f);
   }
+
+  public override void _ExitTree() {
+    PlayerRepo.Damaged -= OnPlayerDamaged;
+    PlayerRepo.Healed -= OnPlayerHealed;
+
+    base._ExitTree();
+  }
 }

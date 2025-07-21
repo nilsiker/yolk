@@ -2,7 +2,6 @@
 namespace Yolk.Logic.Player;
 
 using Chickensoft.Introspection;
-using Godot;
 
 public partial class PlayerLogic {
 

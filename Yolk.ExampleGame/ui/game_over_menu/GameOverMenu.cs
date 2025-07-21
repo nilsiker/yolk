@@ -1,6 +1,5 @@
 namespace Yolk.ExampleGame.UI;
 
-using System;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
@@ -23,13 +22,15 @@ public partial class GameOverMenu : Control {
 
     GameRepo.GameOver += OnGameOver;
     GameRepo.Quitted += OnQuitted;
+    GameRepo.Ready += OnGameReady;
     GameRepo.LoadRequested += OnLoadRequested;
   }
 
+  private void OnGameReady() => Visible = false;
   private void OnLoadRequested(string obj) => Visible = false;
   private void OnQuitted() => Visible = false;
   private void OnGameOver() => Visible = true;
-  private void OnRetryButtonPressed() => throw new NotImplementedException("Retry functionality not implemented yet.");
+  private void OnRetryButtonPressed() => GameRepo.Autoload();
   private void OnQuitButtonPressed() => GameRepo.RequestQuit();
 
 }

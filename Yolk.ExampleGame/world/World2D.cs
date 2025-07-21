@@ -12,7 +12,6 @@ using Yolk.Level;
 using Yolk.Logic.World;
 using Yolk.World;
 
-
 public interface IWorld2D : INode, IProvide<IWorldRepo>;
 
 [StateInfo]
@@ -28,13 +27,12 @@ public partial class World2D : Node, IWorld2D {
 
   [Export] private PackedScene _startScene = default!;
 
-  [Node] private Player Player { get; set; } = default!;
   [Node] private Node2D Levels { get; set; } = default!;
 
-  private IWorldRepo WorldRepo { get; set; } = new WorldRepo();
   private WorldLogic Logic { get; set; } = new WorldLogic();
   private WorldLogic.IBinding Binding { get; set; } = default!;
   private ISaveChunk<WorldData> LevelSaveChunk { get; set; } = default!;
+  private IWorldRepo WorldRepo { get; set; } = new WorldRepo();
 
   public void Setup() => LevelSaveChunk = new SaveChunk<WorldData>(
       onSave: chunk => new WorldData {

@@ -45,7 +45,7 @@ public partial class Player : CharacterBody2D, IPlayer {
   }
 
   private ISaveChunk<PlayerData> PlayerChunk { get; set; } = default!;
-  private PlayerLogic Logic { get; set; } = default!;
+  public PlayerLogic Logic { get; set; } = default!;
   private PlayerLogic.IBinding Binding { get; set; } = default!;
 
   public void Setup() {
@@ -63,6 +63,7 @@ public partial class Player : CharacterBody2D, IPlayer {
      },
      onLoad: (chunk, data) => {
        GlobalPosition = new(data.Px, data.Py);
+       (this as IPlayer).RegisterCheckpoint(data.Px, data.Py);
        Logic.RestoreFrom(data.Logic);
        PlayerRepo.SetHealth(data.Health);
        PlayerRepo.SetMaxHealth(data.MaxHealth);
@@ -82,8 +83,8 @@ public partial class Player : CharacterBody2D, IPlayer {
       .Handle((in PlayerLogic.Output.MoveAndSlide output) => OnOutputMoveAndSlide(output.X, output.Y))
       .Handle((in PlayerLogic.Output.FaceRight _) => Sprite.FlipH = false)
       .Handle((in PlayerLogic.Output.FaceLeft _) => Sprite.FlipH = true)
-      .Handle((in PlayerLogic.Output.OnJump output) => OnOutputOnJump())
-      .Handle((in PlayerLogic.Output.GrantInvincibility output) => OnOutputGrantInvincibility(output.Duration));
+      .Handle((in PlayerLogic.Output.OnJump output) => OnOutputOnJump());
+    // .Handle((in PlayerLogic.Output.GrantInvincibility output) => OnOutputGrantInvincibility(output.Duration));
 
     Logic.Set(AppRepo);
     Logic.Set(WorldRepo);

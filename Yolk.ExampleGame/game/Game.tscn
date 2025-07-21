@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://cywpu6lxdjhuu"]
+[gd_scene load_steps=15 format=3 uid="uid://cywpu6lxdjhuu"]
 
 [ext_resource type="Script" uid="uid://bjbrxyy5n8jhp" path="res://game/Game.cs" id="1_17mmo"]
 [ext_resource type="Script" uid="uid://ccj1nobacdf5w" path="res://music/MusicManager.cs" id="2_5a4rm"]
 [ext_resource type="PackedScene" uid="uid://ch84hntra3ghi" path="res://screen_effects/ScreenEffects.tscn" id="2_qv7dg"]
+[ext_resource type="Script" uid="uid://c6nolokr3hkmk" path="res://player/PlayerProvider.cs" id="2_ssvhv"]
 [ext_resource type="PackedScene" uid="uid://b3yir6wkmklbj" path="res://ui/main_menu/MainMenu.tscn" id="3_3d0qh"]
 [ext_resource type="Script" uid="uid://0hw03rhihrh5" path="res://sound_effects/SoundEffectsManager.cs" id="3_8t8sv"]
 [ext_resource type="Script" uid="uid://17kismd3rhvu" path="res://yolk_repo_provider/YolkRepoProvider.cs" id="3_ejjr5"]
@@ -70,13 +71,14 @@ visible = false
 [node name="GameOverMenu" parent="YolkRepoProvider/GameUI" instance=ExtResource("11_3pld8")]
 visible = false
 
-[node name="World" type="Node2D" parent="YolkRepoProvider"]
+[node name="World2D" type="Node2D" parent="YolkRepoProvider"]
 process_mode = 1
 script = ExtResource("5_qv7dg")
 
-[node name="Levels" type="Node2D" parent="YolkRepoProvider/World"]
+[node name="PlayerProvider" type="Node" parent="YolkRepoProvider/World2D"]
 unique_name_in_owner = true
+script = ExtResource("2_ssvhv")
+PlayerScene = ExtResource("11_5a4rm")
 
-[node name="Player" parent="YolkRepoProvider/World" instance=ExtResource("11_5a4rm")]
+[node name="Levels" type="Node2D" parent="YolkRepoProvider/World2D"]
 unique_name_in_owner = true
-position = Vector2(-71, -76)

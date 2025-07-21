@@ -98,12 +98,15 @@ mouse_filter = 2
 
 [node name="HeartUI" parent="Margins/Gauges/Hearts" instance=ExtResource("2_fdx20")]
 layout_mode = 2
+texture = null
 
 [node name="HeartUI2" parent="Margins/Gauges/Hearts" instance=ExtResource("2_fdx20")]
 layout_mode = 2
+texture = null
 
 [node name="HeartUI3" parent="Margins/Gauges/Hearts" instance=ExtResource("2_fdx20")]
 layout_mode = 2
+texture = null
 
 [node name="Charges" type="HBoxContainer" parent="Margins/Gauges"]
 unique_name_in_owner = true
@@ -114,12 +117,15 @@ mouse_filter = 2
 
 [node name="ChargeUI" parent="Margins/Gauges/Charges" instance=ExtResource("3_ttn8j")]
 layout_mode = 2
+texture = null
 
 [node name="ChargeUI2" parent="Margins/Gauges/Charges" instance=ExtResource("3_ttn8j")]
 layout_mode = 2
+texture = null
 
 [node name="ChargeUI3" parent="Margins/Gauges/Charges" instance=ExtResource("3_ttn8j")]
 layout_mode = 2
+texture = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

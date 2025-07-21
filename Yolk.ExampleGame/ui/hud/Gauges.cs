@@ -22,39 +22,61 @@ public partial class Gauges : Control {
   public void OnResolved() {
     PlayerRepo.Health.Sync += OnPlayerHeartsSync;
     PlayerRepo.Charges.Sync += OnPlayerChargesSync;
+    PlayerRepo.MaxHealth.Sync += OnPlayerMaxHealthSync;
+    PlayerRepo.MaxCharges.Sync += OnPlayerMaxChargesSync;
+  }
 
-
+  private void OnPlayerMaxHealthSync(int count) {
     Hearts.ClearChildren();
-    Charges.ClearChildren();
 
-    for (var i = 0; i < PlayerRepo.Health.Value; i++) {
+    for (var i = 0; i < count; i++) {
       var pip = _heartScene.Instantiate<PipUI>();
-      pip.Filled = true;
       Hearts.AddChild(pip);
     }
 
-    for (var i = 0; i < PlayerRepo.Charges.Value; i++) {
+    Callable.From(() => FillHearts(count));
+  }
+
+  private void OnPlayerMaxChargesSync(int count) {
+    Charges.ClearChildren();
+
+    for (var i = 0; i < count; i++) {
       var pip = _chargeScene.Instantiate<PipUI>();
-      pip.Filled = true;
       Charges.AddChild(pip);
     }
+
+    Callable.From(() => FillCharges(count));
   }
 
-  private void OnPlayerHeartsSync(int hearts) {
+  public void FillHearts(int count) {
     foreach (var child in Hearts.GetChildren()) {
+      if (child.IsQueuedForDeletion()) {
+        continue;
+      }
+
+
       if (child is PipUI pip) {
-        pip.Filled = hearts > 0;
-        hearts--;
+        pip.Filled = count > 0;
+        count--;
       }
     }
   }
 
-  private void OnPlayerChargesSync(int charges) {
+  public void FillCharges(int count) {
     foreach (var child in Charges.GetChildren()) {
       if (child is PipUI pip) {
-        pip.Filled = charges > 0;
-        charges--;
+        if (child.IsQueuedForDeletion()) {
+          continue;
+        }
+
+        pip.Filled = count > 0;
+        count--;
       }
     }
   }
+
+
+  private void OnPlayerHeartsSync(int hearts) => Callable.From(() => FillHearts(hearts)).CallDeferred();
+
+  private void OnPlayerChargesSync(int charges) => Callable.From(() => FillCharges(charges)).CallDeferred();
 }

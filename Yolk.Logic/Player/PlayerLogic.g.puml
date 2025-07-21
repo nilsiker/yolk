@@ -20,7 +20,6 @@ state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
 }
 
 Yolk_Logic_Player_PlayerLogic_State --> Yolk_Logic_Player_PlayerLogic_State : RegisterCheckpoint
-Yolk_Logic_Player_PlayerLogic_State --> Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Idle : OnGameStarting
 Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt --> Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt : AnimationFinished
 Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt --> Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt : OnGrounded
 Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt --> Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt : PhysicsTick
@@ -45,7 +44,6 @@ Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded --> Yolk_Logic_Player
 Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Walking --> Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Idle : PhysicsTick
 Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Walking --> Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Walking : PhysicsTick
 
-Yolk_Logic_Player_PlayerLogic_State : OnWorldLevelLoaded() → Teleport
 Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled : OnEnter → SetEnabled
 Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt : OnEnter → Animate
 Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt : OnExit → GrantInvincibility

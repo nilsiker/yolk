@@ -13,27 +13,21 @@ using Yolk.Logic.SoundEffects;
 
 [Meta(typeof(IAutoNode))]
 public partial class YolkRepoProvider : Node,
-  IProvide<IInventoryRepo>,
   IProvide<ISoundEffectsRepo>,
-  IProvide<IMusicRepo>, IProvide<IPlayerRepo> {
+  IProvide<IMusicRepo>,
+  IProvide<IPlayerRepo> {
   public override void _Notification(int what) => this.Notify(what);
 
-  [Node] private IPlayer Player { get; set; } = default!;
+  [Node] private PlayerProvider PlayerProvider { get; set; } = default!;
 
-  IInventoryRepo IProvide<IInventoryRepo>.Value() => InventoryRepo;
   ISoundEffectsRepo IProvide<ISoundEffectsRepo>.Value() => SoundEffectsRepo;
   IMusicRepo IProvide<IMusicRepo>.Value() => MusicRepo;
-  IPlayerRepo IProvide<IPlayerRepo>.Value() => PlayerRepo;
+  IPlayerRepo IProvide<IPlayerRepo>.Value() => PlayerProvider.PlayerRepo;
 
-
-  private IInventoryRepo InventoryRepo { get; set; } = default!;
   private ISoundEffectsRepo SoundEffectsRepo { get; set; } = default!;
   private IMusicRepo MusicRepo { get; set; } = default!;
-  private IPlayerRepo PlayerRepo { get; set; } = default!;
 
   public void OnResolved() {
-    PlayerRepo = new PlayerRepo(3, 1);
-    InventoryRepo = new InventoryRepo();
     SoundEffectsRepo = new SoundEffectsRepo();
     MusicRepo = new MusicRepo();
 

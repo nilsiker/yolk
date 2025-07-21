@@ -3,6 +3,7 @@ namespace Yolk.Logic.Player;
 
 using Chickensoft.Introspection;
 using Chickensoft.LogicBlocks;
+using Yolk.Logic.World;
 
 public partial class PlayerLogic {
 
@@ -29,8 +30,11 @@ public partial class PlayerLogic {
             var data = Get<Data>();
 
             Get<IAppRepo>().RequestBlackout(() => {
-              Output(new Output.Teleport(data.CheckpointX, data.CheckpointY));
-              Output(new Output.MoveAndSlide(data.VelocityX, data.VelocityY));
+              var vec = new Vec2 {
+                X = data.CheckpointX,
+                Y = data.CheckpointY
+              };
+              Get<IPlayerRepo>().Respawn(new Transform(vec, 0));
               Input(new Input.BlackoutFinished());
             });
 
