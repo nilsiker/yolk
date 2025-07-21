@@ -1,9 +1,6 @@
 @startuml PlayerLogic
 state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
   state "Alive" as Yolk_Logic_Player_PlayerLogic_State_Alive {
-    state "Disabled" as Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled {
-      state "Hurt" as Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt
-    }
     state "Enabled" as Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled {
       state "Airborne" as Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Airborne {
         state "Falling" as Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Airborne_Falling
@@ -15,6 +12,9 @@ state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
       }
     }
     state "OnWall" as Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_OnWall
+    state "Disabled" as Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled {
+      state "Hurt" as Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt
+    }
   }
   state "Dead" as Yolk_Logic_Player_PlayerLogic_State_Dead
 }

@@ -4,6 +4,8 @@ namespace Yolk;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
+
+using Yolk.ExampleGame;
 using Yolk.Logic.Music;
 using Yolk.Logic.Player;
 using Yolk.Logic.SoundEffects;
@@ -15,6 +17,8 @@ public partial class YolkRepoProvider : Node,
   IProvide<ISoundEffectsRepo>,
   IProvide<IMusicRepo>, IProvide<IPlayerRepo> {
   public override void _Notification(int what) => this.Notify(what);
+
+  [Node] private IPlayer Player { get; set; } = default!;
 
   IInventoryRepo IProvide<IInventoryRepo>.Value() => InventoryRepo;
   ISoundEffectsRepo IProvide<ISoundEffectsRepo>.Value() => SoundEffectsRepo;

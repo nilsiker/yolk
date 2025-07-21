@@ -119,13 +119,8 @@ public partial class Player : CharacterBody2D, IPlayer {
 
 
   private void OnOutputAnimate(string animation) => Anim.Play(animation);
-
   private void OnOutputSetEnabled(bool enabled) => Callable.From(() => SetCollisionLayerValue(1, enabled)).CallDeferred();
-
-  private void OnOutputTeleport(float x, float y) {
-    GD.Print($"Teleporting player to {x}, {y}");
-    GlobalPosition = new Vector2(x, y);
-  }
+  private void OnOutputTeleport(float x, float y) => GlobalPosition = new Vector2(x, y);
 
   public override void _PhysicsProcess(double delta) {
     var inputVector = Inputs.GetMoveVector();
