@@ -6,6 +6,7 @@ using Godot;
 using Yolk.Extensions;
 using Yolk.Logic.Player;
 
+// TODO fix heart and charge pips to reflect actual health and charge values
 
 [Meta(typeof(IAutoNode))]
 public partial class Gauges : Control {
