@@ -1,6 +1,9 @@
 @startuml PlayerLogic
 state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
   state "Alive" as Yolk_Logic_Player_PlayerLogic_State_Alive {
+    state "Disabled" as Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled {
+      state "Hurt" as Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt
+    }
     state "Enabled" as Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled {
       state "Airborne" as Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Airborne {
         state "Falling" as Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Airborne_Falling
@@ -12,14 +15,12 @@ state "PlayerLogic State" as Yolk_Logic_Player_PlayerLogic_State {
       }
     }
     state "OnWall" as Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_OnWall
-    state "Disabled" as Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled {
-      state "Hurt" as Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt
-    }
   }
   state "Dead" as Yolk_Logic_Player_PlayerLogic_State_Dead
 }
 
 Yolk_Logic_Player_PlayerLogic_State --> Yolk_Logic_Player_PlayerLogic_State : RegisterCheckpoint
+Yolk_Logic_Player_PlayerLogic_State --> Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Idle : OnGameStarting
 Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt --> Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt : AnimationFinished
 Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt --> Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt : OnGrounded
 Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt --> Yolk_Logic_Player_PlayerLogic_State_Alive_Disabled_Hurt : PhysicsTick
@@ -54,9 +55,10 @@ Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Airborne : OnPhysicsTick → F
 Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Airborne_Falling : OnEnter → Animate
 Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Airborne_Jumping : OnEnter → Animate, OnJump
 Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Airborne_Jumping : OnPhysicsTick → MoveAndSlide
+Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded : OnPhysicsTick → MoveAndSlide
 Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Idle : OnEnter → Animate
 Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Walking : OnEnter → Animate
 Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Walking : OnPhysicsTick → FaceLeft, FaceRight, MoveAndSlide
 
-[*] --> Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded
+[*] --> Yolk_Logic_Player_PlayerLogic_State_Alive_Enabled_Grounded_Idle
 @enduml

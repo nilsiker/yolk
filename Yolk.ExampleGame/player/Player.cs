@@ -55,11 +55,19 @@ public partial class Player : CharacterBody2D, IPlayer {
      onSave: chunk => new PlayerData {
        Px = GlobalPosition.X,
        Py = GlobalPosition.Y,
-       Logic = Logic
+       Logic = Logic,
+       Health = PlayerRepo.Health.Value,
+       MaxHealth = PlayerRepo.MaxHealth.Value,
+       Charges = PlayerRepo.Charges.Value,
+       MaxCharges = PlayerRepo.MaxCharges.Value,
      },
      onLoad: (chunk, data) => {
        GlobalPosition = new(data.Px, data.Py);
        Logic.RestoreFrom(data.Logic);
+       PlayerRepo.SetHealth(data.Health);
+       PlayerRepo.SetMaxHealth(data.MaxHealth);
+       PlayerRepo.SetCharges(data.Charges);
+       PlayerRepo.SetMaxCharges(data.MaxCharges);
      });
   }
 

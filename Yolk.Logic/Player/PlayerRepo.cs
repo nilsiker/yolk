@@ -7,11 +7,15 @@ public interface IPlayerRepo : IDisposable {
   public event Action? OutOfHearts;
   public event Action? Damaged;
   public event Action? Healed;
-  public IAutoProp<int> Hearts { get; }
-  public IAutoProp<int> MaxHearts { get; }
+  public IAutoProp<int> Health { get; }
+  public IAutoProp<int> MaxHealth { get; }
   public IAutoProp<int> Charges { get; }
   public IAutoProp<int> MaxCharges { get; }
 
+  public void SetHealth(int hearts);
+  public void SetMaxHealth(int maxHearts);
+  public void SetCharges(int charges);
+  public void SetMaxCharges(int maxCharges);
   public void Damage(int amount = 1);
   public void Heal(int amount = 1);
   public void AddCharge(int amount = 1);
@@ -28,10 +32,23 @@ public class PlayerRepo(int initialHearts, int initialCharges) : IPlayerRepo {
   public event Action? Damaged;
   public event Action? Healed;
 
-  public IAutoProp<int> Hearts => _hearts;
-  public IAutoProp<int> MaxHearts => _maxHearts;
+  public IAutoProp<int> Health => _hearts;
+  public IAutoProp<int> MaxHealth => _maxHearts;
   public IAutoProp<int> Charges => _charges;
   public IAutoProp<int> MaxCharges => _maxCharges;
+
+  public void SetHealth(int hearts) {
+    _hearts.OnNext(Math.Max(hearts, 0));
+    if (_hearts.Value <= 0) {
+      OutOfHearts?.Invoke();
+    }
+  }
+
+  public void SetMaxHealth(int maxHearts) => _maxHearts.OnNext(Math.Max(maxHearts, 1));
+
+  public void SetCharges(int charges) => _charges.OnNext(Math.Max(charges, 0));
+
+  public void SetMaxCharges(int maxCharges) => _maxCharges.OnNext(Math.Max(maxCharges, 0));
 
   public void Damage(int amount = 1) {
     var newHearts = Math.Max(_hearts.Value - amount, 0);

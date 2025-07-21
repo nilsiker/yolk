@@ -40,7 +40,7 @@ public partial class PlayerLogic {
           public Transition On(in Input.BlackoutFinished input) {
             var data = Get<Data>();
 
-            var dead = Get<IPlayerRepo>().Hearts.Value == 0;
+            var dead = Get<IPlayerRepo>().Health.Value == 0;
 
             return dead ? To<Dead>() : To<Enabled.Grounded.Idle>();
           }

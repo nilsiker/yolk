@@ -4,7 +4,6 @@ using System;
 using Chickensoft.AutoInject;
 using Chickensoft.Introspection;
 using Godot;
-using Shouldly;
 using Yolk.Logic.Player;
 
 [Meta(typeof(IAutoNode))]

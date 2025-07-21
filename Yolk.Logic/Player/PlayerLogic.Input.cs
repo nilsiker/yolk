@@ -3,6 +3,7 @@ namespace Yolk.Logic.Player;
 
 public partial class PlayerLogic {
   public static class Input {
+    public readonly record struct OnGameStarting;
     public readonly record struct PhysicsTick(float Delta);
     public readonly record struct TakeDamage(int Amount);
     public readonly record struct Die;

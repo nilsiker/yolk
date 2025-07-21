@@ -20,14 +20,14 @@ public partial class Gauges : Control {
   [Node] private Control Charges { get; set; } = default!;
 
   public void OnResolved() {
-    PlayerRepo.Hearts.Sync += OnPlayerHeartsSync;
+    PlayerRepo.Health.Sync += OnPlayerHeartsSync;
     PlayerRepo.Charges.Sync += OnPlayerChargesSync;
 
 
     Hearts.ClearChildren();
     Charges.ClearChildren();
 
-    for (var i = 0; i < PlayerRepo.Hearts.Value; i++) {
+    for (var i = 0; i < PlayerRepo.Health.Value; i++) {
       var pip = _heartScene.Instantiate<PipUI>();
       pip.Filled = true;
       Hearts.AddChild(pip);

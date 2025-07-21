@@ -24,7 +24,6 @@ public partial class PlayerLogic {
             }
 
             data.VelocityX = data.MoveDirectionX * data.Speed;
-            GD.Print(data.VelocityX);
             Output(new Output.MoveAndSlide(data.VelocityX, data.VelocityY));
             return ToSelf();
           }
