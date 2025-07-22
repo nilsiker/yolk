@@ -67,10 +67,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Yolk.Generator/Yolk.Generator.csproj" OutputItemType="analyzer" />
+    <ProjectReference Include="..\Yolk.Generator\Yolk.Generator.csproj" OutputItemType="analyzer" />
     <ProjectReference Include="..\Yolk.Data\Yolk.Data.csproj" />
     <ProjectReference Include="..\Yolk.Extensions\Yolk.Extensions.csproj" />
     <ProjectReference Include="..\Yolk.Logic\Yolk.Logic.csproj" />
-    <ProjectReference Include="..\Yolk.Nodes\Yolk.Nodes.csproj" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dpahhf0tdwx5s"]
+[gd_scene load_steps=3 format=3 uid="uid://dpahhf0tdwx5s"]
 
 [ext_resource type="Theme" uid="uid://dx8a0hc3h3m6w" path="res://theme_yolk.tres" id="1_ab3b7"]
 [ext_resource type="Script" uid="uid://bjkhq8mnf1drk" path="res://ui/options_menu/ActionBindButton.cs" id="2_2pmu6"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hsjae"]
-load_path = "res://.godot/imported/tile_0550.png-589529356da224d98360f614a784d959.ctex"
 
 [node name="ActionBindButton" type="Button"]
 custom_minimum_size = Vector2(300, 40)
@@ -14,7 +11,6 @@ size_flags_horizontal = 3
 theme = ExtResource("1_ab3b7")
 shortcut_feedback = false
 text = " Jump"
-icon = SubResource("CompressedTexture2D_hsjae")
 alignment = 0
 text_overrun_behavior = 3
 icon_alignment = 2
